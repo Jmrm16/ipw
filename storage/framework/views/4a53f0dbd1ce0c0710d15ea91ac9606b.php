@@ -82,37 +82,75 @@
 <body>
 
     
-    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="<?php echo e(url('/')); ?>">
-                <img src="<?php echo e(asset('img/logoB.png')); ?>" alt="Logo IPW">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav me-3">
-                    <li class="nav-item">
-                        <a href="<?php echo e(url('/')); ?>" class="nav-link <?php echo e(Request::is('/') ? 'text-primary active' : ''); ?>">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="<?php echo e(url('/about')); ?>" class="nav-link <?php echo e(Request::is('about') ? 'text-primary active' : ''); ?>">Acerca de</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="<?php echo e(url('/productos')); ?>" class="nav-link <?php echo e(Request::is('productos') ? 'text-primary active' : ''); ?>">Productos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="<?php echo e(url('/contacto')); ?>" class="nav-link <?php echo e(Request::is('contacto') ? 'text-primary active' : ''); ?>">Contacto</a>
-                    </li>
-                </ul>
+<nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="<?php echo e(url('/')); ?>">
+            <img src="<?php echo e(asset('img/logoB.png')); ?>" alt="Logo IPW">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav me-3">
+                <li class="nav-item">
+                    <a href="<?php echo e(url('/')); ?>" class="nav-link <?php echo e(Request::is('/') ? 'text-primary active' : ''); ?>">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?php echo e(url('/about')); ?>" class="nav-link <?php echo e(Request::is('about') ? 'text-primary active' : ''); ?>">Acerca de</a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?php echo e(url('/productos')); ?>" class="nav-link <?php echo e(Request::is('productos') ? 'text-primary active' : ''); ?>">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?php echo e(url('/contacto')); ?>" class="nav-link <?php echo e(Request::is('contacto') ? 'text-primary active' : ''); ?>">Contacto</a>
+                </li>
+            </ul>
 
-                
-                <a href="<?php echo e(url('/perfil')); ?>" class="nav-link">
-                    <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
-                </a>
-            </div>
+            
+            <ul class="navbar-nav ms-auto">
+                <?php if(auth()->guard()->guest()): ?>
+                    
+                    <li class="nav-item">
+                        <a href="<?php echo e(route('login')); ?>" class="nav-link">
+                            </i> Iniciar sesión
+                        </a>
+                    </li>
+                <?php else: ?>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle me-1" style="font-size: 1.5rem;"></i> <?php echo e(Auth::user()->name); ?>
+
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li>
+                                <a class="dropdown-item" href="<?php echo e(route('dashboard')); ?>">
+                                    <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="<?php echo e(route('perfil.show')); ?>">
+                                    <i class="bi bi-person-lines-fill me-2"></i> Perfil
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="POST" action="<?php echo e(route('logout')); ?>">
+                                    <?php echo csrf_field(); ?>
+                                    <button type="submit" class="dropdown-item">
+                                        <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                <?php endif; ?>
+            </ul>
+
         </div>
-    </nav>
+    </div>
+</nav>
+
 
 </body>
 </html>

@@ -70,6 +70,11 @@
                                                 Ver Pago
                                             </button>
                                         @endif
+                                            @if($formulario->estado === 'finalizado' && $formulario->poliza_path)
+                                             <a href="{{ $formulario->poliza_path }}" target="_blank" class="btn btn-outline-primary mb-1">
+                                             <i class="bi bi-file-earmark-text me-1"></i> Ver Póliza
+                                              </a>
+                                            @endif
                                     </td>
                                 </tr>
 

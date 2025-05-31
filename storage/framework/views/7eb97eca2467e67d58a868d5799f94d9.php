@@ -88,6 +88,11 @@
                                                 Ver Pago
                                             </button>
                                         <?php endif; ?>
+                                            <?php if($formulario->estado === 'finalizado' && $formulario->poliza_path): ?>
+                                             <a href="<?php echo e($formulario->poliza_path); ?>" target="_blank" class="btn btn-outline-primary mb-1">
+                                             <i class="bi bi-file-earmark-text me-1"></i> Ver Póliza
+                                              </a>
+                                            <?php endif; ?>
                                     </td>
                                 </tr>
 

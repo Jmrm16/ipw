@@ -117,7 +117,8 @@ class FormularioMedico extends Model
         'direccion_in',
         'fondos',
         'tipo_proceso',
-        'constancia_pago_path'
+        'constancia_pago_path',
+        'poliza_path',
 
     ];
 
