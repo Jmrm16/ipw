@@ -8,7 +8,7 @@
             </a>
             <p>Agencia de seguros con más de 20 años de experiencia brindando soluciones confiables a nuestros clientes. Estamos en Maicao, La Guajira, protegiendo lo que más valoras.</p>
             <div class="d-flex justify-content-start mt-4">
-                <a class="btn btn-outline-primary rounded-circle text-center mr-2 px-0" style="width: 38px; height: 38px;" href="#"><i class="fab fa-facebook-f"></i></a>
+                <a class="btn btn-outline-primary rounded-circle text-center mr-2 px-0" style="width: 38px; height: 38px;" href="https://www.facebook.com/ipw.agenciadeseguros/"><i class="fab fa-facebook-f"></i></a>
                 <a class="btn btn-outline-primary rounded-circle text-center mr-2 px-0" style="width: 38px; height: 38px;" href="#"><i class="fab fa-instagram"></i></a>
                 <a class="btn btn-outline-primary rounded-circle text-center px-0" style="width: 38px; height: 38px;" href="#"><i class="fab fa-whatsapp"></i></a>
             </div>

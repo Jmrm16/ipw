@@ -31,7 +31,7 @@ class GoogleAuthController extends Controller
 
             Auth::login($user, true);
 
-            return redirect('/Formulario');
+            return redirect('/dashboard');
 
         } catch (\Exception $e) {
             Log::error('Google Auth Error: ' . $e->getMessage()); // ← Ahora sí funcionará
