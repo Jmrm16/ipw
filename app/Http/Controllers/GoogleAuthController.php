@@ -15,11 +15,11 @@ class GoogleAuthController extends Controller
      */
     public function redirectToGoogle(Request $request)
     {
-        // Guardamos en sesión la URL de donde viene el usuario
+        // Si el usuario fue redirigido automáticamente desde una ruta protegida
+        // Laravel ya guarda intended en la sesión: no necesitas guardarlo tú manualmente
+        // Pero si quieres una URL personalizada, puedes permitirlo así:
         if ($request->has('from')) {
             session(['redirect_after_login' => $request->get('from')]);
-        } else {
-            session(['redirect_after_login' => url()->previous()]);
         }
 
         return Socialite::driver('google')->redirect();
@@ -33,7 +33,6 @@ class GoogleAuthController extends Controller
         try {
             $googleUser = Socialite::driver('google')->user();
 
-            // Buscar o crear el usuario
             $user = User::firstOrCreate(
                 ['email' => $googleUser->getEmail()],
                 [
@@ -45,14 +44,23 @@ class GoogleAuthController extends Controller
 
             Auth::login($user, true);
 
-            // Obtener la URL guardada en sesión
-            $redirectUrl = session('redirect_after_login');
-
-            // Redirigir según el origen
-            if ($redirectUrl && str_contains($redirectUrl, 'seguros/medicos')) {
-                return redirect()->route('formulario.create');
+            // Primero, si Laravel ya tenía una ruta "intended", la usamos:
+            if (session()->has('url.intended')) {
+                return redirect()->intended(route('dashboard'));
             }
 
+            // Segundo, si manualmente guardamos una redirección personalizada:
+            if (session()->has('redirect_after_login')) {
+                $url = session()->pull('redirect_after_login');
+
+                if (str_contains($url, 'seguros/medicos')) {
+                    return redirect()->route('formulario.create');
+                }
+
+                return redirect($url); // o cualquier otra URL si quieres
+            }
+
+            // Fallback por defecto
             return redirect()->route('dashboard');
 
         } catch (\Exception $e) {

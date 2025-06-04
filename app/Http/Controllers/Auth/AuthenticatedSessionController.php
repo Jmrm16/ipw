@@ -24,23 +24,42 @@ class AuthenticatedSessionController extends Controller
     /**
      * Procesar el inicio de sesión.
      */
-    public function store(Request $request): RedirectResponse
-    {
-        $credentials = $request->validate([
-            'email'    => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+public function store(Request $request): RedirectResponse
+{
+    $credentials = $request->validate([
+        'email'    => ['required', 'email'],
+        'password' => ['required'],
+    ]);
+    
+    if (Auth::attempt($credentials, $request->filled('remember'))) {
+        $request->session()->regenerate();
 
-        if (Auth::attempt($credentials, $request->filled('remember'))) {
-            $request->session()->regenerate();
-
-            return redirect()->intended(route('formulario.create'));
+        // 1. Si Laravel ya tiene una URL protegida guardada (automático)
+        if (session()->has('url.intended')) {
+            return redirect()->intended(route('dashboard'));
         }
 
-        return back()->withErrors([
-            'email' => 'Las credenciales ingresadas no son válidas.',
-        ])->onlyInput('email');
+        // 2. Si manualmente guardaste una URL anterior
+        if (session()->has('redirect_after_login')) {
+            $url = session()->pull('redirect_after_login');
+
+            // O redireccionas condicionalmente
+            if (str_contains($url, 'seguros/medicos')) {
+                return redirect()->route('formulario.create');
+            }
+
+            return redirect($url);
+        }
+
+        // 3. Fallback por defecto
+        return redirect()->route('dashboard');
     }
+
+    return back()->withErrors([
+        'email' => 'Las credenciales ingresadas no son válidas.',
+    ])->onlyInput('email');
+}
+
 
     /**
      * Cerrar sesión.

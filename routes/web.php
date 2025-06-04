@@ -49,7 +49,9 @@ Route::view('/login', 'auth.login')->name('login');
 Route::middleware(['google.auth'])->group(function () {
 
     // 📝 Formularios
-    Route::get('/Formulario', [FormularioMedicoController::class, 'create'])->name('formulario.create');
+Route::get('/Formulario', [FormularioMedicoController::class, 'create'])
+    ->middleware('auth')
+    ->name('formulario.create');
     Route::post('/Formulario', [FormularioMedicoController::class, 'store'])->name('formulario.store');
 
     // 📄 PDFs
