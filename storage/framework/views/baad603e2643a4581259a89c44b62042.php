@@ -16,11 +16,57 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card border-0 shadow-lg p-4 rounded-4">
-                <div class="card-body text-center">
-                    <h2 class="mb-3 fw-bold text-primary">Iniciar Sesión</h2>
-                    <p class="mb-4 text-muted">Para continuar, inicia sesión con tu cuenta de Google.</p>
+                <div class="card-body">
+                    <h2 class="mb-3 fw-bold text-primary text-center">Iniciar Sesión</h2>
+                    <p class="mb-4 text-muted text-center">Usa tus credenciales o tu cuenta de Google</p>
 
-                    <a href="<?php echo e(route('google.login')); ?>" class="btn btn-danger btn-lg w-100">
+                    <!-- Mostrar errores -->
+                    <?php if($errors->any()): ?>
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <li><?php echo e($error); ?></li>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
+
+                    <!-- Formulario tradicional -->
+                    <form method="POST" action="<?php echo e(route('login')); ?>">
+                        <?php echo csrf_field(); ?>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo Electrónico</label>
+                            <input type="email" id="email" name="email" class="form-control" required autofocus value="<?php echo e(old('email')); ?>">
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" id="password" name="password" class="form-control" required>
+                        </div>
+
+                        <!-- Recordarme -->
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" name="remember" id="remember">
+                            <label class="form-check-label" for="remember">Recordarme</label>
+                        </div>
+                        <div class="text-center mt-3">
+                            <small>¿No tienes una cuenta? <a href="<?php echo e(route('register')); ?>">Regístrate</a></small>
+                        </div>
+
+                        <!-- Botón iniciar sesión -->
+                        <button type="submit" class="btn btn-primary w-100 mb-3">Iniciar Sesión</button>
+                    </form>
+
+                    <!-- Separador -->
+                    <div class="text-center my-3">
+                        <span class="text-muted">— o —</span>
+                    </div>
+
+                    <!-- Google Login -->
+                    <a href="<?php echo e(route('google.login')); ?>" class="btn btn-danger w-100">
                         <i class="fab fa-google me-2"></i> Iniciar Sesión con Google
                     </a>
                 </div>

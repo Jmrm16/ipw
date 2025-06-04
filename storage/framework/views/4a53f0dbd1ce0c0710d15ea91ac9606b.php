@@ -10,7 +10,7 @@
 
     <style>
         .navbar-brand img {
-            max-height: 120px;
+            max-height: 70px;
             object-fit: contain;
             height: auto;
             width: auto;
@@ -83,15 +83,15 @@
 
     
 <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm">
-    <div class="container">
+    <div class="container-fluid px-3"> <!-- Cambio aquí de container a container-fluid -->
         <a class="navbar-brand d-flex align-items-center" href="<?php echo e(url('/')); ?>">
-            <img src="<?php echo e(asset('img/logoB.png')); ?>" alt="Logo IPW">
+            <img src="<?php echo e(asset('img/logoB.png')); ?>" alt="Logo IPW" style="max-height: 70px;">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav me-3">
+        <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+            <ul class="navbar-nav">
                 <li class="nav-item">
                     <a href="<?php echo e(url('/')); ?>" class="nav-link <?php echo e(Request::is('/') ? 'text-primary active' : ''); ?>">Home</a>
                 </li>
@@ -106,17 +106,14 @@
                 </li>
             </ul>
 
-            
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav">
                 <?php if(auth()->guard()->guest()): ?>
-                    
                     <li class="nav-item">
                         <a href="<?php echo e(route('login')); ?>" class="nav-link">
-                            </i> Iniciar sesión
+                            Iniciar sesión
                         </a>
                     </li>
                 <?php else: ?>
-                    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person-circle me-1" style="font-size: 1.5rem;"></i> <?php echo e(Auth::user()->name); ?>
@@ -146,10 +143,10 @@
                     </li>
                 <?php endif; ?>
             </ul>
-
         </div>
     </div>
 </nav>
+
 
 
 </body>

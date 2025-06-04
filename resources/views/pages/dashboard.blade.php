@@ -3,9 +3,14 @@
 @section('title', 'Mi Dashboard')
 
 @section('content')
+
+
 <div class="d-flex">
     {{-- Sidebar solo en esta vista --}}
+    <div id="sidebarContainer" class="transition-width" style="width: 250px;">
     <x-sidebar />
+</div>
+
 
     <div class="flex-grow-1 p-4">
         <div class="card shadow-lg border-0 p-4">

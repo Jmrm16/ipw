@@ -1,8 +1,11 @@
 <?php $__env->startSection('title', 'Mi Dashboard'); ?>
 
 <?php $__env->startSection('content'); ?>
+
+
 <div class="d-flex">
     
+    <div id="sidebarContainer" class="transition-width" style="width: 250px;">
     <?php if (isset($component)) { $__componentOriginal2880b66d47486b4bfeaf519598a469d6 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal2880b66d47486b4bfeaf519598a469d6 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.sidebar','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -23,6 +26,8 @@
 <?php $component = $__componentOriginal2880b66d47486b4bfeaf519598a469d6; ?>
 <?php unset($__componentOriginal2880b66d47486b4bfeaf519598a469d6); ?>
 <?php endif; ?>
+</div>
+
 
     <div class="flex-grow-1 p-4">
         <div class="card shadow-lg border-0 p-4">

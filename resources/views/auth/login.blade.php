@@ -18,11 +18,57 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card border-0 shadow-lg p-4 rounded-4">
-                <div class="card-body text-center">
-                    <h2 class="mb-3 fw-bold text-primary">Iniciar Sesión</h2>
-                    <p class="mb-4 text-muted">Para continuar, inicia sesión con tu cuenta de Google.</p>
+                <div class="card-body">
+                    <h2 class="mb-3 fw-bold text-primary text-center">Iniciar Sesión</h2>
+                    <p class="mb-4 text-muted text-center">Usa tus credenciales o tu cuenta de Google</p>
 
-                    <a href="{{ route('google.login') }}" class="btn btn-danger btn-lg w-100">
+                    <!-- Mostrar errores -->
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <!-- Formulario tradicional -->
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo Electrónico</label>
+                            <input type="email" id="email" name="email" class="form-control" required autofocus value="{{ old('email') }}">
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" id="password" name="password" class="form-control" required>
+                        </div>
+
+                        <!-- Recordarme -->
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" name="remember" id="remember">
+                            <label class="form-check-label" for="remember">Recordarme</label>
+                        </div>
+                        <div class="text-center mt-3">
+                            <small>¿No tienes una cuenta? <a href="{{ route('register') }}">Regístrate</a></small>
+                        </div>
+
+                        <!-- Botón iniciar sesión -->
+                        <button type="submit" class="btn btn-primary w-100 mb-3">Iniciar Sesión</button>
+                    </form>
+
+                    <!-- Separador -->
+                    <div class="text-center my-3">
+                        <span class="text-muted">— o —</span>
+                    </div>
+
+                    <!-- Google Login -->
+                    <a href="{{ route('google.login') }}" class="btn btn-danger w-100">
                         <i class="fab fa-google me-2"></i> Iniciar Sesión con Google
                     </a>
                 </div>

@@ -10,7 +10,7 @@
 
     <style>
         .navbar-brand img {
-            max-height: 120px;
+            max-height: 70px;
             object-fit: contain;
             height: auto;
             width: auto;
@@ -83,15 +83,15 @@
 
     {{-- NAVBAR --}}
 <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm">
-    <div class="container">
+    <div class="container-fluid px-3"> <!-- Cambio aquí de container a container-fluid -->
         <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-            <img src="{{ asset('img/logoB.png') }}" alt="Logo IPW">
+            <img src="{{ asset('img/logoB.png') }}" alt="Logo IPW" style="max-height: 70px;">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav me-3">
+        <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+            <ul class="navbar-nav">
                 <li class="nav-item">
                     <a href="{{ url('/') }}" class="nav-link {{ Request::is('/') ? 'text-primary active' : '' }}">Home</a>
                 </li>
@@ -106,17 +106,14 @@
                 </li>
             </ul>
 
-            {{-- Bloque de usuario --}}
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav">
                 @guest
-                    {{-- No autenticado --}}
                     <li class="nav-item">
                         <a href="{{ route('login') }}" class="nav-link">
-                            </i> Iniciar sesión
+                            Iniciar sesión
                         </a>
                     </li>
                 @else
-                    {{-- Autenticado --}}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person-circle me-1" style="font-size: 1.5rem;"></i> {{ Auth::user()->name }}
@@ -145,10 +142,10 @@
                     </li>
                 @endguest
             </ul>
-
         </div>
     </div>
 </nav>
+
 
 
 </body>

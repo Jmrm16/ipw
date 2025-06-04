@@ -20,6 +20,8 @@ Route::view('/about', 'pages.about');
 Route::view('/productos', 'pages.services');
 Route::view('/Pricing', 'pages.pricing');
 Route::view('/seguros/medicos', 'seguros.medicos');
+Route::view('/seguros/rce', 'seguros.RCE');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -101,3 +103,5 @@ Route::post('/logout', function () {
     Auth::logout();
     return redirect('/login');
 })->name('logout');
+
+require __DIR__.'/auth.php';
