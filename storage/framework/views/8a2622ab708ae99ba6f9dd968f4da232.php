@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <title><?php echo $__env->yieldContent('title', 'Aseguradora-IPW'); ?></title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
 
@@ -18,54 +17,143 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
-    <link href="<?php echo e(asset('lib/owlcarousel/assets/owl.carousel.min.css')); ?>" rel="stylesheet">
-    <link href="<?php echo e(asset('lib/owlcarousel/assets/owl.carousel.css')); ?>" rel="stylesheet">
+    <!-- Bootstrap 5 CSS ✅ -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Bootstrap & Custom CSS -->
+    <!-- OwlCarousel CSS -->
+    <link href="<?php echo e(asset('lib/owlcarousel/assets/owl.carousel.min.css')); ?>" rel="stylesheet">
+
+    <!-- Custom CSS -->
     <link href="<?php echo e(asset('css/style.css')); ?>" rel="stylesheet">
 
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    
-
+    <?php echo $__env->yieldContent('styles'); ?>
 </head>
 
 <body>
 
-
+    
     <?php echo $__env->make('partials.navbar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
     
-
     <?php echo $__env->yieldContent('content'); ?>
+    <!-- Botón flotante del chatbot -->
+<div id="chatbot-button" style="position: fixed; bottom: 20px; left: 20px; z-index: 9999;">
+    <button class="btn btn-success rounded-circle shadow" style="width: 60px; height: 60px;" onclick="openChatbotModal()">
+        <i class="fab fa-whatsapp fa-lg"></i>
+    </button>
+</div>
 
+<!-- Botón flotante del chatbot -->
+<div style="position: fixed; bottom: 20px; left: 20px; z-index: 9999;">
+    <button class="btn btn-success rounded-circle shadow" style="width: 60px; height: 60px;" onclick="openChatbotModal()">
+        <i class="fas fa-robot fa-lg"></i>
+    </button>
+</div>
+
+<!-- Modal del Chatbot -->
+<div class="modal fade" id="chatbotModal" tabindex="-1" aria-labelledby="chatbotModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-scrollable modal-dialog-bottom">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">Asistente Virtual</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body" id="chatbot-messages" style="max-height: 400px; overflow-y: auto;">
+                <div class="alert alert-light">🤖 Hola, ¿en qué puedo ayudarte hoy?</div>
+            </div>
+            <div class="modal-footer p-2">
+                <input type="text" id="chatbotInput" class="form-control me-2" placeholder="Escribe tu mensaje...">
+                <button class="btn btn-success" onclick="sendChatbotMessage()">Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    
     <?php echo $__env->make('partials.footer', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <!-- Scripts -->
+
+    <!-- jQuery ✅ (solo una vez) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- OwlCarousel -->
+    <script src="<?php echo e(asset('lib/owlcarousel/owl.carousel.min.js')); ?>"></script>
+
+    <!-- Otros plugins -->
     <script src="<?php echo e(asset('lib/easing/easing.min.js')); ?>"></script>
     <script src="<?php echo e(asset('lib/waypoints/waypoints.min.js')); ?>"></script>
     <script src="<?php echo e(asset('lib/counterup/counterup.min.js')); ?>"></script>
-    <script src="<?php echo e(asset('lib/owlcarousel/owl.carousel.min.js')); ?>"></script>
-    <script src="<?php echo e(asset('lib/owlcarousel/owl.carousel.js')); ?>"></script>
 
-    <!-- Template Javascript -->
+    <!-- Bootstrap Bundle JS ✅ -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
     <script src="<?php echo e(asset('js/main.js')); ?>"></script>
     <script src="<?php echo e(asset('js/jquery.marquee.min.js')); ?>"></script>
-    <!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Plugin jQuery Marquee -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.marquee/1.5.0/jquery.marquee.min.js"></script>
-<!-- Agrega Bootstrap 5 si no está incluido -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="<?php echo e(asset('js/form-validations.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/form-validations.js')); ?>"></script>
 
-
-
-
-
+    <?php echo $__env->yieldContent('scripts'); ?>
 </body>
+
+<script>
+    function openChatbotModal() {
+        const modal = new bootstrap.Modal(document.getElementById('chatbotModal'));
+        modal.show();
+    }
+
+    function sendChatbotMessage() {
+        const input = document.getElementById('chatbotInput');
+        const message = input.value.trim();
+        if (!message) return;
+
+        const container = document.getElementById('chatbot-messages');
+        container.innerHTML += `<div class="text-end mb-2"><div class="alert alert-success d-inline-block">${message}</div></div>`;
+        container.scrollTop = container.scrollHeight;
+        input.value = '';
+        input.disabled = true;
+
+        fetch('<?php echo e(route('api.chatbot')); ?>', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>'
+            },
+            body: JSON.stringify({ mensaje: message })
+        })
+        .then(res => res.json())
+        .then(data => {
+             console.log(data); // 👈 AGREGA ESTO
+            const respuesta = data.respuesta || '🤖 Lo siento, no pude responder eso.';
+            container.innerHTML += `<div class="mb-2"><div class="alert alert-light border">${respuesta.replace(/\n/g, "<br>")}</div></div>`;
+
+            // Si quieres redirigir a WhatsApp si no entiende:
+            if (respuesta.includes('no pude') || respuesta.includes('no estoy seguro')) {
+                container.innerHTML += `<div class="text-center mb-2">
+                    <a href="https://wa.me/573001234567" target="_blank" class="btn btn-sm btn-outline-success">
+                        Chatear por WhatsApp
+                    </a>
+                </div>`;
+            }
+
+            input.disabled = false;
+            input.focus();
+            container.scrollTop = container.scrollHeight;
+        })
+.catch((err) => {
+    console.error(err); // ✅ ahora sí está definida
+    container.innerHTML += `<div class="alert alert-danger">Error al conectar con el asistente.</div>`;
+    input.disabled = false;
+});
+    }
+</script>
+
 
 </html>
 <?php /**PATH C:\xampp\htdocs\nueva aseguradora\ipw\resources\views/layouts/app.blade.php ENDPATH**/ ?>

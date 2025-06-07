@@ -9,6 +9,7 @@ use App\Http\Controllers\FormularioMedicoController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\ObservacionClienteController;
+use App\Http\Controllers\ChatbotController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,9 @@ Route::get('/contacto', [ContactoController::class, 'index'])->name('contacto.in
 Route::post('/contacto', [ContactoController::class, 'store'])->name('contacto.store');
 Route::get('/list', [ContactoController::class, 'show'])->name('contacto.show');
 
+    // routes/web.php
+Route::post('/api/chatbot', [ChatbotController::class, 'responder'])->name('api.chatbot');
+
 /*
 |--------------------------------------------------------------------------
 | Google Auth
@@ -47,6 +51,7 @@ Route::view('/login', 'auth.login')->name('login');
 |--------------------------------------------------------------------------
 */
 Route::middleware(['google.auth'])->group(function () {
+
 
     // 📝 Formularios
 Route::get('/Formulario', [FormularioMedicoController::class, 'create'])
