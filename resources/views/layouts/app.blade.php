@@ -54,19 +54,31 @@
 </div>
 
 <!-- Modal del Chatbot -->
+<!-- Modal del Chatbot -->
 <div class="modal fade" id="chatbotModal" tabindex="-1" aria-labelledby="chatbotModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-scrollable modal-dialog-bottom">
-        <div class="modal-content">
-            <div class="modal-header bg-success text-white">
-                <h5 class="modal-title">Asistente Virtual</h5>
+    <div class="modal-dialog modal-dialog-scrollable" style="max-width: 400px; margin: auto; margin-top: 10vh;">
+        <div class="modal-content shadow-lg border-0 rounded-4">
+            <div class="modal-header bg-success text-white rounded-top-4">
+                <h5 class="modal-title"><i class="fas fa-robot me-2"></i> IPW Bot</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
-            <div class="modal-body" id="chatbot-messages" style="max-height: 400px; overflow-y: auto;">
-                <div class="alert alert-light">🤖 Hola, ¿en qué puedo ayudarte hoy?</div>
+
+            <div class="modal-body p-3" id="chatbot-messages" style="max-height: 500px; overflow-y: auto; background-color: #f8f9fa;">
+                <div class="d-flex align-items-start mb-2">
+                    <div class="bg-light rounded p-2 shadow-sm text-dark">
+                        🤖 Hola, ¿en qué puedo ayudarte hoy?
+                    </div>
+                </div>
             </div>
-            <div class="modal-footer p-2">
-                <input type="text" id="chatbotInput" class="form-control me-2" placeholder="Escribe tu mensaje...">
-                <button class="btn btn-success" onclick="sendChatbotMessage()">Enviar</button>
+
+            <div class="modal-footer border-0 p-2 bg-white rounded-bottom-4">
+                <div class="input-group">
+                    <input type="text" id="chatbotInput" class="form-control rounded-start-pill border-end-0" placeholder="Escribe tu mensaje...">
+                    <button class="btn btn-success rounded-end-pill" onclick="sendChatbotMessage()">Enviar</button>
+                </div>
+                <div class="w-100 text-end mt-1">
+                    <button class="btn btn-sm btn-link text-muted" onclick="resetChatbot()">⟳ Reiniciar conversación</button>
+                </div>
             </div>
         </div>
     </div>
@@ -107,51 +119,94 @@
         const modal = new bootstrap.Modal(document.getElementById('chatbotModal'));
         modal.show();
     }
+    function resetChatbot() {
+    const container = document.getElementById('chatbot-messages');
+    container.innerHTML = `<div class="alert alert-light">🤖 Hola, ¿en qué puedo ayudarte hoy?</div>`;
+}
 
-    function sendChatbotMessage() {
-        const input = document.getElementById('chatbotInput');
-        const message = input.value.trim();
-        if (!message) return;
+function sendChatbotMessage() {
+    const input = document.getElementById('chatbotInput');
+    const message = input.value.trim();
+    const container = document.getElementById('chatbot-messages');
 
-        const container = document.getElementById('chatbot-messages');
-        container.innerHTML += `<div class="text-end mb-2"><div class="alert alert-success d-inline-block">${message}</div></div>`;
-        container.scrollTop = container.scrollHeight;
-        input.value = '';
-        input.disabled = true;
+    if (!message) return;
 
-        fetch('{{ route('api.chatbot') }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify({ mensaje: message })
-        })
-        .then(res => res.json())
-        .then(data => {
-             console.log(data); // 👈 AGREGA ESTO
-            const respuesta = data.respuesta || '🤖 Lo siento, no pude responder eso.';
-            container.innerHTML += `<div class="mb-2"><div class="alert alert-light border">${respuesta.replace(/\n/g, "<br>")}</div></div>`;
+    // Mostrar mensaje del usuario (alineado a la derecha)
+    container.innerHTML += `
+        <div class="d-flex justify-content-end mb-2">
+            <div class="bg-success text-white rounded p-2 shadow-sm">
+                ${message}
+            </div>
+        </div>`;
+    container.scrollTop = container.scrollHeight;
 
-            // Si quieres redirigir a WhatsApp si no entiende:
-            if (respuesta.includes('no pude') || respuesta.includes('no estoy seguro')) {
-                container.innerHTML += `<div class="text-center mb-2">
+    input.value = '';
+    input.disabled = true;
+
+    // Indicador de "escribiendo..."
+    const loadingMsgId = `loading-${Date.now()}`;
+    container.innerHTML += `
+        <div class="d-flex justify-content-start mb-2" id="${loadingMsgId}">
+            <div class="bg-light rounded p-2 shadow-sm text-muted fst-italic">
+                Escribiendo...
+            </div>
+        </div>`;
+    container.scrollTop = container.scrollHeight;
+
+    fetch('{{ route('api.chatbot') }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({ mensaje: message })
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data);
+
+        // Eliminar "escribiendo..."
+        const loadingMsg = document.getElementById(loadingMsgId);
+        if (loadingMsg) loadingMsg.remove();
+
+        const respuesta = data.respuesta || '🤖 Lo siento, no pude responder eso.';
+
+        // Mostrar respuesta del bot
+        container.innerHTML += `
+            <div class="d-flex justify-content-start mb-2">
+                <div class="bg-light rounded p-2 shadow-sm text-dark">
+                    ${respuesta.replace(/\n/g, '<br>')}
+                </div>
+            </div>`;
+
+        // Si no entiende la pregunta, sugiere WhatsApp
+        if (respuesta.includes('no pude') || respuesta.includes('no estoy seguro')) {
+            container.innerHTML += `
+                <div class="text-center mb-2">
                     <a href="https://wa.me/573001234567" target="_blank" class="btn btn-sm btn-outline-success">
                         Chatear por WhatsApp
                     </a>
                 </div>`;
-            }
+        }
 
-            input.disabled = false;
-            input.focus();
-            container.scrollTop = container.scrollHeight;
-        })
-.catch((err) => {
-    console.error(err); // ✅ ahora sí está definida
-    container.innerHTML += `<div class="alert alert-danger">Error al conectar con el asistente.</div>`;
-    input.disabled = false;
-});
-    }
+        input.disabled = false;
+        input.focus();
+        container.scrollTop = container.scrollHeight;
+    })
+    .catch((err) => {
+        console.error(err);
+        const loadingMsg = document.getElementById(loadingMsgId);
+        if (loadingMsg) loadingMsg.remove();
+
+        container.innerHTML += `
+            <div class="d-flex justify-content-start mb-2">
+                <div class="bg-danger text-white rounded p-2 shadow-sm">
+                    ⚠️ Error al conectar con el asistente.
+                </div>
+            </div>`;
+        input.disabled = false;
+    });
+}
 </script>
 
 
