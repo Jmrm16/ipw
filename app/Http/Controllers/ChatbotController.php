@@ -23,6 +23,7 @@ public function responder(Request $request)
         session()->forget('chatbot_historial');
         session()->forget('profesion_detectada');
         session()->forget('valor_asegurado');
+        session()->forget('esperando_confirmacion');
         return response()->json([
             'respuesta' => '✅ Conversación reiniciada. ¿En qué puedo ayudarte ahora?'
         ]);
@@ -61,22 +62,21 @@ public function responder(Request $request)
 
     // 👉 Detectar profesión y valor asegurado desde el mensaje o sesión
     $precios = Config::get('chatbot.precios_polizas', []);
-    $profesiones = array_keys($precios);
-    $valores = ['100 millones', '200 millones'];
-
     $profesionDetectada = session('profesion_detectada');
     $valorDetectado = session('valor_asegurado');
 
-    foreach ($profesiones as $profesion) {
-        if (str_contains($mensaje, strtolower($profesion))) {
+    // Normalizar y buscar coincidencias
+    $mensajeNormalizado = strtolower(trim($mensaje));
+    foreach ($precios as $profesion => $valores) {
+        if (str_contains($mensajeNormalizado, strtolower($profesion))) {
             $profesionDetectada = $profesion;
             session(['profesion_detectada' => $profesionDetectada]);
             break;
         }
     }
 
-    foreach ($valores as $valor) {
-        if (str_contains($mensaje, $valor)) {
+    foreach (['100 millones', '200 millones', '400 millones', '4000 millones'] as $valor) {
+        if (str_contains($mensajeNormalizado, $valor)) {
             $valorDetectado = $valor;
             session(['valor_asegurado' => $valorDetectado]);
             break;
@@ -88,9 +88,8 @@ public function responder(Request $request)
         if ($precio) {
             session(['esperando_confirmacion' => true]);
             return response()->json([
-                'respuesta' => "✅ La póliza médica para un {$profesionDetectada} con un valor asegurado de {$valorDetectado} cuesta \${$precio} con la aseguradora Confianza. 
-                    Puedes registrarte para una póliza médica <a href='https://ipw.com/polizas/medicas/registro' target='_blank'>haciendo clic aquí</a>.
-                    ¿Deseas saber el precio de otra póliza o consultar algo más?"
+                'respuesta' => "✅ La póliza médica para un {$profesionDetectada} con un valor asegurado de {$valorDetectado} cuesta \${$precio} con la aseguradora Confianza.<br>\n                    
+                Puedes registrarte para una póliza médica <a href='https://purple-zebra-412652.hostingersite.com/seguros/medicos' target='_blank'>haciendo clic aquí</a>.<br>\n                    ¿Deseas saber el precio de otra póliza o consultar algo más?"
             ]);
         }
     } elseif ($profesionDetectada && !$valorDetectado) {
@@ -124,10 +123,5 @@ public function responder(Request $request)
 
     return response()->json(['respuesta' => $respuestaIA]);
 }
-
-
-
-
-
 
 }

@@ -13,129 +13,184 @@
 <!-- Page Header Start -->
 
 <!-- About Start -->
-<div class="container-fluid py-5">
-    <div class="container">
-        <div class="row align-items-center pb-1">
-            <div class="col-lg-5">
-                <img class="img-thumbnail p-3" src="img/about.jpg" alt="">
-            </div>
-            <div class="col-lg-7 mt-5 mt-lg-0">
-                <small class="bg-primary text-white text-uppercase font-weight-bold px-1">Who We Are</small>
-                <h1 class="mt-2 mb-4">Agencia de Seguros IPW</h1>
-                <p class="mb-4">Una agencia de seguros creada desde el 2003, en el municipio de Maicao, dispuesta a dar soluciones oportunas a las necesidades de la población, relacionadas a pólizas de seguros y productos afines.</p>
-                
-                <div class="mb-4">
-                    <h4 class="font-weight-bold">Misión</h4>
-                    <p>Brindar asesoría experta y personalizada en seguros a todos nuestros clientes, guiándolos en la selección de la póliza que mejor se adapte a sus necesidades y protegiendo su patrimonio con el respaldo de nuestras sólidas alianzas.</p>
-                </div>
+<div class="container-fluid bg-light py-5">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <!-- Imagen -->
+      <div class="col-lg-5">
+        <img class="img-fluid rounded shadow-sm" src="<?php echo e(asset('img/about.jpg')); ?>" alt="Sobre nosotros">
+      </div>
 
-                <div class="mb-4">
-                    <h4 class="font-weight-bold">Visión</h4>
-                    <p>Para el 2026 consolidarnos como la agencia de seguros líder en La Guajira, reconocida por la excelencia en nuestros servicios, la calidad de nuestra asesoría y la solidez de nuestras alianzas con las mejores compañías de seguros del país, posicionándonos como aliados de confianza para la protección del patrimonio y el bienestar de nuestros clientes.</p>
-                </div>
+      <!-- Contenido Institucional -->
+      <div class="col-lg-7">
+        <span class="badge bg-primary text-uppercase px-3 py-2 mb-3 shadow-sm">Quiénes Somos</span>
+        <h2 class="fw-bold mb-3 text-dark">Agencia de Seguros IPW</h2>
+        <p class="fs-5 text-muted mb-4">
+          Fundada en 2003 en Maicao, somos una agencia con amplia trayectoria brindando soluciones efectivas en pólizas de seguros y productos afines.
+        </p>
 
-                <div class="mb-4">
-                    <h4 class="font-weight-bold">Valores Corporativos</h4>
-                    <ul class="list-unstyled">
-                        <li><i class="fa fa-check text-primary mr-2"></i>Responsabilidad</li>
-                        <li><i class="fa fa-check text-primary mr-2"></i>Compromiso</li>
-                        <li><i class="fa fa-check text-primary mr-2"></i>Respeto</li>
-                        <li><i class="fa fa-check text-primary mr-2"></i>Integridad</li>
-                        <li><i class="fa fa-check text-primary mr-2"></i>Transparencia</li>
-                        <li><i class="fa fa-check text-primary mr-2"></i>Equidad</li>
-                        <li><i class="fa fa-check text-primary mr-2"></i>Tolerancia</li>
-                        <li><i class="fa fa-check text-primary mr-2"></i>Honestidad</li>
-                    </ul>
-                </div>
-
-                <a href="" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold">
-                    Leer Mas
-                </a>
-            </div>
+        <!-- Misión -->
+        <div class="mb-4">
+          <h5 class="fw-bold text-primary">Misión</h5>
+          <p class="text-muted mb-0">Brindar asesoría experta y personalizada en seguros a nuestros clientes, protegiendo su patrimonio con respaldo confiable.</p>
         </div>
-        <div class="row mt-4">
-            <div class="col-md-4">
-                <div class="d-flex align-items-center border mb-4 mb-lg-0 p-4" style="height: 120px;">
-                    <i class="fa fa-2x fa-map-marker-alt text-primary mr-3"></i>
-                    <div class="d-flex flex-column">
-                        <h5 class="font-weight-bold">Our Office</h5>
-                        <p class="m-0">Calle 16 No. 12 - 100, Maicao - La Guajira</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="d-flex align-items-center border mb-4 mb-lg-0 p-4" style="height: 120px;">
-                    <i class="fa fa-2x fa-envelope-open text-primary mr-3"></i>
-                    <div class="d-flex flex-column">
-                        <h5 class="font-weight-bold">Email Us</h5>
-                        <p class="m-0">ibethpana@gmail.com</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="d-flex align-items-center border mb-4 mb-lg-0 p-4" style="height: 120px;">
-                    <i class="fas fa-2x fa-phone-alt text-primary mr-3"></i>
-                    <div class="d-flex flex-column">
-                        <h5 class="font-weight-bold">Call Us</h5>
-                        <p class="m-0">300 800 0231 - 300 278 7271</p>
-                    </div>
-                </div>
-            </div>
+
+        <!-- Visión -->
+        <div class="mb-4">
+          <h5 class="fw-bold text-primary">Visión</h5>
+          <p class="text-muted mb-0">Ser líderes en La Guajira para 2026, reconocidos por nuestro servicio, calidad y alianzas sólidas con las mejores aseguradoras del país.</p>
         </div>
+
+        <!-- Valores -->
+        <div class="mb-4">
+          <h5 class="fw-bold text-primary">Valores Corporativos</h5>
+          <ul class="list-unstyled text-muted">
+            <?php $__currentLoopData = ['Responsabilidad', 'Compromiso', 'Respeto', 'Integridad', 'Transparencia', 'Equidad', 'Tolerancia', 'Honestidad']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $valor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+              <li class="mb-1"><i class="fa fa-check-circle text-primary me-2"></i><?php echo e($valor); ?></li>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+          </ul>
+        </div>
+
+        <a href="<?php echo e(url('/about')); ?>" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">Leer Más</a>
+      </div>
     </div>
+
+    <!-- Contact Info -->
+    <div class="row text-center mt-5 g-4">
+      <div class="col-md-4">
+        <div class="bg-white p-4 rounded shadow-sm d-flex align-items-center justify-content-center h-100">
+          <i class="fa fa-map-marker-alt fa-2x text-primary me-3"></i>
+          <div class="text-start">
+            <h6 class="fw-bold mb-1">Nuestra Oficina</h6>
+            <p class="mb-0 text-muted">Calle 16 No. 12 - 100, Maicao, La Guajira</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="bg-white p-4 rounded shadow-sm d-flex align-items-center justify-content-center h-100">
+          <i class="fa fa-envelope-open fa-2x text-primary me-3"></i>
+          <div class="text-start">
+            <h6 class="fw-bold mb-1">Correo Electrónico</h6>
+            <p class="mb-0 text-muted">ibethpana@gmail.com</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="bg-white p-4 rounded shadow-sm d-flex align-items-center justify-content-center h-100">
+          <i class="fa fa-phone-alt fa-2x text-primary me-3"></i>
+          <div class="text-start">
+            <h6 class="fw-bold mb-1">Contáctanos</h6>
+            <p class="mb-0 text-muted">300 800 0231 - 300 278 7271</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
+
 <!-- About End -->
 
 <!-- Features Start -->
-<div class="container-fluid pt-5 pb-2">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 mb-5">
-                <small class="bg-primary text-white text-uppercase font-weight-bold px-1">Why Choose Us</small>
-                <h1 class="mt-2 mb-3">Más de 20 Años de Experiencia</h1>
-                <h4 class="font-weight-normal text-muted mb-4">Desde el 2003, hemos brindado soluciones de seguros confiables y personalizadas a nuestros clientes en Maicao y La Guajira.</h4>
-                <div class="list-inline mb-4">
-                    <p class="font-weight-semi-bold mb-2"><i class="fa fa-angle-right text-primary mr-2"></i>Asesoría personalizada</p>
-                    <p class="font-weight-semi-bold mb-2"><i class="fa fa-angle-right text-primary mr-2"></i>Soluciones adaptadas a tus necesidades</p>
-                    <p class="font-weight-semi-bold mb-2"><i class="fa fa-angle-right text-primary mr-2"></i>Alianzas con las mejores compañías de seguros</p>
-                </div>
-                <a href="" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold">Learn More</a>
+<!-- Características Inicio -->
+<div class="container-fluid bg-light py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      
+      <!-- Texto Informativo -->
+      <div class="col-lg-6 mb-5">
+        <span class="badge rounded-pill bg-primary mb-3 px-3 py-2 text-uppercase shadow-sm">¿Por qué elegirnos?</span>
+        <h2 class="fw-bold text-dark mb-3">20 Años Protegiendo Tu Futuro</h2>
+        <p class="text-muted mb-4 fs-5">
+          Desde el 2003 brindamos seguridad, respaldo y acompañamiento profesional a miles de clientes en toda La Guajira. Con nosotros, tu tranquilidad está asegurada.
+        </p>
+
+        <ul class="list-unstyled">
+          <li class="d-flex align-items-start mb-3">
+            <i class="fa fa-check-circle text-primary me-2 mt-1"></i>
+            <span class="text-dark">Asesoría 100% personalizada y cercana</span>
+          </li>
+          <li class="d-flex align-items-start mb-3">
+            <i class="fa fa-handshake text-primary me-2 mt-1"></i>
+            <span class="text-dark">Alianzas con aseguradoras líderes del país</span>
+          </li>
+          <li class="d-flex align-items-start mb-3">
+            <i class="fa fa-layer-group text-primary me-2 mt-1"></i>
+            <span class="text-dark">Cobertura amplia para personas, familias y empresas</span>
+          </li>
+        </ul>
+
+        <a href="<?php echo e(url('/about')); ?>" class="btn btn-primary px-4 py-2 rounded-pill mt-3 shadow-sm">Conócenos Más</a>
+      </div>
+
+      <!-- Estadísticas con contador -->
+      <div class="col-lg-6">
+        <div class="row g-4">
+          <?php
+            $stats = [
+              ['target' => 20, 'label' => 'Años de Experiencia'],
+              ['target' => 15, 'label' => 'Aseguradoras Aliadas'],
+              ['target' => 1200, 'label' => 'Clientes Satisfechos'],
+              ['target' => 5000, 'label' => 'Pólizas Emitidas']
+            ];
+          ?>
+
+          <?php $__currentLoopData = $stats; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $stat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <div class="col-sm-6">
+              <div class="bg-white rounded shadow-sm text-center py-4 h-100 hover-shadow">
+                <h2 class="text-primary fw-bold display-5 mb-2 counter" data-target="<?php echo e($stat['target']); ?>">0</h2>
+                <p class="mb-0 fw-semibold text-muted"><?php echo e($stat['label']); ?></p>
+              </div>
             </div>
-            <div class="col-lg-6">
-                <div class="row">
-                    <div class="col-sm-6 pb-1">
-                        <div class="d-flex flex-column align-items-center border px-4 mb-4">
-                            <h2 class="display-3 text-primary mb-3" data-toggle="counter-up">20</h2>
-                            <h5 class="font-weight-bold mb-4">Años de Experiencia</h5>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 pb-1">
-                        <div class="d-flex flex-column align-items-center border px-4 mb-4">
-                            <h2 class="display-3 text-primary mb-3" data-toggle="counter-up">500</h2>
-                            <h5 class="font-weight-bold mb-4">Clientes Satisfechos</h5>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 pb-1">
-                        <div class="d-flex flex-column align-items-center border px-4 mb-4">
-                            <h2 class="display-3 text-primary mb-3" data-toggle="counter-up">1000</h2>
-                            <h5 class="font-weight-bold mb-4">Pólizas Emitidas</h5>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 pb-1">
-                        <div class="d-flex flex-column align-items-center border px-4 mb-4">
-                            <h2 class="display-3 text-primary mb-3" data-toggle="counter-up">10</h2>
-                            <h5 class="font-weight-bold mb-4">Compañías Aliadas</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
+      </div>
+
     </div>
+  </div>
 </div>
+
 <!-- Features End -->
 
 <!-- Team Start -->
 
 <!-- Team End -->
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('scripts'); ?>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const counters = document.querySelectorAll('.counter');
+
+    const animateCounter = (el) => {
+        const target = +el.getAttribute('data-target');
+        let count = 0;
+        const step = Math.ceil(target / 50); // velocidad
+
+        const update = () => {
+            count += step;
+            if (count >= target) {
+                el.textContent = target.toLocaleString();
+            } else {
+                el.textContent = count.toLocaleString();
+                requestAnimationFrame(update);
+            }
+        };
+        update();
+    };
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.6 });
+
+    counters.forEach(counter => {
+        observer.observe(counter);
+    });
+});
+</script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\nueva aseguradora\ipw\resources\views/pages/about.blade.php ENDPATH**/ ?>

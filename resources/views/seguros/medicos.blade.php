@@ -77,93 +77,98 @@
 
 
 
-  <div class="container my-5" id="seccionCotizacion">
-  <div class="card shadow-lg border-0 rounded-4">
-    <div class="card-body py-5 px-4">
-      <h2 class="h4 fw-bold text-primary mb-4 text-center">Cotiza tu Póliza Médica</h2>
-      
-      <form id="formCotizacion" novalidate>
-        <div class="row g-3">
-          <div class="col-md-6">
-            <label for="profesion" class="form-label fw-semibold">Profesión / Especialidad</label>
-            <select id="profesion" class="form-select" required>
-              <option value="">Seleccione una profesión</option>
-              <option value="CLASE 3" data-profesion="MEDICINA GENERAL">Medicina General</option>
-              <option value="CLASE 3" data-profesion="ENFERMERA JEFE">Enfermería Superior</option>
-              <option value="CLASE 4" data-profesion="AUXILIAR DE ENFERMERIA">Auxiliar de Enfermería</option>
-              <option value="CLASE 1" data-profesion="GINECOBSTETRICIA">Ginecología</option>
-              <option value="CLASE 4" data-profesion="ODONTOLOGIA">Odontología</option>
-              <option value="CLASE 2" data-profesion="PSICOLOGIA">Psicología</option>
-              <option value="CLASE 4" data-profesion="NUTRICIONISTA">Nutricionista</option>
-              <option value="CLASE 3" data-profesion="PEDIATRIA">Pediatra</option>
-              <option value="CLASE 1" data-profesion="ORTOPEDIA">Ortopedia</option>
-              <option value="CLASE 3" data-profesion="ALERGÓLOGO">Alergólogo</option>
-              <option value="CLASE 1" data-profesion="ANESTESIOLOGIA">Anestesiólogo</option>
-            </select>
+<div class="container py-5" id="seccionCotizacion">
+  <div class="row justify-content-center">
+    <div class="col-lg-10 col-xl-9">
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-5">
+          <h2 class="h4 fw-bold text-primary text-center mb-4">Cotiza tu Póliza Médica</h2>
+
+          <form id="formCotizacion" novalidate>
+            <div class="row g-4">
+              <div class="col-md-6">
+                <label for="profesion" class="form-label fw-semibold">Profesión / Especialidad</label>
+                <select id="profesion" class="form-select form-select-lg rounded-pill shadow-sm" required>
+                  <option value="">Seleccione una profesión</option>
+                  <option value="CLASE 3" data-profesion="MEDICINA GENERAL">Medicina General</option>
+                  <option value="CLASE 3" data-profesion="ENFERMERA JEFE">Enfermería Superior</option>
+                  <option value="CLASE 4" data-profesion="AUXILIAR DE ENFERMERIA">Auxiliar de Enfermería</option>
+                  <option value="CLASE 1" data-profesion="GINECOBSTETRICIA">Ginecología</option>
+                  <option value="CLASE 4" data-profesion="ODONTOLOGIA">Odontología</option>
+                  <option value="CLASE 2" data-profesion="PSICOLOGIA">Psicología</option>
+                  <option value="CLASE 4" data-profesion="NUTRICIONISTA">Nutricionista</option>
+                  <option value="CLASE 3" data-profesion="PEDIATRIA">Pediatra</option>
+                  <option value="CLASE 1" data-profesion="ORTOPEDIA">Ortopedia</option>
+                  <option value="CLASE 3" data-profesion="ALERGÓLOGO">Alergólogo</option>
+                  <option value="CLASE 1" data-profesion="ANESTESIOLOGIA">Anestesiólogo</option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label for="valor" class="form-label fw-semibold">Valor Asegurado</label>
+                <select id="valor" class="form-select form-select-lg rounded-pill shadow-sm" required>
+                  <option value="">Seleccione un valor</option>
+                  <option value="100M">$100.000.000</option>
+                  <option value="400M">$400.000.000</option>
+                  <option value="500M">$500.000.000</option>
+                  <option value="700M">$700.000.000</option>
+                  <option value="1.000M">$1.000.000.000</option>
+                  <option value="2.000M">$2.000.000.000</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="d-grid mt-4">
+              <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm">
+                <i class="bi bi-calculator me-2"></i>Calcular Cotización
+              </button>
+            </div>
+
+            <div id="resultado" class="text-center mt-4 fs-5 fw-bold"></div>
+
+            <hr class="my-4" />
+
+            <div>
+              <h6 class="fw-bold text-primary mb-2">Documentación requerida:</h6>
+              <ul class="text-muted small ps-3 mb-0">
+                <li>📄 Fotocopia del documento de identidad.</li>
+                <li>🧾 RUT</li>
+                <li>🎓 Diploma profesional</li>
+                <li>📑 Resolución o Rethus</li>
+                <li>🖋️ Diligencia tu formulario</li>
+              </ul>
+            </div>
+          </form>
+        </div>
+
+        <!-- RESULTADOS -->
+        <div id="resultadoCotizacionGeneral" class="container mt-5 mb-4 d-none">
+          <div class="table-responsive bg-white rounded-4 shadow-sm border p-4">
+            <div id="acordeonCoberturas">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light text-primary">
+                  <tr>
+                    <th>Aseguradora</th>
+                    <th>Precio</th>
+                    <th>Valor Asegurado</th>
+                    <th class="text-center">Coberturas</th>
+                    <th class="text-center">Solicitar</th>
+                  </tr>
+                </thead>
+                <tbody id="listaResultados">
+                  <!-- JS llenará aquí -->
+                </tbody>
+              </table>
+            </div>
           </div>
-          
-          <div class="col-md-6">
-            <label for="valor" class="form-label fw-semibold">Valor Asegurado</label>
-            <select id="valor" class="form-select" required>
-              <option value="">Seleccione un valor</option>
-              <option value="100M">$100.000.000</option>
-              <option value="400M">$400.000.000</option>
-              <option value="500M">$500.000.000</option>
-              <option value="700M">$700.000.000</option>
-              <option value="1.000M">$1.000.000.000</option>
-              <option value="2.000M">$2.000.000.000</option>
-            </select>
-          </div>
         </div>
+        <!-- FIN RESULTADOS -->
 
-        <div class="d-grid mt-4">
-          <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm">
-            Calcular Cotización
-          </button>
-        </div>
-
-        <div id="resultado" class="text-center mt-3 fs-5 fw-bold"></div>
-
-        <hr class="my-4" />
-
-        <div>
-          <h6 class="fw-bold text-primary mb-2">Documentación requerida:</h6>
-          <ul class="text-muted small ps-3">
-            <li>Fotocopia del documento de identidad.</li>
-            <li>RUT</li>
-            <li>Diploma profesional</li>
-            <li>Resolución o Rethus</li>
-            <li>Diligencia tu formulario</li>
-          </ul>
-        </div>
-      </form>
+      </div>
     </div>
-<div id="resultadoCotizacionGeneral" class="container mt-4 mb-5">
-  <div class="table-responsive bg-white rounded shadow-sm p-3 border">
-    
-    <!-- Acordeón envolvente para comportamiento exclusivo de Bootstrap collapse -->
-    <div id="acordeonCoberturas">
-      <table class="table align-middle mb-0">
-      <thead class="table-light text-primary">
-        <tr>
-          <th>Aseguradora</th>
-          <th>Precio</th>
-          <th>Valor Asegurado</th> <!-- Nueva columna -->
-          <th class="text-center">Coberturas</th>
-          <th class="text-center">Solicitar</th>
-        </tr>
-      </thead>
-
-        <tbody id="listaResultados">
-          <!-- JavaScript llenará aquí las filas -->
-        </tbody>
-      </table>
-    </div>
-
   </div>
 </div>
-  </div>
-</div>
+
 
 <!-- Compañías Aseguradoras -->
 <!-- Compañías Aseguradoras -->
@@ -173,52 +178,50 @@
 
 <!-- Sección adicional de beneficios -->
 <!-- Sección Mejorada de Beneficios -->
-<div class="container-fluid bg-light py-5 mt-5">
-  <div class="container">
-    <div class="row g-5 align-items-center">
-      
-      <!-- Imagen -->
-      <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.1s">
-        <img src="{{ asset('img/logoB.png') }}" >
+<div class="container py-5 mt-5 bg-light">
+  <div class="row justify-content-center text-center mb-5">
+    <div class="col-lg-8">
+      <h2 class="fw-bold text-primary">¿Por qué elegir nuestros seguros?</h2>
+      <p class="text-muted">Ofrecemos respaldo profesional, atención continua y planes a tu medida.</p>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <!-- Beneficio 1 -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card border-0 shadow-sm rounded-4 h-100 text-center p-4">
+        <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+          <i class="fas fa-shield-alt fa-lg text-primary"></i>
+        </div>
+        <h5 class="fw-semibold">Protección Integral</h5>
+        <p class="text-muted small">Amplia cobertura para múltiples especialidades y riesgos profesionales.</p>
       </div>
+    </div>
 
-      <!-- Beneficios -->
-      <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.2s">
-        <h2 class="fw-bold mb-4 text-primary">¿Por qué elegir nuestros seguros?</h2>
-
-        <div class="d-flex align-items-start mb-4">
-          <div class="bg-primary bg-opacity-10 rounded-circle p-3 me-3">
-            <i class="fas fa-shield-alt fa-lg text-primary"></i>
-          </div>
-          <div>
-            <h5 class="fw-semibold mb-1">Protección Integral</h5>
-            <p class="text-muted mb-0">Amplia cobertura para múltiples especialidades y riesgos profesionales.</p>
-          </div>
+    <!-- Beneficio 2 -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card border-0 shadow-sm rounded-4 h-100 text-center p-4">
+        <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+          <i class="fas fa-clock fa-lg text-primary"></i>
         </div>
+        <h5 class="fw-semibold">Asistencia 24/7</h5>
+        <p class="text-muted small">Atención permanente ante emergencias o inquietudes.</p>
+      </div>
+    </div>
 
-        <div class="d-flex align-items-start mb-4">
-          <div class="bg-primary bg-opacity-10 rounded-circle p-3 me-3">
-            <i class="fas fa-clock fa-lg text-primary"></i>
-          </div>
-          <div>
-            <h5 class="fw-semibold mb-1">Asistencia 24/7</h5>
-            <p class="text-muted mb-0">Atención permanente ante emergencias o inquietudes.</p>
-          </div>
+    <!-- Beneficio 3 -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card border-0 shadow-sm rounded-4 h-100 text-center p-4">
+        <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+          <i class="fas fa-hand-holding-usd fa-lg text-primary"></i>
         </div>
-
-        <div class="d-flex align-items-start">
-          <div class="bg-primary bg-opacity-10 rounded-circle p-3 me-3">
-            <i class="fas fa-hand-holding-usd fa-lg text-primary"></i>
-          </div>
-          <div>
-            <h5 class="fw-semibold mb-1">Tarifas Competitivas</h5>
-            <p class="text-muted mb-0">Precios ajustados con planes flexibles para cada necesidad profesional.</p>
-          </div>
-        </div>
+        <h5 class="fw-semibold">Tarifas Competitivas</h5>
+        <p class="text-muted small">Precios ajustados con planes flexibles para cada necesidad profesional.</p>
       </div>
     </div>
   </div>
 </div>
+
 
 
 <!-- Modal -->
@@ -227,21 +230,29 @@
 </div>
 
   
-  <style>
-    .bg-soft-primary {
-      background-color: rgba(41, 137, 216, 0.1);
-    }
-    .text-gradient-primary {
-      background: linear-gradient(to right, #1e5799, #2989d8);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    .hover-shadow:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
-    }
-  </style>
+<style>
+  .bg-soft-primary {
+    background-color: rgba(52, 152, 219, 0.12);
+    border-radius: 0.75rem;
+  }
+
+  .text-gradient-primary {
+    background-image: linear-gradient(90deg, #1e5799, #3498db);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 700;
+  }
+
+  .hover-shadow {
+    transition: all 0.3s ease;
+  }
+
+  .hover-shadow:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+  }
+</style>
   
 
 <script>
