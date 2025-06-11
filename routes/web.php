@@ -10,6 +10,7 @@ use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\ObservacionClienteController;
 use App\Http\Controllers\ChatbotController;
+use App\Http\Controllers\PasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,15 @@ Route::view('/login', 'auth.login')->name('login');
 | Rutas Protegidas (Solo usuarios autenticados con Google)
 |--------------------------------------------------------------------------
 */
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/perfil/password', [PasswordController::class, 'edit'])->name('password.change');
+    Route::post('/perfil/password', [PasswordController::class, 'update'])->name('password.update');
+});
+
+
+
+
 Route::middleware(['google.auth'])->group(function () {
 
 
@@ -95,6 +105,9 @@ Route::get('/dashboard', function () {
     Route::post('/observaciones/{observacion}/responder', [ObservacionClienteController::class, 'responder'])
     ->name('observaciones.responder')
     ->middleware('auth');
+
+    Route::get('/perfil/editar', [PerfilController::class, 'edit'])->name('perfil.edit');
+Route::post('/perfil/actualizar', [PerfilController::class, 'update'])->name('perfil.update');
 
 
     Route::post('/formulario/{id}/constancia-pago', [FormularioMedicoController::class, 'subirConstanciaPago'])

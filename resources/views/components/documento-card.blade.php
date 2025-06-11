@@ -1,5 +1,6 @@
 @php
     $documento = $documentos->has($tipo) ? $documentos[$tipo] : null;
+    $esHeredado = $documento && is_null($documento->formulario_medico_id);
 @endphp
 
 <div x-data="{ uploading: false, submit() { uploading = true; $refs.formularioUpload.submit(); } }"
@@ -7,9 +8,18 @@
             p-4 shadow-sm bg-white hover:shadow-md transition-all duration-300">
 
     {{-- Cabecera --}}
-    <div class="flex items-center gap-2 mb-2 text-sm font-semibold text-gray-700">
-        <i class="ri-file-text-line text-lg text-gray-500"></i>
-        {{ $label }}
+    <div class="flex items-center justify-between mb-2 text-sm font-semibold text-gray-700">
+        <div class="flex items-center gap-2">
+            <i class="ri-file-text-line text-lg text-gray-500"></i>
+            {{ $label }}
+        </div>
+
+        {{-- Etiqueta de documento heredado --}}
+        @if ($esHeredado)
+            <span class="text-xs text-orange-600 bg-orange-100 px-2 py-0.5 rounded-full font-medium">
+                Usando documento anterior
+            </span>
+        @endif
     </div>
 
     {{-- Formulario --}}

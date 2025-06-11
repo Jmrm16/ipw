@@ -12,30 +12,42 @@ use App\Models\Notificacion;
 class DocumentoController extends Controller
 {
     // Mostrar lista de documentos requeridos para el formulario más reciente
-    public function index()
-    {
-        $user = Auth::user();
+public function index()
+{
+    $user = Auth::user();
+    $formulario = FormularioMedico::where('user_id', $user->id)->latest()->first();
 
-        $tipos = [
-            'documento_identidad',
-            'certificado_existencia',
-            'estados_financieros',
-            'formulario_firmado',
-        ];
-
-        $formulario = FormularioMedico::where('user_id', $user->id)->latest()->first();
-
-        if (!$formulario) {
-            return view('pages.documentos-vacio');
-        }
-
-        $documentos = DocumentoUsuario::where('user_id', $user->id)
-            ->where('formulario_medico_id', $formulario->id)
-            ->get()
-            ->keyBy('tipo');
-
-        return view('pages.documentos', compact('documentos', 'tipos', 'formulario'));
+    if (!$formulario) {
+        return view('pages.documentos-vacio');
     }
+
+    // Cargar documentos específicos de este formulario
+    $documentosFormulario = DocumentoUsuario::where('user_id', $user->id)
+        ->where('formulario_medico_id', $formulario->id)
+        ->get()
+        ->keyBy('tipo');
+
+    // Cargar documentos generales del usuario (sin formulario asignado)
+    $documentosGenerales = DocumentoUsuario::where('user_id', $user->id)
+        ->whereNull('formulario_medico_id')
+        ->get()
+        ->keyBy('tipo');
+
+    // Mezclar: prioridad a los específicos, pero si no hay, usar el general
+    $documentos = $documentosGenerales->merge($documentosFormulario);
+
+    $tipos = [
+        'cedula',
+        'rut',
+        'diploma',
+        'tarjeta_profesional',
+        'formulario_sarlaft',
+        'formulario_medico',
+    ];
+
+    return view('pages.documentos', compact('documentos', 'tipos', 'formulario'));
+}
+
 
 public function store(Request $request, FormularioMedico $formulario)
 {
@@ -45,10 +57,11 @@ public function store(Request $request, FormularioMedico $formulario)
     ]);
 
     $user = Auth::user();
+    $tipo = $request->tipo;
 
-    if ($formulario->user_id !== $user->id) {
-        abort(403, 'No autorizado');
-    }
+    $esDocumentoGeneral = !in_array($tipo, ['formulario_sarlaft', 'formulario_medico']);
+
+    $formularioId = $esDocumentoGeneral ? null : $formulario->id;
 
     $archivo = $request->file('archivo');
     $nombre = time() . '_' . $archivo->getClientOriginalName();
@@ -57,8 +70,8 @@ public function store(Request $request, FormularioMedico $formulario)
     DocumentoUsuario::updateOrCreate(
         [
             'user_id' => $user->id,
-            'formulario_medico_id' => $formulario->id,
-            'tipo' => $request->tipo,
+            'formulario_medico_id' => $formularioId,
+            'tipo' => $tipo,
         ],
         [
             'archivo' => $ruta,
@@ -66,89 +79,69 @@ public function store(Request $request, FormularioMedico $formulario)
         ]
     );
 
-    // Crear notificación
-Notificacion::create([
-    'tipo' => 'documento_subido',
-    'mensaje' => "El usuario {$user->name} ha subido el documento: {$request->tipo}",
-    'leida' => false,
-    'data' => [
-        'user_id' => $user->id,
-        'formulario_id' => $formulario->id,
-        'tipo_proceso' => 'documento',
-    ],
-]);
-
-    $tiposRequeridos = [
-        'cedula',
-        'rut',
-        'diploma',
-        'tarjeta_profesional',
-        'formulario_sarlaft',
-        'formulario_medico',
-    ];
-
-    $subidos = DocumentoUsuario::where('user_id', $user->id)
-        ->where('formulario_medico_id', $formulario->id)
-        ->whereIn('tipo', $tiposRequeridos)
-        ->pluck('tipo')
-        ->unique()
-        ->toArray();
-
-    if (count(array_intersect($tiposRequeridos, $subidos)) === count($tiposRequeridos)) {
-        $formulario->estado = 'documentos_cargados';
-        $formulario->save();
-    }
+    // Notificación
+    Notificacion::create([
+        'tipo' => 'documento_subido',
+        'mensaje' => "El usuario {$user->name} ha subido el documento: {$tipo}",
+        'leida' => false,
+        'data' => [
+            'user_id' => $user->id,
+            'formulario_id' => $formulario->id,
+            'tipo_proceso' => 'documento',
+        ],
+    ]);
 
     return redirect()->route('documentos.por_formulario', ['formulario' => $formulario->id])
         ->with('success', 'Documento subido correctamente.');
 }
 
-    
-    
 
-    // Ver documento por tipo
-    public function ver($tipo)
+    // Ver un documento por tipo (usando formulario actual o global)
+    public function ver($tipo, $formularioId)
     {
         $user = Auth::user();
 
-        $formulario = FormularioMedico::where('user_id', $user->id)->latest()->first();
-        if (!$formulario) {
-            abort(404, 'No se encontró el formulario asociado.');
-        }
+        $formulario = FormularioMedico::where('id', $formularioId)
+            ->where('user_id', $user->id)
+            ->firstOrFail();
 
         $documento = DocumentoUsuario::where('user_id', $user->id)
-            ->where('formulario_medico_id', $formulario->id)
             ->where('tipo', $tipo)
+            ->where(function ($query) use ($formularioId) {
+                $query->where('formulario_medico_id', $formularioId)
+                      ->orWhereNull('formulario_medico_id');
+            })
             ->firstOrFail();
 
         return response()->file(storage_path('app/public/' . $documento->archivo));
     }
 
+    // Ver vista de documentos por formulario (usa herencia también)
     public function verPorFormulario($formularioId)
-{
-    $user = Auth::user();
+    {
+        $user = Auth::user();
 
-    // Validar que el formulario pertenece al usuario
-    $formulario = FormularioMedico::where('id', $formularioId)
-                    ->where('user_id', $user->id)
-                    ->firstOrFail();
+        $formulario = FormularioMedico::where('id', $formularioId)
+            ->where('user_id', $user->id)
+            ->firstOrFail();
 
-            $tipos = [
-                'cedula',
-                'rut',
-                'diploma',
-                'tarjeta_profesional',
-                'formulario_sarlaft',
-                'formulario_medico',
-            ];
+        $tipos = [
+            'cedula',
+            'rut',
+            'diploma',
+            'tarjeta_profesional',
+            'formulario_sarlaft',
+            'formulario_medico',
+        ];
 
+        $documentos = DocumentoUsuario::where('user_id', $user->id)
+            ->where(function ($query) use ($formularioId) {
+                $query->whereNull('formulario_medico_id')
+                      ->orWhere('formulario_medico_id', $formularioId);
+            })
+            ->get()
+            ->keyBy('tipo');
 
-    $documentos = DocumentoUsuario::where('user_id', $user->id)
-        ->where('formulario_medico_id', $formularioId)
-        ->get()
-        ->keyBy('tipo');
-
-    return view('pages.documentos', compact('documentos', 'tipos', 'formulario'));
-}
-
+        return view('pages.documentos', compact('documentos', 'tipos', 'formulario'));
+    }
 }

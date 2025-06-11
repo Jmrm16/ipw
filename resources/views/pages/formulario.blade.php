@@ -154,22 +154,30 @@
         </div>
     </div>
 
-    <!-- Dirección, Ciudad y Departamento -->
-    <div class="row">
-        <div class="col-md-6">
-            <label class="form-label">Dirección:</label>
-            <input type="text" class="form-control" name="direccion" required>
-        </div>
-        <div class="col-md-6">
-            <label class="form-label">Ciudad:</label>
-            <input type="text" class="form-control" name="ciudad_residencia" required>
-        </div>
-    </div>
+<!-- Departamento -->
+<div class="mb-3">
+    <label class="form-label">Departamento:</label>
+    <select class="form-select" id="departamento" name="departamento" required>
+        <option value="">Seleccione un departamento</option>
+        <!-- Se llena dinámicamente con JS -->
+    </select>
+</div>
 
-    <div class="mb-3">
-        <label class="form-label">Departamento:</label>
-        <input type="text" class="form-control" name="departamento" required>
-    </div>
+<!-- Ciudad/Municipio -->
+<div class="mb-3">
+    <label class="form-label">Ciudad o Municipio:</label>
+    <select class="form-select" id="ciudad_residencia" name="ciudad_residencia" required>
+        <option value="">Seleccione un municipio</option>
+        <!-- Se llena dinámicamente con JS -->
+    </select>
+</div>
+
+<!-- Dirección -->
+<div class="mb-3">
+    <label class="form-label">Dirección:</label>
+    <input type="text" class="form-control" name="direccion" required>
+</div>
+
 
     <!-- Título Profesional, Otorgado Por y Fecha de Graduación -->
     <div class="mb-3">
@@ -959,6 +967,45 @@ patrimonio.value = formatCurrency(a - p);
 activos.addEventListener('input', updatePatrimonio);
 pasivos.addEventListener('input', updatePatrimonio);
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const selectDepartamento = document.getElementById('departamento');
+    const selectCiudad = document.getElementById('ciudad_residencia');
+
+    fetch('/data/colombia.json')
+        .then(res => res.json())
+        .then(data => {
+            // Llenar departamentos
+            data.forEach(entry => {
+                const option = document.createElement('option');
+                option.value = entry.departamento;
+                option.textContent = entry.departamento;
+                selectDepartamento.appendChild(option);
+            });
+
+            // Escuchar cambios en el departamento
+            selectDepartamento.addEventListener('change', () => {
+                const selectedDepto = selectDepartamento.value;
+                const deptoData = data.find(d => d.departamento === selectedDepto);
+
+                // Limpiar ciudades anteriores
+                selectCiudad.innerHTML = '<option value="">Seleccione un municipio</option>';
+
+                if (deptoData && deptoData.ciudades) {
+                    deptoData.ciudades.forEach(ciudad => {
+                        const option = document.createElement('option');
+                        option.value = ciudad;
+                        option.textContent = ciudad;
+                        selectCiudad.appendChild(option);
+                    });
+                }
+            });
+        })
+        .catch(err => console.error('Error al cargar el archivo de departamentos:', err));
+});
+</script>
+
 
 
 

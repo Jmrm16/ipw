@@ -1,62 +1,230 @@
 <?php $__env->startSection('title', 'Mi Perfil'); ?>
 
 <?php $__env->startSection('content'); ?>
-<div class="d-flex">
-    
-    <?php if (isset($component)) { $__componentOriginal2880b66d47486b4bfeaf519598a469d6 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal2880b66d47486b4bfeaf519598a469d6 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.sidebar','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('sidebar'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes([]); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal2880b66d47486b4bfeaf519598a469d6)): ?>
-<?php $attributes = $__attributesOriginal2880b66d47486b4bfeaf519598a469d6; ?>
-<?php unset($__attributesOriginal2880b66d47486b4bfeaf519598a469d6); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal2880b66d47486b4bfeaf519598a469d6)): ?>
-<?php $component = $__componentOriginal2880b66d47486b4bfeaf519598a469d6; ?>
-<?php unset($__componentOriginal2880b66d47486b4bfeaf519598a469d6); ?>
-<?php endif; ?>
+<div class="profile-container">
 
-    
-    <div class="flex-grow-1 p-4">
-        <div class="card shadow-lg border-0 p-4">
-            <h2 class="text-center text-primary fw-bold mb-4">
-                <i class="bi bi-person-circle me-2"></i>Información del Perfil
-            </h2>
-
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="bg-light p-4 rounded border">
-                        <div class="mb-3 d-flex align-items-center">
-                            <i class="bi bi-person-fill me-3 fs-4 text-primary"></i>
-                            <div>
-                                <strong class="text-secondary">Nombre:</strong>
-                                <div class="text-dark"><?php echo e($usuario->name); ?></div>
-                            </div>
-                        </div>
-
-                        <div class="mb-3 d-flex align-items-center">
-                            <i class="bi bi-envelope-fill me-3 fs-4 text-primary"></i>
-                            <div>
-                                <strong class="text-secondary">Email:</strong>
-                                <div class="text-dark"><?php echo e($usuario->email); ?></div>
-                            </div>
-                        </div>
-
-                        
-                        
+    <!-- Contenido Principal -->
+    <main class="main-content">
+        <!-- Tarjeta de Perfil -->
+        <div class="profile-card">
+            <!-- Encabezado con gradiente y avatar -->
+            <div class="profile-header bg-gradient-to-r from-indigo-600 to-blue-700 shadow-md">
+                <div class="avatar-container">
+                    <div class="avatar shadow">
+                        <i class="ri-user-3-fill"></i>
+                    </div>
+                    <div>
+                        <h1 class="profile-title">Mi Perfil</h1>
+                        <p class="text-sm opacity-80">Bienvenido de nuevo, <?php echo e($usuario->name); ?></p>
                     </div>
                 </div>
             </div>
+
+            <!-- Cuerpo del perfil -->
+            <div class="profile-body">
+                <!-- Información Personal -->
+                <section class="profile-section">
+                    <h2 class="section-title">
+                        <i class="ri-information-line"></i> Datos Personales
+                    </h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="ri-user-line"></i>
+                            </div>
+                            <div class="info-content">
+                                <label>Nombre Completo</label>
+                                <p><?php echo e($usuario->name); ?></p>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="ri-mail-line"></i>
+                            </div>
+                            <div class="info-content">
+                                <label>Correo Electrónico</label>
+                                <p><?php echo e($usuario->email); ?></p>
+                            </div>
+                        </div>
+
+                        <?php if(isset($usuario->telefono)): ?>
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="ri-phone-line"></i>
+                            </div>
+                            <div class="info-content">
+                                <label>Teléfono</label>
+                                <p><?php echo e($usuario->telefono); ?></p>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+
+                        <?php if(isset($usuario->role)): ?>
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="ri-shield-user-line"></i>
+                            </div>
+                            <div class="info-content">
+                                <label>Rol</label>
+                                <p><?php echo e(ucfirst($usuario->role)); ?></p>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                </section>
+
+                <!-- Acciones -->
+                <section class="profile-actions">
+                    <h2 class="section-title">
+                        <i class="ri-settings-3-line"></i> Acciones Rápidas
+                    </h2>
+                    <div class="action-buttons">
+                        <a href="<?php echo e(route('perfil.edit')); ?>" class="btn-edit">
+                            <i class="ri-edit-2-line"></i> Editar Perfil
+                        </a>
+                        <a href="<?php echo e(route('password.change')); ?>" class="btn-change-password">
+                            <i class="ri-lock-password-line"></i> Cambiar Contraseña
+                        </a>
+                    </div>
+                </section>
+            </div>
         </div>
-    </div>
+    </main>
 </div>
+
+<style>
+    .profile-container {
+        display: flex;
+        min-height: 100vh;
+        background: linear-gradient(to bottom, #f0f4f8, #ffffff);
+    }
+    .main-content {
+        flex: 1;
+        padding: 2rem;
+    }
+    .profile-card {
+        background: white;
+        border-radius: 1rem;
+        box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+    .profile-header {
+        padding: 2.5rem 2rem;
+        color: white;
+    }
+    .avatar-container {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    .avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        border: 2px solid white;
+    }
+    .profile-title {
+        font-size: 1.75rem;
+        font-weight: 600;
+    }
+    .profile-body {
+        padding: 2rem;
+        margin-top: -2rem;
+    }
+    .section-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.25rem;
+    }
+    .info-item {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem;
+        background: #f1f5f9;
+        border-left: 4px solid #3b82f6;
+        border-radius: 0.5rem;
+        transition: 0.2s;
+    }
+    .info-item:hover {
+        background: #e2e8f0;
+        transform: translateY(-2px);
+    }
+    .info-icon {
+        font-size: 1.5rem;
+        color: #3b82f6;
+    }
+    .info-content label {
+        font-size: 0.875rem;
+        color: #64748b;
+    }
+    .info-content p {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #1e293b;
+    }
+    .profile-actions {
+        margin-top: 2.5rem;
+    }
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+    .btn-edit, .btn-change-password {
+        padding: 0.75rem 1.25rem;
+        border-radius: 8px;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+    }
+    .btn-edit {
+        background: #3b82f6;
+        color: white;
+    }
+    .btn-edit:hover {
+        background: #2563eb;
+    }
+    .btn-change-password {
+        background: white;
+        color: #3b82f6;
+        border: 1px solid #3b82f6;
+    }
+    .btn-change-password:hover {
+        background: #eff6ff;
+    }
+    @media (max-width: 768px) {
+        .main-content {
+            padding: 1rem;
+        }
+        .avatar-container {
+            flex-direction: column;
+            text-align: center;
+        }
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+        .action-buttons {
+            flex-direction: column;
+        }
+    }
+</style>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\nueva aseguradora\ipw\resources\views/pages/perfil.blade.php ENDPATH**/ ?>
+
+<?php echo $__env->make('layouts.app-modern', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\nueva aseguradora\ipw\resources\views/pages/perfil.blade.php ENDPATH**/ ?>
