@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('formularios_medicos', function (Blueprint $table) {
-            $table->text('tipo_proceso')->nullable()->after('estado');
+            $table->text('tipo_proceso')->nullable();
         });
     }
 

@@ -4,6 +4,43 @@
 
 @section('content')
 <div class="space-y-8">
+    <!-- Botón de notificaciones y modal -->
+    <div class="flex justify-end mb-4 relative">
+        <!-- Botón -->
+        <button id="notificacionesBtn"
+                class="relative p-2 rounded-full bg-white shadow hover:bg-blue-50 transition z-50">
+            <i class="ri-notification-3-line text-2xl text-blue-600"></i>
+            @if($notificaciones->where('leida', false)->count() > 0)
+                <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
+                    {{ $notificaciones->where('leida', false)->count() }}
+                </span>
+            @endif
+        </button>
+
+        <!-- Dropdown modal -->
+        <div id="notificacionesModal"
+             class="hidden absolute top-12 right-0 w-96 bg-white rounded-lg shadow-lg ring-1 ring-gray-200 z-40">
+            <div class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-t-lg flex items-center gap-2">
+                <i class="ri-notification-3-line"></i> Notificaciones
+            </div>
+            <ul class="max-h-80 overflow-y-auto divide-y">
+                @forelse($notificaciones as $n)
+                    <li class="p-3 hover:bg-gray-50 {{ $n->leida ? 'text-gray-500' : 'text-gray-800 font-semibold' }}">
+                        <div class="flex items-start gap-2">
+                            <i class="ri-information-line text-blue-500 mt-1"></i>
+                            <div>
+                                <p>{{ $n->mensaje }}</p>
+                                <div class="text-xs text-gray-400">{{ \Carbon\Carbon::parse($n->created_at)->diffForHumans() }}</div>
+                            </div>
+                        </div>
+                    </li>
+                @empty
+                    <li class="p-3 text-center text-gray-500">No tienes notificaciones</li>
+                @endforelse
+            </ul>
+        </div>
+    </div>
+
     <!-- Estadísticas mejoradas -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Tarjeta de formularios -->
@@ -203,12 +240,59 @@
 </style>
 
 <script>
-    // Inicializar tooltips de Bootstrap si es necesario
     document.addEventListener('DOMContentLoaded', function() {
+        // Control del modal de notificaciones
+        const notificacionesBtn = document.getElementById('notificacionesBtn');
+        const notificacionesModal = document.getElementById('notificacionesModal');
+        let modalAbierto = false;
+
+        // Abrir/cerrar modal al hacer clic en el botón
+        notificacionesBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            modalAbierto = !modalAbierto;
+            
+            if (modalAbierto) {
+                notificacionesModal.classList.remove('hidden');
+                // Marcar notificaciones como leídas al abrir el modal
+                marcarNotificacionesComoLeidas();
+            } else {
+                notificacionesModal.classList.add('hidden');
+            }
+        });
+
+        // Cerrar modal al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            if (modalAbierto && !notificacionesModal.contains(e.target) && e.target !== notificacionesBtn) {
+                notificacionesModal.classList.add('hidden');
+                modalAbierto = false;
+            }
+        });
+
+        // Función para marcar notificaciones como leídas
+        function marcarNotificacionesComoLeidas() {
+            fetch("{{ route('notificaciones.marcar-leidas') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({})
+            }).then(response => {
+                if(response.ok) {
+                    // Actualizar el contador de notificaciones
+                    const badge = document.querySelector('.absolute.-top-1.-right-1.bg-red-500');
+                    if(badge) {
+                        badge.remove();
+                    }
+                }
+            });
+        }
+
+        // Inicializar tooltips de Bootstrap si es necesario
         const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
         const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
-    })
+    });
 </script>
 @endsection

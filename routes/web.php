@@ -10,6 +10,7 @@ use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\ObservacionClienteController;
 use App\Http\Controllers\ChatbotController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PasswordController;
 
 /*
@@ -76,11 +77,9 @@ Route::get('/Formulario', [FormularioMedicoController::class, 'create'])
     Route::get('/ver-pdf2/{id}', [PDFController::class, 'llenarPDF2'])->name('formulario2.pdf');
 
     // 📊 Dashboard
-Route::get('/dashboard', function () {
-    $user = Auth::user();
-    $formularios = \App\Models\FormularioMedico::where('user_id', $user->id)->latest()->paginate(5); // ✅ paginate()
-    return view('pages.dashboard', compact('formularios'));
-})->name('dashboard');
+   Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+   Route::post('/notificaciones/marcar-leidas', [DashboardController::class, 'marcarLeidas'])->name('notificaciones.marcar-leidas');
+Route::post('/notificaciones/marcar-todas', [DashboardController::class, 'marcarTodas'])->name('notificaciones.marcar-todas');
 
 
     // 📁 Documentos por formulario
