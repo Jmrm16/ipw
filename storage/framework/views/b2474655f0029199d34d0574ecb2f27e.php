@@ -1,177 +1,215 @@
 <?php $__env->startSection('title', 'Mi Dashboard'); ?>
 
 <?php $__env->startSection('content'); ?>
-
-
-<div class="d-flex">
-    
-    <div id="sidebarContainer" class="transition-width" style="width: 250px;">
-    <?php if (isset($component)) { $__componentOriginal2880b66d47486b4bfeaf519598a469d6 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal2880b66d47486b4bfeaf519598a469d6 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.sidebar','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('sidebar'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes([]); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal2880b66d47486b4bfeaf519598a469d6)): ?>
-<?php $attributes = $__attributesOriginal2880b66d47486b4bfeaf519598a469d6; ?>
-<?php unset($__attributesOriginal2880b66d47486b4bfeaf519598a469d6); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal2880b66d47486b4bfeaf519598a469d6)): ?>
-<?php $component = $__componentOriginal2880b66d47486b4bfeaf519598a469d6; ?>
-<?php unset($__componentOriginal2880b66d47486b4bfeaf519598a469d6); ?>
-<?php endif; ?>
-</div>
-
-
-    <div class="flex-grow-1 p-4">
-        <div class="card shadow-lg border-0 p-4">
-            <h2 class="text-center mb-4 text-primary fw-bold">
-                <i class="bi bi-file-earmark-check-fill me-2"></i>Mis Formularios Completados
-            </h2>
-
-            <?php if(session('success')): ?>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <?php echo e(session('success')); ?>
-
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+<div class="space-y-8">
+    <!-- Estadísticas mejoradas -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Tarjeta de formularios -->
+        <div class="bg-white p-6 rounded-xl shadow-lg transform transition-all hover:scale-[1.02] hover:shadow-xl border-l-4 border-blue-500">
+            <div class="flex items-center gap-5">
+                <div class="p-3 rounded-full bg-blue-50 text-blue-500">
+                    <i class="ri-file-list-3-line text-2xl"></i>
                 </div>
-            <?php endif; ?>
+                <div>
+                    <p class="text-sm font-medium text-gray-500">Formularios Completados</p>
+                    <h3 class="text-2xl font-bold text-gray-800"><?php echo e($formularios->count()); ?></h3>
+                    <p class="text-xs text-gray-400 mt-1">Último: <?php echo e($formularios->last()?->created_at->diffForHumans() ?? 'N/A'); ?></p>
+                </div>
+            </div>
+        </div>
 
+        <!-- Tarjeta de documentos pendientes -->
+        <div class="bg-white p-6 rounded-xl shadow-lg transform transition-all hover:scale-[1.02] hover:shadow-xl border-l-4 border-yellow-500">
+            <div class="flex items-center gap-5">
+                <div class="p-3 rounded-full bg-yellow-50 text-yellow-500">
+                    <i class="ri-folder-warning-line text-2xl"></i>
+                </div>
+                <div>
+                    <p class="text-sm font-medium text-gray-500">Documentos Pendientes</p>
+                    <h3 class="text-2xl font-bold text-gray-800"><?php echo e($formularios->where('estado', 'pendiente')->count()); ?></h3>
+                    <p class="text-xs text-gray-400 mt-1">Requieren atención</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta de pólizas -->
+        <div class="bg-white p-6 rounded-xl shadow-lg transform transition-all hover:scale-[1.02] hover:shadow-xl border-l-4 border-green-500">
+            <div class="flex items-center gap-5">
+                <div class="p-3 rounded-full bg-green-50 text-green-500">
+                    <i class="ri-shield-check-line text-2xl"></i>
+                </div>
+                <div>
+                    <p class="text-sm font-medium text-gray-500">Pólizas Emitidas</p>
+                    <h3 class="text-2xl font-bold text-gray-800"><?php echo e($formularios->where('estado', 'finalizado')->count()); ?></h3>
+                    <p class="text-xs text-gray-400 mt-1">Completados con éxito</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tarjeta de formularios mejorada -->
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <!-- Encabezado con gradiente -->
+        <div class="bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-4">
+            <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold text-white flex items-center gap-3">
+                    <i class="ri-file-check-line"></i> Mis Formularios
+                </h3>
+                <div class="relative">
+                    <input type="text" placeholder="Buscar formulario..." class="pl-10 pr-4 py-2 rounded-full text-sm bg-blue-400 bg-opacity-20 text-white placeholder-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                    <i class="ri-search-line absolute left-3 top-2.5 text-blue-100"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cuerpo de la tabla -->
+        <div class="p-6">
             <?php if($formularios->isEmpty()): ?>
-                <div class="text-center text-muted my-4">
-                    <i class="bi bi-inbox fs-1 mb-2"></i>
-                    <p>No has completado ningún formulario todavía.</p>
+                <div class="text-center py-12">
+                    <div class="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="ri-inbox-line text-3xl text-gray-400"></i>
+                    </div>
+                    <h4 class="text-gray-500 font-medium mb-2">No hay formularios completados</h4>
+                    <p class="text-gray-400 text-sm mb-4">Comienza completando tu primer formulario</p>
+                    <a href="#" class="inline-flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                        <i class="ri-add-line mr-2"></i> Nuevo Formulario
+                    </a>
                 </div>
             <?php else: ?>
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle text-center border">
-                        <thead class="table-primary">
-                            <tr class="text-uppercase">
-                                <th>ID</th>
-                                <th>Fecha</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
                             </tr>
                         </thead>
-                        <tbody class="table-group-divider">
+                        <tbody class="bg-white divide-y divide-gray-200">
                             <?php $__currentLoopData = $formularios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $formulario): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <tr>
-                                    <td><?php echo e($formulario->id); ?></td>
-                                    <td><?php echo e($formulario->created_at->format('Y-m-d')); ?></td>
-                                    <td>
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm font-medium text-gray-900">#<?php echo e($formulario->id); ?></div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-700"><?php echo e($formulario->created_at->format('d/m/Y')); ?></div>
+                                        <div class="text-xs text-gray-400"><?php echo e($formulario->created_at->diffForHumans()); ?></div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
                                         <?php
                                             $estadoColor = match ($formulario->estado) {
-                                                'pendiente' => 'bg-secondary text-white',
-                                                'en_revisión' => 'bg-warning text-white',
-                                                'aprobado' => 'bg-success text-white',
-                                                'rechazado' => 'bg-danger text-white',
-                                                'finalizado' => 'bg-primary text-white',
-                                                default => 'bg-light text-dark',
+                                                'pendiente' => 'bg-gray-100 text-gray-800',
+                                                'en_revisión' => 'bg-yellow-100 text-yellow-800',
+                                                'aprobado' => 'bg-green-100 text-green-800',
+                                                'rechazado' => 'bg-red-100 text-red-800',
+                                                'finalizado' => 'bg-blue-100 text-blue-800',
+                                                'proceso_pago' => 'bg-cyan-100 text-cyan-800',
+                                                default => 'bg-gray-100 text-gray-600',
                                             };
                                         ?>
-                                        <span class="badge <?php echo e($estadoColor); ?>"><?php echo e(ucfirst($formulario->estado)); ?></span>
-                                    </td>
-                                    <td>
-                                        <a href="<?php echo e(route('documentos.por_formulario', ['formulario' => $formulario->id])); ?>" class="btn btn-outline-secondary mb-1">
-                                            Subir Documentos
-                                        </a>
-
-                                        <a href="<?php echo e(route('observaciones.por_formulario', $formulario->id)); ?>" class="btn btn-outline-info mb-1">
-                                            Ver Observaciones
-                                        </a>
-
-                                        <?php if($formulario->estado === 'proceso_pago' && ($formulario->link_pago || $formulario->comprobante_pago_path)): ?>
-                                            <button class="btn btn-outline-success mb-1"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#modalPago<?php echo e($formulario->id); ?>">
-                                                Ver Pago
-                                            </button>
-                                        <?php endif; ?>
-                                            <?php if($formulario->estado === 'finalizado' && $formulario->poliza_path): ?>
-                                             <a href="<?php echo e($formulario->poliza_path); ?>" target="_blank" class="btn btn-outline-primary mb-1">
-                                             <i class="bi bi-file-earmark-text me-1"></i> Ver Póliza
-                                              </a>
+                                        <span class="px-3 py-1 rounded-full text-xs font-semibold <?php echo e($estadoColor); ?> inline-flex items-center">
+                                            <?php if($formulario->estado === 'pendiente'): ?>
+                                                <i class="ri-time-line mr-1"></i>
+                                            <?php elseif($formulario->estado === 'en_revisión'): ?>
+                                                <i class="ri-search-eye-line mr-1"></i>
+                                            <?php elseif($formulario->estado === 'aprobado'): ?>
+                                                <i class="ri-checkbox-circle-line mr-1"></i>
+                                            <?php elseif($formulario->estado === 'rechazado'): ?>
+                                                <i class="ri-close-circle-line mr-1"></i>
+                                            <?php elseif($formulario->estado === 'finalizado'): ?>
+                                                <i class="ri-shield-check-line mr-1"></i>
+                                            <?php elseif($formulario->estado === 'proceso_pago'): ?>
+                                                <i class="ri-money-dollar-circle-line mr-1"></i>
                                             <?php endif; ?>
+                                            <?php echo e(ucfirst(str_replace('_', ' ', $formulario->estado))); ?>
+
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <div class="flex justify-end space-x-3">
+                                            <a href="<?php echo e(route('documentos.por_formulario', $formulario->id)); ?>" 
+                                               class="text-blue-500 hover:text-blue-700 transition-colors"
+                                               data-tooltip="Subir documentos">
+                                                <i class="ri-upload-2-line text-lg"></i>
+                                            </a>
+                                            <a href="<?php echo e(route('observaciones.por_formulario', $formulario->id)); ?>" 
+                                               class="text-cyan-500 hover:text-cyan-700 transition-colors"
+                                               data-tooltip="Ver observaciones">
+                                                <i class="ri-chat-3-line text-lg"></i>
+                                            </a>
+                                            <?php if($formulario->estado === 'proceso_pago'): ?>
+                                                <a href="#" 
+                                                   class="text-green-500 hover:text-green-700 transition-colors"
+                                                   data-bs-toggle="modal" 
+                                                   data-bs-target="#modalPago<?php echo e($formulario->id); ?>"
+                                                   data-tooltip="Información de pago">
+                                                    <i class="ri-bank-card-line text-lg"></i>
+                                                </a>
+                                            <?php endif; ?>
+                                            <?php if($formulario->estado === 'finalizado' && $formulario->poliza_path): ?>
+                                                <a href="<?php echo e($formulario->poliza_path); ?>" 
+                                                   target="_blank"
+                                                   class="text-gray-500 hover:text-gray-700 transition-colors"
+                                                   data-tooltip="Ver póliza">
+                                                    <i class="ri-file-paper-2-line text-lg"></i>
+                                                </a>
+                                            <?php endif; ?>
+                                        </div>
                                     </td>
                                 </tr>
-
-                                
-                                <?php if($formulario->estado === 'proceso_pago' && ($formulario->link_pago || $formulario->comprobante_pago_path)): ?>
-                                <div class="modal fade" id="modalPago<?php echo e($formulario->id); ?>" tabindex="-1" aria-labelledby="modalPagoLabel<?php echo e($formulario->id); ?>" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content shadow">
-                                            <div class="modal-header bg-primary text-white">
-                                                <h5 class="modal-title" id="modalPagoLabel<?php echo e($formulario->id); ?>">
-                                                    <i class="bi bi-credit-card me-2"></i> Información de Pago
-                                                </h5>
-                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                                            </div>
-                                            <div class="modal-body">
-    <?php if($formulario->link_pago): ?>
-        <div class="mb-3">
-            <strong>Link de Pago:</strong><br>
-            <a href="<?php echo e($formulario->link_pago); ?>" class="text-primary" target="_blank">
-                <?php echo e($formulario->link_pago); ?>
-
-            </a>
-        </div>
-    <?php endif; ?>
-
-    <?php if($formulario->comprobante_pago_path): ?>
-        <div class="mb-4">
-            <strong>Recibo de Pago (PDF):</strong><br>
-            <a href="<?php echo e($formulario->comprobante_pago_path); ?>" target="_blank" class="btn btn-outline-secondary mt-2">
-                <i class="bi bi-file-earmark-arrow-down me-1"></i> Ver Comprobante
-            </a>
-        </div>
-    <?php endif; ?>
-
-    
-    <?php if($formulario->constancia_pago_path): ?>
-        <div class="mb-3">
-            <strong>Constancia de Pago:</strong><br>
-            <img src="<?php echo e(asset('storage/' . $formulario->constancia_pago_path)); ?>"
-                 alt="Constancia de pago"
-                 class="img-fluid rounded border shadow-sm mt-2"
-                 style="max-height: 300px;">
-        </div>
-    <?php endif; ?>
-
-
-<form action="<?php echo e(route('formulario.constancia_pago', $formulario->id)); ?>" method="POST" enctype="multipart/form-data" class="mt-4">
-    <?php echo csrf_field(); ?>
-    <div class="mb-3">
-        <label for="constancia_<?php echo e($formulario->id); ?>" class="form-label fw-bold">Subir Constancia de Pago (PDF o Imagen):</label>
-        <input type="file" name="documento" accept=".pdf,image/*" required class="form-control" id="constancia_<?php echo e($formulario->id); ?>">
-    </div>
-    <button type="submit" class="btn btn-primary">
-        <i class="bi bi-upload me-1"></i> Subir Constancia
-    </button>
-</form>
-
-</div>
-
-
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <?php endif; ?>
-
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Paginación -->
+                <?php if($formularios->hasPages()): ?>
+                <div class="px-6 py-4 bg-gray-50 border-t border-gray-200">
+                    <?php echo e($formularios->links()); ?>
+
+                </div>
+                <?php endif; ?>
             <?php endif; ?>
         </div>
     </div>
 </div>
-<?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\nueva aseguradora\ipw\resources\views/pages/dashboard.blade.php ENDPATH**/ ?>
+<style>
+    [data-tooltip] {
+        position: relative;
+    }
+    [data-tooltip]::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #333;
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+        font-size: 0.75rem;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.2s ease;
+    }
+    [data-tooltip]:hover::after {
+        opacity: 1;
+        visibility: visible;
+        bottom: calc(100% + 5px);
+    }
+</style>
+
+<script>
+    // Inicializar tooltips de Bootstrap si es necesario
+    document.addEventListener('DOMContentLoaded', function() {
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    })
+</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app-modern', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\nueva aseguradora\ipw\resources\views/pages/dashboard.blade.php ENDPATH**/ ?>

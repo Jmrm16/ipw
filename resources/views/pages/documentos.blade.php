@@ -1,104 +1,74 @@
-@extends('layouts.app')
+@extends('layouts.app-modern')
 
-@section('title', 'Mis Documentos')
+@section('title', 'Documentos Requeridos')
 
 @section('content')
-<div class="container-fluid">
-    <div class="row flex-nowrap">
-        {{-- Sidebar --}}
-        <x-sidebar />
+<div class="p-6">
+    {{-- Encabezado principal --}}
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold text-blue-700 flex items-center gap-2">
+            <i class="ri-folder-upload-line text-3xl"></i>
+            Subida de Documentos Requeridos
+        </h1>
+    </div>
 
-        {{-- Main Content --}}
-        <div class="col py-4">
-            <div class="card shadow-lg border-0 rounded-3 overflow-hidden">
-                {{-- Card Header --}}
-                <div class="card-header bg-primary text-white py-3">
-                    <h2 class="h4 mb-0 text-center fw-bold">
-                        <i class="bi bi-folder2-open me-2"></i>Subida de Documentos Requeridos
-                    </h2>
-                </div>
+    {{-- Instrucción general --}}
+    <div class="bg-blue-50 border border-blue-200 text-blue-800 p-4 rounded-lg mb-6">
+        Asegúrate de haber firmado y huellado el <strong>Formulario Médico</strong> y el <strong>Formulario SARLAFT</strong> antes de continuar.
+    </div>
 
-                {{-- Card Body --}}
-                <div class="card-body p-4">
-                    @if (session('success'))
-                        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
-                            <i class="bi bi-check-circle-fill me-2"></i>
-                            {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-                        </div>
-                    @endif
+    {{-- Botones PDF --}}
+    <div class="flex flex-wrap gap-4 mb-8">
+        <a href="{{ route('formulario1.pdf', $formulario->id) }}" target="_blank"
+           class="flex items-center gap-2 bg-white border border-blue-500 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition">
+            <i class="ri-file-list-3-line"></i> Ver Formulario Médico
+        </a>
+        <a href="{{ route('formulario2.pdf', $formulario->id) }}" target="_blank"
+           class="flex items-center gap-2 bg-green-100 text-green-700 border border-green-400 px-4 py-2 rounded-lg hover:bg-green-200 transition">
+            <i class="ri-shield-check-line"></i> Ver Formulario SARLAFT
+        </a>
+    </div>
 
-                    @php
-                        $formularios_firmados = [
-                            'formulario_sarlaft' => 'Formulario SARLAFT Firmado',
-                            'formulario_medico' => 'Formulario Médico Firmado',
-                        ];
+    {{-- Secciones --}}
+    @php
+        $formularios_firmados = [
+            'formulario_sarlaft' => 'Formulario SARLAFT Firmado',
+            'formulario_medico' => 'Formulario Médico Firmado',
+        ];
 
-                        $documentos_generales = [
-                            'cedula' => 'Cédula',
-                            'rut' => 'RUT',
-                            'diploma' => 'Diploma',
-                            'tarjeta_profesional' => 'Tarjeta Profesional',
-                        ];
+        $documentos_generales = [
+            'cedula' => 'Cédula',
+            'rut' => 'RUT',
+            'diploma' => 'Diploma',
+            'tarjeta_profesional' => 'Tarjeta Profesional',
+        ];
 
-                        $renderCard = function ($tipo, $label) use ($formulario, $documentos) {
-                            return view('components.documento-card', compact('tipo', 'label', 'formulario', 'documentos'))->render();
-                        };
-                    @endphp
+        $renderCard = function ($tipo, $label) use ($formulario, $documentos) {
+            return view('components.documento-card', compact('tipo', 'label', 'formulario', 'documentos'))->render();
+        };
+    @endphp
 
-                    {{-- Formularios Firmados --}}
-                {{-- Formularios Firmados --}}
-                <div class="mb-5">
-                    <h5 class="text-primary fw-bold mb-4 pb-2 border-bottom">
-                        <i class="bi bi-file-earmark-text me-2"></i>Formularios Firmados
-                    </h5>
+    {{-- Formularios Firmados --}}
+    <div class="mb-10">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2 flex items-center gap-2">
+            <i class="ri-file-edit-line"></i> Formularios Firmados
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            @foreach ($formularios_firmados as $tipo => $label)
+                {!! $renderCard($tipo, $label) !!}
+            @endforeach
+        </div>
+    </div>
 
-                    {{-- Mensaje de instrucción --}}
-                    <div class="alert alert-info d-flex align-items-center mb-4" role="alert">
-                        <i class="bi bi-info-circle-fill me-2 fs-5"></i>
-                        <div>
-                            Para continuar, asegúrate de haber firmado y huellado el <strong>Formulario Médico</strong> y el <strong>Formulario SARLAFT</strong>.
-                        </div>
-                    </div>
-
-                    {{-- Botones para ver los formularios PDF --}}
-                    <div class="mb-4 text-center">
-                        <a href="{{ route('formulario1.pdf', $formulario->id) }}" target="_blank" class="btn btn-outline-primary me-2 mb-2">
-                            <i class="bi bi-file-earmark-medical me-1"></i> Ver Formulario Médico
-                        </a>
-
-                        <a href="{{ route('formulario2.pdf', $formulario->id) }}" target="_blank" class="btn btn-outline-success mb-2">
-                            <i class="bi bi-shield-check me-1"></i> Ver Formulario SARLAFT
-                        </a>
-                    </div>
-
-                    <div class="row row-cols-1 g-3">
-                        @foreach ($formularios_firmados as $tipo => $label)
-                            {!! $renderCard($tipo, $label) !!}
-                        @endforeach
-                    </div>
-                </div>
-
-
-
-
-
-                    {{-- Documentos Generales --}}
-                    <div class="mb-5">
-                        <h5 class="text-primary fw-bold mb-4 pb-2 border-bottom">
-                            <i class="bi bi-files me-2"></i>Documentos Personales
-                        </h5>
-                            <div class="row row-cols-1 g-3">
-                                @foreach ($documentos_generales as $tipo => $label)
-                                    <div class="col">
-                                        {!! $renderCard($tipo, $label) !!}
-                                    </div>
-                                @endforeach
-                            </div>
-
-                    </div>
-                </div>
-            </div>
+    {{-- Documentos Generales --}}
+    <div class="mb-10">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2 flex items-center gap-2">
+            <i class="ri-archive-line"></i> Documentos Personales
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            @foreach ($documentos_generales as $tipo => $label)
+                {!! $renderCard($tipo, $label) !!}
+            @endforeach
         </div>
     </div>
 </div>

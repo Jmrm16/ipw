@@ -66,11 +66,12 @@ Route::get('/Formulario', [FormularioMedicoController::class, 'create'])
     Route::get('/ver-pdf2/{id}', [PDFController::class, 'llenarPDF2'])->name('formulario2.pdf');
 
     // 📊 Dashboard
-    Route::get('/dashboard', function () {
-        $user = Auth::user();
-        $formularios = \App\Models\FormularioMedico::where('user_id', $user->id)->latest()->get();
-        return view('pages.dashboard', compact('formularios'));
-    })->name('dashboard');
+Route::get('/dashboard', function () {
+    $user = Auth::user();
+    $formularios = \App\Models\FormularioMedico::where('user_id', $user->id)->latest()->paginate(5); // ✅ paginate()
+    return view('pages.dashboard', compact('formularios'));
+})->name('dashboard');
+
 
     // 📁 Documentos por formulario
     Route::get('/documentos', [DocumentoController::class, 'index'])->name('documentos.index'); // Formulario más reciente
