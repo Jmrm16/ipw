@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
+use Illuminate\Support\Facades\View;
+use App\Models\Notificacion;
+use Illuminate\Support\Facades\Auth;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -17,8 +19,22 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
-    {
-        //
-    }
+public function boot()
+{
+    View::composer('layouts.*', function ($view) {
+        if (Auth::check()) {
+            $userId = Auth::id();
+
+            $notificaciones = Notificacion::whereRaw("JSON_EXTRACT(data, '$.usuario_id') = ?", [$userId])
+                ->latest()
+                ->take(10)
+                ->get();
+
+            $noLeidas = $notificaciones->where('leida', false);
+
+            $view->with('notificaciones', $notificaciones)
+                 ->with('notificacionesNoLeidas', $noLeidas);
+        }
+    });
+}
 }

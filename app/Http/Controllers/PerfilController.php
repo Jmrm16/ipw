@@ -12,23 +12,51 @@ class PerfilController extends Controller
         return view('pages.perfil', compact('usuario'));
     }
 
-    public function edit()
-    {
-        $usuario = Auth::user();
-        return view('pages.perfil-edit', compact('usuario'));
+// PerfilController.php
+public function edit()
+{
+    return view('pages.perfil-edit');
+}
+
+public function update(Request $request)
+{
+    $user = Auth::user();
+
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $user->id,
+        'password' => 'nullable|min:6|confirmed',
+    ]);
+
+    $user->name = $request->name;
+    $user->email = $request->email;
+
+    if ($request->filled('password')) {
+        $user->password = bcrypt($request->password);
     }
 
-    public function update(Request $request)
-    {
-        $usuario = Auth::user();
+    $user->save();
 
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'telefono' => 'nullable|string|max:20',
-        ]);
+    return redirect()->route('perfil.show')->with('success', 'Perfil actualizado correctamente.');
+}
 
-        $usuario->update($request->only('name', 'telefono'));
+public function editPassword()
+{
+    return view('pages.perfil-password');
+}
 
-        return redirect()->route('perfil.show')->with('success', 'Perfil actualizado correctamente.');
-    }
+public function updatePassword(Request $request)
+{
+    $request->validate([
+        'password' => 'required|min:6|confirmed',
+    ]);
+
+    $user = Auth::user();
+    $user->password = bcrypt($request->password);
+    $user->save();
+
+    return redirect()->route('perfil.password')->with('success', 'Contraseña actualizada correctamente.');
+}
+
+
 }

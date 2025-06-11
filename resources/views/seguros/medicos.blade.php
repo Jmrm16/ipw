@@ -72,6 +72,23 @@
       font-size: 1rem !important;
     }
   }
+
+  .btn-gradient {
+  background: linear-gradient(to right, #007bff, #00c6ff);
+  border: none;
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+.btn-gradient:hover {
+  background: linear-gradient(to right, #0056b3, #009ec3);
+  transform: translateY(-2px);
+}
+.card-hover-effect:hover {
+  transform: translateY(-4px);
+  transition: 0.3s ease;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.08);
+}
+
 </style>
 
 <!-- Sección de Cotización -->
@@ -79,61 +96,70 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10">
-        <div class="card border-0 shadow-lg card-hover-effect">
-          <div class="card-body p-5">
-            <div class="text-center mb-5">
-              <h2 class="fw-bold text-primary mb-3">Cotiza tu Seguro Médico</h2>
-              <p class="text-muted">Complete el formulario para obtener una cotización personalizada</p>
-            </div>
-            
-            <form id="formCotizacion" novalidate>
-              <div class="row g-4">
-                <div class="col-md-6">
-                  <div class="form-floating">
-                    <select class="form-select" id="profesion" required>
-                      <option value="">Seleccione una opción</option>
-                      <option value="CLASE 3" data-profesion="MEDICINA GENERAL">Medicina General</option>
-                      <option value="CLASE 3" data-profesion="ENFERMERA JEFE">Enfermería Superior</option>
-                      <option value="CLASE 4" data-profesion="AUXILIAR DE ENFERMERIA">Auxiliar de Enfermería</option>
-                      <option value="CLASE 1" data-profesion="GINECOBSTETRICIA">Ginecología</option>
-                      <option value="CLASE 4" data-profesion="ODONTOLOGIA">Odontología</option>
-                      <option value="CLASE 2" data-profesion="PSICOLOGIA">Psicología</option>
-                      <option value="CLASE 4" data-profesion="NUTRICIONISTA">Nutricionista</option>
-                      <option value="CLASE 3" data-profesion="PEDIATRIA">Pediatra</option>
-                      <option value="CLASE 1" data-profesion="ORTOPEDIA">Ortopedia</option>
-                      <option value="CLASE 3" data-profesion="ALERGÓLOGO">Alergólogo</option>
-                      <option value="CLASE 1" data-profesion="ANESTESIOLOGIA">Anestesiólogo</option>
-                    </select>
-                    <label for="profesion">Profesión / Especialidad</label>
-                  </div>
-                </div>
-                
-                <div class="col-md-6">
-                  <div class="form-floating">
-                    <select class="form-select" id="valor" required>
-                      <option value="">Seleccione una opción</option>
-                      <option value="100M">$100.000.000</option>
-                      <option value="400M">$400.000.000</option>
-                      <option value="500M">$500.000.000</option>
-                      <option value="700M">$700.000.000</option>
-                      <option value="1.000M">$1.000.000.000</option>
-                      <option value="2.000M">$2.000.000.000</option>
-                    </select>
-                    <label for="valor">Valor Asegurado</label>
-                  </div>
-                </div>
-              </div>
+      <div class="card border-0 shadow-lg rounded-4 bg-light-subtle">
+  <div class="card-body p-5">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold text-primary mb-3">Cotiza tu Seguro Médico</h2>
+      <p class="text-muted fs-6">Completa los datos para recibir una cotización personalizada en segundos</p>
+    </div>
 
-              <div class="d-grid mt-4">
-                <button type="submit" class="btn btn-primary-gradient btn-lg py-3 rounded-pill shadow-sm">
-                  <i class="fas fa-calculator me-2"></i> Calcular Cotización
-                </button>
-              </div>
+    <form id="formCotizacion" novalidate>
+      <div class="row g-4">
 
-              <div id="resultado" class="text-center mt-4 fs-5 fw-bold"></div>
-            </form>
+        <!-- Profesión -->
+        <div class="col-md-6">
+          <div class="form-floating position-relative">
+            <select class="form-select shadow-sm" id="profesion" required>
+              <option value="">Seleccione una opción</option>
+              <option value="CLASE 3" data-profesion="MEDICINA GENERAL">Medicina General</option>
+              <option value="CLASE 3" data-profesion="ENFERMERA JEFE">Enfermería Superior</option>
+              <option value="CLASE 4" data-profesion="AUXILIAR DE ENFERMERIA">Auxiliar de Enfermería</option>
+              <option value="CLASE 1" data-profesion="GINECOBSTETRICIA">Ginecología</option>
+              <option value="CLASE 4" data-profesion="ODONTOLOGIA">Odontología</option>
+              <option value="CLASE 2" data-profesion="PSICOLOGIA">Psicología</option>
+              <option value="CLASE 4" data-profesion="NUTRICIONISTA">Nutricionista</option>
+              <option value="CLASE 3" data-profesion="PEDIATRIA">Pediatra</option>
+              <option value="CLASE 1" data-profesion="ORTOPEDIA">Ortopedia</option>
+              <option value="CLASE 3" data-profesion="ALERGÓLOGO">Alergólogo</option>
+              <option value="CLASE 1" data-profesion="ANESTESIOLOGIA">Anestesiólogo</option>
+            </select>
+            <label for="profesion"><i class="bi bi-briefcase-fill me-2 text-primary"></i>Profesión / Especialidad</label>
           </div>
         </div>
+
+        <!-- Valor asegurado -->
+        <div class="col-md-6">
+          <div class="form-floating position-relative">
+            <select class="form-select shadow-sm" id="valor" required>
+              <option value="">Seleccione una opción</option>
+              <option value="100M">$100.000.000</option>
+              <option value="400M">$400.000.000</option>
+              <option value="500M">$500.000.000</option>
+              <option value="700M">$700.000.000</option>
+              <option value="1.000M">$1.000.000.000</option>
+              <option value="2.000M">$2.000.000.000</option>
+            </select>
+            <label for="valor"><i class="bi bi-currency-dollar me-2 text-success"></i>Valor Asegurado</label>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Botón calcular -->
+      <div class="d-grid mt-5">
+        <button type="submit" class="btn btn-gradient btn-lg py-3 rounded-pill shadow-sm position-relative overflow-hidden">
+          <span class="fw-semibold">
+            <i class="bi bi-calculator me-2"></i>Calcular Cotización
+          </span>
+        </button>
+      </div>
+
+      <!-- Resultado -->
+      <div id="resultado" class="text-center mt-4 fs-5 fw-bold text-success"></div>
+    </form>
+  </div>
+</div>
+
         
         <!-- Resultados de Cotización -->
         <div id="resultadoCotizacionGeneral" class="mt-5" style="display: none;">

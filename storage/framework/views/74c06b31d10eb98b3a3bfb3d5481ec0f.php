@@ -83,7 +83,7 @@
                         <a href="<?php echo e(route('perfil.edit')); ?>" class="btn-edit">
                             <i class="ri-edit-2-line"></i> Editar Perfil
                         </a>
-                        <a href="<?php echo e(route('password.change')); ?>" class="btn-change-password">
+                        <a href="<?php echo e(route('perfil.password')); ?>" class="btn-change-password">
                             <i class="ri-lock-password-line"></i> Cambiar Contraseña
                         </a>
                     </div>

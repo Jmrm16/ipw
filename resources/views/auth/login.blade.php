@@ -3,7 +3,7 @@
 @section('title', 'Iniciar Sesión')
 
 @section('content')
-<!-- Encabezado con gradiente y parallax -->
+<!-- Encabezado con gradiente -->
 <div class="container-fluid page-header d-flex align-items-center justify-content-center mb-5 py-5 position-relative overflow-hidden"
      style="background: linear-gradient(135deg, #1e5799 0%, #207cca 51%, #2989d8 100%); height: 400px;">
     <div class="position-absolute w-100 h-100" style="top:0; left:0; background-image: url('{{ asset('img/headers.jpg') }}'); background-size: cover; background-position: center; opacity: 0.15; z-index: 1;"></div>
@@ -13,16 +13,15 @@
     </div>
 </div>
 
-<!-- Sección del login con estilo -->
+<!-- Login -->
 <div class="container mb-5">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card border-0 shadow-lg p-4 rounded-4">
+        <div class="col-md-6 col-lg-5">
+            <div class="card border-0 shadow-lg p-4 rounded-4 bg-light-subtle card-hover-effect">
                 <div class="card-body">
                     <h2 class="mb-3 fw-bold text-primary text-center">Iniciar Sesión</h2>
                     <p class="mb-4 text-muted text-center">Usa tus credenciales o tu cuenta de Google</p>
 
-                    <!-- Mostrar errores -->
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul class="mb-0">
@@ -33,42 +32,38 @@
                         </div>
                     @endif
 
-                    <!-- Formulario tradicional -->
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
-                        <!-- Email -->
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo Electrónico</label>
-                            <input type="email" id="email" name="email" class="form-control" required autofocus value="{{ old('email') }}">
+                            <input type="email" id="email" name="email" class="form-control form-control-lg rounded-pill" required autofocus value="{{ old('email') }}">
                         </div>
 
-                        <!-- Password -->
                         <div class="mb-3">
                             <label for="password" class="form-label">Contraseña</label>
-                            <input type="password" id="password" name="password" class="form-control" required>
+                            <input type="password" id="password" name="password" class="form-control form-control-lg rounded-pill" required>
                         </div>
 
-                        <!-- Recordarme -->
                         <div class="form-check mb-4">
                             <input class="form-check-input" type="checkbox" name="remember" id="remember">
                             <label class="form-check-label" for="remember">Recordarme</label>
                         </div>
+
+                        <button type="submit" class="btn btn-primary-gradient w-100 py-2 fw-semibold rounded-pill">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
+                        </button>
+
                         <div class="text-center mt-3">
                             <small>¿No tienes una cuenta? <a href="{{ route('register') }}">Regístrate</a></small>
                         </div>
-
-                        <!-- Botón iniciar sesión -->
-                        <button type="submit" class="btn btn-primary w-100 mb-3">Iniciar Sesión</button>
                     </form>
 
-                    <!-- Separador -->
-                    <div class="text-center my-3">
-                        <span class="text-muted">— o —</span>
+                    <div class="text-center my-4 text-muted">
+                        <span>— o —</span>
                     </div>
 
-                    <!-- Google Login -->
-                    <a href="{{ route('google.login') }}" class="btn btn-danger w-100">
+                    <a href="{{ route('google.login') }}" class="btn btn-outline-danger w-100 py-2 rounded-pill fw-semibold">
                         <i class="fab fa-google me-2"></i> Iniciar Sesión con Google
                     </a>
                 </div>
@@ -77,17 +72,35 @@
     </div>
 </div>
 
-<!-- Estilos adicionales -->
+<!-- Estilos personalizados -->
 <style>
-    .page-header {
-        position: relative;
-        overflow: hidden;
+    .btn-primary-gradient {
+        background: linear-gradient(45deg, #207cca, #1e5799);
+        color: #fff;
+        border: none;
+        transition: all 0.3s ease;
     }
-    .z-index-1 {
-        z-index: 1;
+
+    .btn-primary-gradient:hover {
+        background: linear-gradient(45deg, #1e5799, #207cca);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
-    .z-index-2 {
-        z-index: 2;
+
+    .btn-outline-danger {
+        border-width: 2px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline-danger:hover {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+    .card-hover-effect:hover {
+        transform: translateY(-4px);
+        transition: 0.3s ease;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.08);
     }
 </style>
 @endsection

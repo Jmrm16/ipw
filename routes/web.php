@@ -89,7 +89,12 @@ Route::post('/notificaciones/marcar-todas', [DashboardController::class, 'marcar
     Route::get('/documentos/ver/{tipo}/{formulario}', [DocumentoController::class, 'ver'])->name('documentos.ver');
 
     // 👤 Perfil
-    Route::get('/perfil', [PerfilController::class, 'show'])->name('perfil.show');
+        Route::get('/perfil', [PerfilController::class, 'show'])->name('perfil.show');
+        Route::get('/perfil/editar', [PerfilController::class, 'edit'])->name('perfil.edit');
+        Route::put('/perfil/actualizar', [PerfilController::class, 'update'])->name('perfil.update');
+        Route::get('/perfil/password', [PerfilController::class, 'editPassword'])->name('perfil.password');
+        Route::put('/perfil/password', [PerfilController::class, 'updatePassword'])->name('perfil.password.update');
+
 
     Route::get('/observaciones', [ObservacionClienteController::class, 'index'])->name('observaciones.index')->middleware('auth');
 
@@ -105,8 +110,6 @@ Route::post('/notificaciones/marcar-todas', [DashboardController::class, 'marcar
     ->name('observaciones.responder')
     ->middleware('auth');
 
-    Route::get('/perfil/editar', [PerfilController::class, 'edit'])->name('perfil.edit');
-Route::post('/perfil/actualizar', [PerfilController::class, 'update'])->name('perfil.update');
 
 
     Route::post('/formulario/{id}/constancia-pago', [FormularioMedicoController::class, 'subirConstanciaPago'])
