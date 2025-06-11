@@ -18,7 +18,7 @@
           action="{{ route('documentos.store', $formulario->id) }}"
           method="POST"
           enctype="multipart/form-data"
-          class="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
+          class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 w-full">
         @csrf
         <input type="hidden" name="tipo" value="{{ $tipo }}">
 
@@ -27,14 +27,15 @@
                name="archivo"
                accept=".pdf,.jpg,.jpeg,.png"
                required
-               class="file-input file-input-sm file-input-bordered w-full max-w-xs" />
+               class="file-input file-input-sm file-input-bordered w-full" />
 
-        {{-- Botón subir --}}
+        {{-- Botón subir/reemplazar estilizado --}}
         <button type="submit"
                 :disabled="uploading"
-                class="btn btn-sm {{ $documento ? 'btn-outline-success' : 'btn-primary' }} flex items-center gap-1">
+                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition
+                       {{ $documento ? 'bg-white border border-green-500 text-green-600 hover:bg-green-100' : 'bg-blue-600 text-white hover:bg-blue-700' }}">
             <template x-if="uploading">
-                <svg class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10"
                             stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor"
@@ -42,7 +43,7 @@
                 </svg>
             </template>
             <template x-if="!uploading">
-                <i class="ri-upload-cloud-line"></i>
+                <i class="ri-upload-cloud-line text-lg"></i>
             </template>
             <span>{{ $documento ? 'Reemplazar' : 'Subir' }}</span>
         </button>
@@ -51,9 +52,9 @@
         @if ($documento)
             <a href="{{ asset('storage/' . $documento->archivo) }}"
                target="_blank"
-               class="btn btn-sm btn-outline-secondary flex items-center justify-center"
+               class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition"
                title="Ver Documento">
-                <i class="ri-eye-line"></i>
+                <i class="ri-eye-line text-lg"></i>
             </a>
         @endif
     </form>

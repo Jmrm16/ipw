@@ -65,7 +65,7 @@
         <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2 flex items-center gap-2">
             <i class="ri-archive-line"></i> Documentos Personales
         </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
             @foreach ($documentos_generales as $tipo => $label)
                 {!! $renderCard($tipo, $label) !!}
             @endforeach
