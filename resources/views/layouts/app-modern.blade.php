@@ -8,6 +8,9 @@
     <!-- Tailwind + RemixIcon -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Head (CSS) -->
+    <link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
     <style>
         .sidebar-collapsed .sidebar-label {
@@ -175,6 +178,22 @@
         })
     });
 </script>
+
+
+
+
+
+
+
+<button onclick="introJs().start()"
+        class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full shadow-lg z-50">
+    <i class="ri-question-line mr-1"></i> Tour
+</button>
+
+
+
+<script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
+
 
 </body>
 </html>

@@ -66,9 +66,9 @@ public function responder(Request $request)
     $valorDetectado = session('valor_asegurado');
 
     // Normalizar y buscar coincidencias
-    $mensajeNormalizado = strtolower(trim($mensaje));
+    $mensajeNormalizado = $this->normalizarTexto($mensaje);
     foreach ($precios as $profesion => $valores) {
-        if (str_contains($mensajeNormalizado, strtolower($profesion))) {
+        if (str_contains($mensajeNormalizado, $this->normalizarTexto($profesion))) {
             $profesionDetectada = $profesion;
             session(['profesion_detectada' => $profesionDetectada]);
             break;
@@ -123,5 +123,18 @@ public function responder(Request $request)
 
     return response()->json(['respuesta' => $respuestaIA]);
 }
+
+private function normalizarTexto($texto)
+{
+    $texto = strtolower($texto); // minúsculas
+    $texto = str_replace(
+        ['á', 'é', 'í', 'ó', 'ú', 'ñ'],
+        ['a', 'e', 'i', 'o', 'u', 'n'],
+        $texto
+    );
+    $texto = preg_replace('/[^a-z0-9 ]/', '', $texto); // eliminar símbolos raros
+    return trim($texto);
+}
+
 
 }

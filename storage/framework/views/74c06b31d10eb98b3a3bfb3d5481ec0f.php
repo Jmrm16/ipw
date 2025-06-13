@@ -6,7 +6,10 @@
     <!-- Contenido Principal -->
     <main class="main-content">
         <!-- Tarjeta de Perfil -->
-        <div class="profile-card">
+        <div class="profile-card"
+        data-intro="Esta es la informacion de tu perfil." 
+        data-step="1">
+            
             <!-- Encabezado con gradiente y avatar -->
             <div class="profile-header bg-gradient-to-r from-indigo-600 to-blue-700 shadow-md">
                 <div class="avatar-container">
@@ -79,7 +82,11 @@
                     <h2 class="section-title">
                         <i class="ri-settings-3-line"></i> Acciones Rápidas
                     </h2>
-                    <div class="action-buttons">
+                    <div class="action-buttons"
+                            data-intro="Estas son las acciones que puedes realizar con tu perfil." 
+                            data-step="2">
+                    
+                        
                         <a href="<?php echo e(route('perfil.edit')); ?>" class="btn-edit">
                             <i class="ri-edit-2-line"></i> Editar Perfil
                         </a>
@@ -225,6 +232,117 @@
         }
     }
 </style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const tourKey = "formularioDashboardTourVisto";
+
+        if (!localStorage.getItem(tourKey) && mostrarTourDesdeServidor) {
+            introJs()
+                .setOptions({
+                    nextLabel: 'Siguiente',
+                    prevLabel: 'Anterior',
+                    skipLabel: 'Saltar',
+                    doneLabel: 'Finalizar'
+                })
+                .start()
+                .oncomplete(() => localStorage.setItem(tourKey, true))
+                .onexit(() => localStorage.setItem(tourKey, true));
+        }
+    });
+</script>
+
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Control del modal de notificaciones
+        const notificacionesBtn = document.getElementById('notificacionesBtn');
+        const notificacionesModal = document.getElementById('notificacionesModal');
+        let modalAbierto = false;
+
+        // Abrir/cerrar modal al hacer clic en el botón
+        notificacionesBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            modalAbierto = !modalAbierto;
+            
+            if (modalAbierto) {
+                notificacionesModal.classList.remove('hidden');
+                // Marcar notificaciones como leídas al abrir el modal
+                marcarNotificacionesComoLeidas();
+            } else {
+                notificacionesModal.classList.add('hidden');
+            }
+        });
+
+        // Cerrar modal al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            if (modalAbierto && !notificacionesModal.contains(e.target) && e.target !== notificacionesBtn) {
+                notificacionesModal.classList.add('hidden');
+                modalAbierto = false;
+            }
+        });
+
+        // Función para marcar notificaciones como leídas
+        function marcarNotificacionesComoLeidas() {
+            fetch("<?php echo e(route('notificaciones.marcar-leidas')); ?>", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>'
+                },
+                body: JSON.stringify({})
+            }).then(response => {
+                if(response.ok) {
+                    // Actualizar el contador de notificaciones
+                    const badge = document.querySelector('.absolute.-top-1.-right-1.bg-red-500');
+                    if(badge) {
+                        badge.remove();
+                    }
+                }
+            });
+        }
+
+        // Inicializar tooltips de Bootstrap si es necesario
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+        
+        // Configurar y lanzar el tour de IntroJS
+        document.getElementById('startTourBtn').addEventListener('click', function() {
+            introJs().setOptions({
+                nextLabel: 'Siguiente',
+                prevLabel: 'Anterior',
+                skipLabel: 'Saltar',
+                doneLabel: 'Terminar',
+                tooltipClass: 'shadow-lg',
+                highlightClass: 'introjs-highlight',
+                exitOnEsc: true,
+                exitOnOverlayClick: true,
+                showStepNumbers: false,
+                keyboardNavigation: true,
+                showButtons: true,
+                showBullets: true,
+                showProgress: false,
+                scrollToElement: true,
+                overlayOpacity: 0.5,
+                position: 'bottom'
+            }).start();
+        });
+        
+        // Iniciar automáticamente el tour si es la primera visita
+        if(localStorage.getItem('dashboardTourCompleted') !== 'true') {
+            setTimeout(() => {
+                introJs().start();
+                localStorage.setItem('dashboardTourCompleted', 'true');
+            }, 1000);
+        }
+    });
+</script>
+
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.app-modern', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\nueva aseguradora\ipw\resources\views/pages/perfil.blade.php ENDPATH**/ ?>

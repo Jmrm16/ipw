@@ -4,11 +4,11 @@
 
 @section('content')
 <div class="space-y-8">
-
     <!-- Estadísticas mejoradas -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" data-intro="Estas son tus estadísticas principales" data-step="2">
         <!-- Tarjeta de formularios -->
-        <div class="bg-white p-6 rounded-xl shadow-lg transform transition-all hover:scale-[1.02] hover:shadow-xl border-l-4 border-blue-500">
+        <div class="bg-white p-6 rounded-xl shadow-lg transform transition-all hover:scale-[1.02] hover:shadow-xl border-l-4 border-blue-500"
+             data-intro="Aquí puedes ver cuántos formularios has completado">
             <div class="flex items-center gap-5">
                 <div class="p-3 rounded-full bg-blue-50 text-blue-500">
                     <i class="ri-file-list-3-line text-2xl"></i>
@@ -22,7 +22,8 @@
         </div>
 
         <!-- Tarjeta de documentos pendientes -->
-        <div class="bg-white p-6 rounded-xl shadow-lg transform transition-all hover:scale-[1.02] hover:shadow-xl border-l-4 border-yellow-500">
+        <div class="bg-white p-6 rounded-xl shadow-lg transform transition-all hover:scale-[1.02] hover:shadow-xl border-l-4 border-yellow-500"
+             data-intro="Documentos que requieren tu atención">
             <div class="flex items-center gap-5">
                 <div class="p-3 rounded-full bg-yellow-50 text-yellow-500">
                     <i class="ri-folder-warning-line text-2xl"></i>
@@ -36,7 +37,8 @@
         </div>
 
         <!-- Tarjeta de pólizas -->
-        <div class="bg-white p-6 rounded-xl shadow-lg transform transition-all hover:scale-[1.02] hover:shadow-xl border-l-4 border-green-500">
+        <div class="bg-white p-6 rounded-xl shadow-lg transform transition-all hover:scale-[1.02] hover:shadow-xl border-l-4 border-green-500"
+             data-intro="Pólizas que has completado exitosamente">
             <div class="flex items-center gap-5">
                 <div class="p-3 rounded-full bg-green-50 text-green-500">
                     <i class="ri-shield-check-line text-2xl"></i>
@@ -51,14 +53,14 @@
     </div>
 
     <!-- Tarjeta de formularios mejorada -->
-    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-intro="Aquí puedes gestionar todos tus formularios" data-step="3">
         <!-- Encabezado con gradiente -->
         <div class="bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-4">
             <div class="flex items-center justify-between">
                 <h3 class="text-lg font-semibold text-white flex items-center gap-3">
                     <i class="ri-file-check-line"></i> Mis Formularios
                 </h3>
-                <div class="relative">
+                <div class="relative" data-intro="Busca formularios específicos" data-step="4">
                     <input type="text" placeholder="Buscar formulario..." class="pl-10 pr-4 py-2 rounded-full text-sm bg-blue-400 bg-opacity-20 text-white placeholder-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-200">
                     <i class="ri-search-line absolute left-3 top-2.5 text-blue-100"></i>
                 </div>
@@ -68,7 +70,7 @@
         <!-- Cuerpo de la tabla -->
         <div class="p-6">
             @if($formularios->isEmpty())
-                <div class="text-center py-12">
+                <div class="text-center py-12" data-intro="Cuando no tengas formularios, verás este mensaje" data-step="5">
                     <div class="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
                         <i class="ri-inbox-line text-3xl text-gray-400"></i>
                     </div>
@@ -86,7 +88,7 @@
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
-                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider" data-intro="Acciones disponibles para cada formulario" data-step="6">Acciones</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -132,12 +134,14 @@
                                         <div class="flex justify-end space-x-3">
                                             <a href="{{ route('documentos.por_formulario', $formulario->id) }}" 
                                                class="text-blue-500 hover:text-blue-700 transition-colors"
-                                               data-tooltip="Subir documentos">
+                                               data-tooltip="Subir documentos"
+                                               data-intro="Sube documentos para este formulario">
                                                 <i class="ri-upload-2-line text-lg"></i>
                                             </a>
                                             <a href="{{ route('observaciones.por_formulario', $formulario->id) }}" 
                                                class="text-cyan-500 hover:text-cyan-700 transition-colors"
-                                               data-tooltip="Ver observaciones">
+                                               data-tooltip="Ver observaciones"
+                                               data-intro="Revisa las observaciones sobre este formulario">
                                                 <i class="ri-chat-3-line text-lg"></i>
                                             </a>
                                             @if($formulario->estado === 'proceso_pago')
@@ -145,7 +149,8 @@
                                                    class="text-green-500 hover:text-green-700 transition-colors"
                                                    data-bs-toggle="modal" 
                                                    data-bs-target="#modalPago{{ $formulario->id }}"
-                                                   data-tooltip="Información de pago">
+                                                   data-tooltip="Información de pago"
+                                                   data-intro="Información sobre el pago de esta póliza">
                                                     <i class="ri-bank-card-line text-lg"></i>
                                                 </a>
                                             @endif
@@ -153,7 +158,8 @@
                                                 <a href="{{ $formulario->poliza_path }}" 
                                                    target="_blank"
                                                    class="text-gray-500 hover:text-gray-700 transition-colors"
-                                                   data-tooltip="Ver póliza">
+                                                   data-tooltip="Ver póliza"
+                                                   data-intro="Descarga la póliza finalizada">
                                                     <i class="ri-file-paper-2-line text-lg"></i>
                                                 </a>
                                             @endif
@@ -167,7 +173,7 @@
 
                 <!-- Paginación -->
                 @if($formularios->hasPages())
-                <div class="px-6 py-4 bg-gray-50 border-t border-gray-200">
+                <div class="px-6 py-4 bg-gray-50 border-t border-gray-200" data-intro="Navega entre tus formularios" data-step="7">
                     {{ $formularios->links() }}
                 </div>
                 @endif
@@ -175,6 +181,7 @@
         </div>
     </div>
 </div>
+
 
 <style>
     [data-tooltip] {
@@ -201,6 +208,110 @@
         visibility: visible;
         bottom: calc(100% + 5px);
     }
+    
+    /* Estilos para IntroJS */
+    .introjs-tooltip {
+        min-width: 300px;
+        max-width: 400px;
+    }
+    .introjs-button {
+        padding: 0.5rem 1rem;
+        border-radius: 0.375rem;
+    }
+    .introjs-skipbutton {
+        margin-right: 0.5rem;
+    }
+    .introjs-bullets ul li a {
+        width: 10px;
+        height: 10px;
+    }
 </style>
 
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Control del modal de notificaciones
+        const notificacionesBtn = document.getElementById('notificacionesBtn');
+        const notificacionesModal = document.getElementById('notificacionesModal');
+        let modalAbierto = false;
+
+        // Abrir/cerrar modal al hacer clic en el botón
+        notificacionesBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            modalAbierto = !modalAbierto;
+            
+            if (modalAbierto) {
+                notificacionesModal.classList.remove('hidden');
+                // Marcar notificaciones como leídas al abrir el modal
+                marcarNotificacionesComoLeidas();
+            } else {
+                notificacionesModal.classList.add('hidden');
+            }
+        });
+
+        // Cerrar modal al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            if (modalAbierto && !notificacionesModal.contains(e.target) && e.target !== notificacionesBtn) {
+                notificacionesModal.classList.add('hidden');
+                modalAbierto = false;
+            }
+        });
+
+        // Función para marcar notificaciones como leídas
+        function marcarNotificacionesComoLeidas() {
+            fetch("{{ route('notificaciones.marcar-leidas') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({})
+            }).then(response => {
+                if(response.ok) {
+                    // Actualizar el contador de notificaciones
+                    const badge = document.querySelector('.absolute.-top-1.-right-1.bg-red-500');
+                    if(badge) {
+                        badge.remove();
+                    }
+                }
+            });
+        }
+
+        // Inicializar tooltips de Bootstrap si es necesario
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+        
+        // Configurar y lanzar el tour de IntroJS
+        document.getElementById('startTourBtn').addEventListener('click', function() {
+            introJs().setOptions({
+                nextLabel: 'Siguiente',
+                prevLabel: 'Anterior',
+                skipLabel: 'Saltar',
+                doneLabel: 'Terminar',
+                tooltipClass: 'shadow-lg',
+                highlightClass: 'introjs-highlight',
+                exitOnEsc: true,
+                exitOnOverlayClick: true,
+                showStepNumbers: false,
+                keyboardNavigation: true,
+                showButtons: true,
+                showBullets: true,
+                showProgress: false,
+                scrollToElement: true,
+                overlayOpacity: 0.5,
+                position: 'bottom'
+            }).start();
+        });
+        
+        // Iniciar automáticamente el tour si es la primera visita
+        if(localStorage.getItem('dashboardTourCompleted') !== 'true') {
+            setTimeout(() => {
+                introJs().start();
+                localStorage.setItem('dashboardTourCompleted', 'true');
+            }, 1000);
+        }
+    });
+</script>
 @endsection

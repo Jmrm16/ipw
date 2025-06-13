@@ -41,8 +41,6 @@ public function index()
         'rut',
         'diploma',
         'tarjeta_profesional',
-        'formulario_sarlaft',
-        'formulario_medico',
     ];
 
     return view('pages.documentos', compact('documentos', 'tipos', 'formulario'));

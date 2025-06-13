@@ -28,7 +28,7 @@ EOT,
         'gerente' => 'La gerente general de nuestra empresa es Mayerlis Bolaño Pana Weffer.',
         'horario' => 'Nuestro horario de trabajo es de lunes a viernes de 8:00 a.m. a 5:00 p.m. También puedes escribirnos por <a href="https://wa.me/573001234567" target="_blank">WhatsApp aquí</a>.',
         'registrarme' => 'Puedes registrarte para una póliza médica <a href="https://purple-zebra-412652.hostingersite.com/seguros/medicos" target="_blank">haciendo clic aquí</a>.',
-        'whatsapp' => '<a href="https://wa.me/573001234567" target="_blank" class="btn btn-sm btn-success">Hablar por WhatsApp</a>',
+        'whatsapp' => '<a href="https://wa.me/573001234567" target="_blank" class="btn btn-success btn-sm rounded-pill px-4"> <i class="fab fa-whatsapp me-2"></i> Chatear con un asesor</a>',
         'asesor' => 'te redireccionaremos con un asesor con este link <a href="https://wa.me/573001234567" target="_blank" class="btn btn-sm btn-success">Hablar por WhatsApp</a>',
         'poliza' => 'si necesitas informacion sobre la poliza medica puedes escribir tu profesion de la siguiente manera
         <ul>
@@ -39,7 +39,7 @@ EOT,
              <li>ginecologia </li>
               <li>psicologia</li>
                <li>nutricion</li>',
-        'poliza' => 'si necesitas informacion sobre la poliza medica puedes escribir tu profesion de la siguiente manera
+        'poliza medica' => 'si necesitas informacion sobre la poliza medica puedes escribir tu profesion de la siguiente manera
         <ul>
             <li>Medico General</li>
             <li>Odontologo</li>
