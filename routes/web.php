@@ -12,13 +12,14 @@ use App\Http\Controllers\ObservacionClienteController;
 use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
 | Rutas Públicas
 |--------------------------------------------------------------------------
 */
-Route::view('/', 'pages.home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::view('/about', 'pages.about');
 Route::view('/productos', 'pages.services');
 Route::view('/Pricing', 'pages.pricing');
