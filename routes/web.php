@@ -70,6 +70,10 @@ Route::get('/Formulario', [FormularioMedicoController::class, 'create'])
     ->middleware('auth')
     ->name('formulario.create');
     Route::post('/Formulario', [FormularioMedicoController::class, 'store'])->name('formulario.store');
+    Route::post('/formulario/{id}/subir-constancia', [FormularioMedicoController::class, 'subirConstanciaPago'])
+    ->name('formulario.subir-constancia')
+    ->middleware('auth');
+
 
     // 📄 PDFs
     Route::post('/llenar-pdf', [PDFController::class, 'llenarPDF'])->name('llenar-pdf');
@@ -129,3 +133,11 @@ Route::post('/logout', function () {
 })->name('logout');
 
 require __DIR__.'/auth.php';
+
+
+
+
+
+
+
+

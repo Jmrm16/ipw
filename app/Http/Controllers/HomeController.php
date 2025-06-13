@@ -12,7 +12,7 @@ class HomeController extends Controller
             'anios_experiencia' => now()->year - 2003,
             'aseguradoras_aliadas' => 15,
             'clientes_satisfechos' => FormularioMedico::count(),
-            'polizas_emitidas' => FormularioMedico::where('estado', 'poliza')->count(),
+            'polizas_emitidas' => FormularioMedico::where('estado', 'finalizado')->count(),
         ];
 
         return view('pages.home', compact('estadisticas'));

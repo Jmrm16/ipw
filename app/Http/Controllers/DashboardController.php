@@ -3,50 +3,80 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\FormularioMedico;
 use App\Models\Notificacion;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-
-
+    /**
+     * Display a listing of the resource.
+     */
 public function index()
 {
     $user = Auth::user();
 
-    $formularios = FormularioMedico::where('user_id', $user->id)
-                    ->latest()
-                    ->paginate(5);
+    // Formularios del cliente
+   $formularios = FormularioMedico::where('user_id', $user->id)
+    ->latest()
+    ->paginate(10); // Puedes ajustar el número de ítems por página
 
-    // Extraer notificaciones solo si el data contiene su ID
-    $notificaciones = \App\Models\Notificacion::whereRaw("JSON_EXTRACT(data, '$.usuario_id') = ?", [$user->id])
-                    ->latest()
-                    ->take(10)
-                    ->get();
 
-    $notificacionesNoLeidas = \App\Models\Notificacion::whereRaw("JSON_EXTRACT(data, '$.usuario_id') = ?", [$user->id])
-                    ->whereNull('leida')
-                    ->get();
+    // Notificaciones solo del cliente
+    $notificaciones = Notificacion::where('data->user_id', $user->id)
+        ->orderBy('created_at', 'desc')
+        ->take(5)
+        ->get();
 
-    return view('pages.dashboard', compact('formularios', 'notificaciones', 'notificacionesNoLeidas'));
+    $noLeidas = $notificaciones->where('leida', false)->count();
+
+    return view('pages.dashboard', compact('formularios', 'notificaciones', 'noLeidas'));
 }
-
-
-    public function marcarLeidas(Request $request)
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
-        Notificacion::where('user_id', Auth::id())
-            ->where('leida', false)
-            ->update(['leida' => true]);
-
-        return response()->json(['success' => true]);
+        //
     }
 
-    public function marcarTodas(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
-        Notificacion::where('user_id', Auth::id())
-            ->update(['leida' => true]);
+        //
+    }
 
-        return back()->with('success', 'Todas las notificaciones marcadas como leídas');
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 }

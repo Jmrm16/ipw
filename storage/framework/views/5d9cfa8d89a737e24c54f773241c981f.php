@@ -213,13 +213,14 @@
       <div class="col-lg-6">
         <div class="row g-4">
           <?php
-            $stats = [
-              ['target' => 20, 'label' => 'Años de Experiencia'],
-              ['target' => 15, 'label' => 'Aseguradoras Aliadas'],
-              ['target' => 1200, 'label' => 'Clientes Satisfechos'],
-              ['target' => 5000, 'label' => 'Pólizas Emitidas']
-            ];
+          $stats = [
+              ['target' => $estadisticas['anios_experiencia'], 'label' => 'Años de Experiencia'],
+              ['target' => $estadisticas['aseguradoras_aliadas'], 'label' => 'Aseguradoras Aliadas'],
+              ['target' => $estadisticas['clientes_satisfechos'], 'label' => 'Clientes Satisfechos'],
+              ['target' => $estadisticas['polizas_emitidas'], 'label' => 'Pólizas Emitidas'],
+          ];
           ?>
+
 
           <?php $__currentLoopData = $stats; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $stat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div class="col-sm-6">
