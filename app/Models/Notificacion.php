@@ -13,6 +13,7 @@ class Notificacion extends Model
     protected $casts = [
         'leida' => 'boolean',
         'data' => 'array',
+        'data' => 'array',
     ];
     protected $table = 'notificaciones';
 }

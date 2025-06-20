@@ -119,9 +119,9 @@
             <div class="bg-soft-primary rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 70px; height: 70px;">
               <i class="fa fa-user-shield fa-2x text-primary"></i>
             </div>
-            <h5 class="fw-semibold mb-2">RCE</h5>
-            <p class="text-muted small">Protección frente a reclamaciones civiles que comprometan tu responsabilidad profesional o patrimonial.</p>
-            <a href="{{ url('/seguros/rce') }}" class="btn btn-sm text-primary fw-semibold">Leer Más <i class="fa fa-arrow-right ms-1"></i></a>
+            <h5 class="fw-semibold mb-2">Cumplimiento</h5>
+            <p class="text-muted small">Pólizas de Cumplimiento que garantizan obligaciones contractuales con cobertura total.</p>
+            <a href="{{ url('/seguros/Cumplimiento') }}" class="btn btn-sm text-primary fw-semibold">Leer Más <i class="fa fa-arrow-right ms-1"></i></a>
           </div>
         </div>
       </div>

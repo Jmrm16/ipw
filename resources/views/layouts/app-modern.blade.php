@@ -85,21 +85,35 @@
             <div class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-t-lg flex items-center gap-2">
                 <i class="ri-notification-3-line"></i> Notificaciones
             </div>
-            <ul class="max-h-80 overflow-y-auto divide-y">
-                @forelse($notificaciones as $n)
-                    <li class="p-3 hover:bg-gray-50 {{ $n->leida ? 'text-gray-500' : 'text-gray-800 font-semibold' }}">
-                        <div class="flex items-start gap-2">
-                            <i class="ri-information-line text-blue-500 mt-1"></i>
-                            <div>
-                                <p>{{ $n->mensaje }}</p>
-                                <div class="text-xs text-gray-400">{{ \Carbon\Carbon::parse($n->created_at)->diffForHumans() }}</div>
-                            </div>
+<ul class="max-h-80 overflow-y-auto divide-y">
+    @forelse($notificaciones as $n)
+        <li class="p-3 hover:bg-gray-50 {{ $n->leida ? 'text-gray-500' : 'text-gray-800 font-semibold' }}">
+            <div class="flex items-start gap-2">
+                <i class="ri-information-line text-blue-500 mt-1"></i>
+                <div>
+                    {{-- Mensaje principal --}}
+                    <p>{{ $n->mensaje }}</p>
+
+                    {{-- Fecha relativa --}}
+                    <div class="text-xs text-gray-400">
+                        {{ \Carbon\Carbon::parse($n->created_at)->diffForHumans() }}
+                    </div>
+
+                    {{-- ✅ Contenido de la observación, si existe --}}
+                    @if(isset($n->data['contenido']))
+                        <div class="mt-1 text-sm text-gray-600 italic">
+                            "{{ $n->data['contenido'] }}"
                         </div>
-                    </li>
-                @empty
-                    <li class="p-3 text-center text-gray-500">No tienes notificaciones</li>
-                @endforelse
-            </ul>
+                    @endif
+
+                </div>
+            </div>
+        </li>
+    @empty
+        <li class="p-3 text-center text-gray-500">No tienes notificaciones</li>
+    @endforelse
+</ul>
+
         </div>
     </div>
 </header>

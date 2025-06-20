@@ -24,7 +24,7 @@ Route::view('/about', 'pages.about');
 Route::view('/productos', 'pages.services');
 Route::view('/Pricing', 'pages.pricing');
 Route::view('/seguros/medicos', 'seguros.medicos');
-Route::view('/seguros/rce', 'seguros.RCE');
+Route::view('/seguros/Cumplimiento', 'seguros.Cumplimiento')->name('seguros.Cumplimiento');
 
 
 /*
@@ -73,6 +73,12 @@ Route::get('/Formulario', [FormularioMedicoController::class, 'create'])
     Route::post('/formulario/{id}/subir-constancia', [FormularioMedicoController::class, 'subirConstanciaPago'])
     ->name('formulario.subir-constancia')
     ->middleware('auth');
+    Route::middleware(['auth'])->group(function () {
+    Route::get('/seguros/Cumplimiento/modal', function () {
+        return redirect('/seguros/Cumplimiento#abrir-modal');
+    })->name('cumplimiento.modal');
+});
+
 
 
     // 📄 PDFs

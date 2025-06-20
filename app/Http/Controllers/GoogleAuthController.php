@@ -15,9 +15,7 @@ class GoogleAuthController extends Controller
      */
     public function redirectToGoogle(Request $request)
     {
-        // Si el usuario fue redirigido automáticamente desde una ruta protegida
-        // Laravel ya guarda intended en la sesión: no necesitas guardarlo tú manualmente
-        // Pero si quieres una URL personalizada, puedes permitirlo así:
+        // Guarda manualmente la URL de retorno si se pasa como parámetro ?from=
         if ($request->has('from')) {
             session(['redirect_after_login' => $request->get('from')]);
         }
@@ -26,41 +24,46 @@ class GoogleAuthController extends Controller
     }
 
     /**
-     * Maneja la respuesta de Google.
+     * Maneja la respuesta de Google después de autenticarse.
      */
     public function handleGoogleCallback()
     {
         try {
+            // Obtener usuario autenticado desde Google
             $googleUser = Socialite::driver('google')->user();
 
+            // Buscar o crear usuario local
             $user = User::firstOrCreate(
                 ['email' => $googleUser->getEmail()],
                 [
                     'name' => $googleUser->getName(),
                     'email_verified_at' => now(),
-                    'password' => bcrypt(uniqid())
+                    'password' => bcrypt(uniqid()) // Contraseña aleatoria
                 ]
             );
 
+            // Iniciar sesión con el usuario
             Auth::login($user, true);
 
-            // Primero, si Laravel ya tenía una ruta "intended", la usamos:
+            // 1. Prioridad: usar la URL intended guardada automáticamente por Laravel
             if (session()->has('url.intended')) {
-                return redirect()->intended(route('dashboard'));
+                return redirect()->intended();
             }
 
-            // Segundo, si manualmente guardamos una redirección personalizada:
+            // 2. Redirección personalizada (usando ?from=)
             if (session()->has('redirect_after_login')) {
                 $url = session()->pull('redirect_after_login');
 
+                // Si viene de seguros médicos, ir al formulario directamente
                 if (str_contains($url, 'seguros/medicos')) {
                     return redirect()->route('formulario.create');
                 }
 
-                return redirect($url); // o cualquier otra URL si quieres
+                // Redirigir a cualquier otra URL personalizada (ej. seguros/Cumplimiento#abrir-modal)
+                return redirect($url);
             }
 
-            // Fallback por defecto
+            // 3. Redirección por defecto
             return redirect()->route('dashboard');
 
         } catch (\Exception $e) {
