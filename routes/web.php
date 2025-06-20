@@ -78,6 +78,9 @@ Route::get('/Formulario', [FormularioMedicoController::class, 'create'])
         return redirect('/seguros/Cumplimiento#abrir-modal');
     })->name('cumplimiento.modal');
 });
+Route::post('/formulario/cumplimiento', [FormularioMedicoController::class, 'iniciarCumplimiento'])
+    ->name('formulario.iniciarCumplimiento');
+
 
 
 

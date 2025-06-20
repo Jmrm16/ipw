@@ -14,6 +14,22 @@ class FormularioMedicoController extends Controller
         return view('pages.formulario');
     }
 
+
+public function iniciarCumplimiento(Request $request)
+{
+    if (!Auth::check()) {
+        return response()->json(['error' => 'No autenticado'], 401);
+    }
+
+    $formulario = FormularioMedico::create([
+        'user_id' => Auth::id(),
+        'tipo_proceso' => 'cumplimiento',
+    ]);
+
+    return response()->json(['success' => true], 200);
+}
+
+
  public function store(Request $request)
 {
     // Validar si el usuario está autenticado

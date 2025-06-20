@@ -50,9 +50,11 @@
         </div>
     </div>
 
+
     <!-- Listado de formularios -->
     <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-intro="Listado completo de tus formularios" data-step="6">
         <!-- Encabezado -->
+
         <div class="bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-4">
             <div class="flex items-center justify-between">
                 <h3 class="text-lg font-semibold text-white flex items-center gap-3">
@@ -65,6 +67,7 @@
                 </div>
             </div>
         </div>
+        
 
         <!-- Cuerpo -->
         <div class="p-6">
@@ -86,6 +89,7 @@
                             <tr>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
                                 <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider" 
                                     data-intro="Acciones disponibles" data-step="9">Acciones</th>
@@ -101,6 +105,27 @@
                                         <div class="text-sm text-gray-700"><?php echo e($formulario->created_at->format('d/m/Y')); ?></div>
                                         <div class="text-xs text-gray-400"><?php echo e($formulario->created_at->diffForHumans()); ?></div>
                                     </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                    <?php
+                                        $tipo = $formulario->tipo_proceso ?? null;
+
+                                        if ($tipo) {
+                                            $etiqueta = ucfirst($tipo);
+                                            $color = $tipo === 'cumplimiento' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700';
+                                        } elseif ($formulario instanceof \App\Models\FormularioCumplimiento) {
+                                            $etiqueta = 'Cumplimiento';
+                                            $color = 'bg-green-100 text-green-700';
+                                        } else {
+                                            $etiqueta = 'Médico';
+                                            $color = 'bg-blue-100 text-blue-700';
+                                        }
+                                    ?>
+                                    <span class="px-3 py-1 rounded-full text-xs font-semibold <?php echo e($color); ?>">
+                                        <?php echo e($etiqueta); ?>
+
+                                    </span>
+                                   </td>
+
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <?php
                                             $estadoColor = match ($formulario->estado) {

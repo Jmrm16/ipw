@@ -90,13 +90,19 @@
             <p class="text-muted">Formulario de vinculación y evaluación de riesgos directamente con Seguros Mundial.</p>
 
             @auth
-              <a href="https://sarlaft.segurosmundial.com.co/forms/f/92c704c9-1967-4c90-b460-212af6bfa7fd" target="_blank" class="btn btn-primary-gradient mt-3">
-                Ir al Formulario
-              </a>
+<form id="formCumplimiento" action="{{ route('formulario.iniciarCumplimiento') }}" method="POST" target="_blank" style="display: none;">
+  @csrf
+</form>
+
+<button class="btn btn-primary-gradient mt-3" onclick="document.getElementById('formCumplimiento').submit();">
+  Ir al Formulario
+</button>
             @else
               <a href="{{ route('cumplimiento.modal') }}" class="btn btn-primary-gradient mt-3">
                 Solicitar
               </a>
+            
+              
             @endauth
 
           </div>
@@ -166,6 +172,35 @@
   });
 </script>
 
+
 @endif
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('btnFormularioCumplimiento');
+    if (!btn) return;
+
+    btn.addEventListener('click', async function () {
+      try {
+        const response = await fetch("{{ route('formulario.iniciarCumplimiento') }}", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+          },
+          body: JSON.stringify({})
+        });
+
+        if (response.ok) {
+          window.open("https://sarlaft.segurosmundial.com.co/forms/f/92c704c9-1967-4c90-b460-212af6bfa7fd", "_blank");
+        } else {
+          alert("Error al iniciar el formulario.");
+        }
+      } catch (error) {
+        alert("Hubo un problema al contactar el servidor.");
+      }
+    });
+  });
+</script>
+
 
 @endsection
