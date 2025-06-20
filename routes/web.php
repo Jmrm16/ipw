@@ -78,8 +78,9 @@ Route::get('/Formulario', [FormularioMedicoController::class, 'create'])
         return redirect('/seguros/Cumplimiento#abrir-modal');
     })->name('cumplimiento.modal');
 });
-Route::post('/formulario/cumplimiento', [FormularioMedicoController::class, 'iniciarCumplimiento'])
+  Route::post('/formulario/cumplimiento', [FormularioMedicoController::class, 'iniciarCumplimiento'])
     ->name('formulario.iniciarCumplimiento');
+
 
 
 
@@ -116,6 +117,7 @@ Route::post('/notificaciones/marcar-todas', [DashboardController::class, 'marcar
     ->name('observaciones.resolver')
     ->middleware('auth');
 
+
     Route::get('/observaciones/formulario/{id}', [\App\Http\Controllers\ObservacionClienteController::class, 'verPorFormulario'])
     ->name('observaciones.por_formulario')
     ->middleware('auth');
@@ -123,6 +125,7 @@ Route::post('/notificaciones/marcar-todas', [DashboardController::class, 'marcar
     Route::post('/observaciones/{observacion}/responder', [ObservacionClienteController::class, 'responder'])
     ->name('observaciones.responder')
     ->middleware('auth');
+    
 
 
 
