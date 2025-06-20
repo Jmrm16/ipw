@@ -71,40 +71,111 @@
   </div>
 </section>
 
-<!-- Aseguradoras -->
+<!-- Requisitos según tipo de persona -->
 <section class="py-5 bg-light">
   <div class="container">
     <div class="text-center mb-5">
-      <h2 class="fw-bold text-primary">Nuestras Aseguradoras</h2>
-      <p class="text-muted">Trabajamos con las compañías más confiables del mercado</p>
+      <h2 class="fw-bold text-primary">Selecciona tu tipo de persona</h2>
+      <p class="text-muted">Consulta los requisitos antes de iniciar el proceso SARLAFT</p>
     </div>
 
-    <div class="row justify-content-center g-4">
-      <div class="col-md-4">
-        <div class="card h-100 border-0 shadow-sm card-hover-effect">
-          <div class="card-body text-center p-4">
-            <div class="icon-box bg-soft-primary rounded-circle mx-auto mb-4">
-              <i class="fas fa-building fa-2x text-primary"></i>
+    <div class="accordion" id="accordionRequisitos">
+      <!-- Persona Natural -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingNatural">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNatural" aria-expanded="true" aria-controls="collapseNatural">
+            Persona Natural
+          </button>
+        </h2>
+        <div id="collapseNatural" class="accordion-collapse collapse show" aria-labelledby="headingNatural" data-bs-parent="#accordionRequisitos">
+          <div class="accordion-body">
+            <div class="table-responsive">
+              <table class="table table-bordered align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th>Requisito</th>
+                    <th>Descripción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Documento de Identidad</td>
+                    <td>Cédula de ciudadanía (PDF o imagen legible)</td>
+                  </tr>
+                  <tr>
+                    <td>Certificado de Ingresos</td>
+                    <td>Declaración o certificación reciente de ingresos</td>
+                  </tr>
+                  <tr>
+                    <td>Dirección y teléfono</td>
+                    <td>Información actualizada de contacto</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <h5 class="fw-bold mb-3">Seguros Mundial</h5>
-            <p class="text-muted">Formulario de vinculación y evaluación de riesgos directamente con Seguros Mundial.</p>
-
             @auth
-<form id="formCumplimiento" action="{{ route('formulario.iniciarCumplimiento') }}" method="POST" target="_blank" style="display: none;">
-  @csrf
-</form>
-
-<button class="btn btn-primary-gradient mt-3" onclick="document.getElementById('formCumplimiento').submit();">
-  Ir al Formulario
-</button>
+            <form action="{{ route('formulario.iniciarCumplimiento') }}" method="POST" target="_blank" class="mt-3 d-inline">
+              @csrf
+              <input type="hidden" name="tipo_persona" value="natural">
+              <button type="submit" class="btn btn-primary-gradient">
+                Ir al formulario SARLAFT - Natural
+              </button>
+            </form>
             @else
-              <a href="{{ route('cumplimiento.modal') }}" class="btn btn-primary-gradient mt-3">
-                Solicitar
-              </a>
-            
-              
+            <a href="{{ route('cumplimiento.modal') }}" class="btn btn-primary-gradient mt-3">
+              Iniciar Sesión para continuar
+            </a>
             @endauth
+          </div>
+        </div>
+      </div>
 
+      <!-- Persona Jurídica -->
+      <div class="accordion-item mt-3">
+        <h2 class="accordion-header" id="headingJuridica">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseJuridica" aria-expanded="false" aria-controls="collapseJuridica">
+            Persona Jurídica
+          </button>
+        </h2>
+        <div id="collapseJuridica" class="accordion-collapse collapse" aria-labelledby="headingJuridica" data-bs-parent="#accordionRequisitos">
+          <div class="accordion-body">
+            <div class="table-responsive">
+              <table class="table table-bordered align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th>Requisito</th>
+                    <th>Descripción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Cámara de Comercio</td>
+                    <td>Certificado vigente no mayor a 30 días</td>
+                  </tr>
+                  <tr>
+                    <td>RUT actualizado</td>
+                    <td>PDF o imagen legible del RUT</td>
+                  </tr>
+                  <tr>
+                    <td>Representante Legal</td>
+                    <td>Identificación y contacto del representante legal</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            @auth
+            <form action="{{ route('formulario.iniciarCumplimiento') }}" method="POST" target="_blank" class="mt-3 d-inline">
+              @csrf
+              <input type="hidden" name="tipo_persona" value="juridica">
+              <button type="submit" class="btn btn-primary-gradient">
+                Ir al formulario SARLAFT - Jurídica
+              </button>
+            </form>
+            @else
+            <a href="{{ route('cumplimiento.modal') }}" class="btn btn-primary-gradient mt-3">
+              Iniciar Sesión para continuar
+            </a>
+            @endauth
           </div>
         </div>
       </div>
@@ -112,53 +183,6 @@
   </div>
 </section>
 
-<!-- Beneficios -->
-<section class="py-5 bg-white">
-  <div class="container">
-    <div class="text-center mb-5">
-      <h2 class="fw-bold text-primary">Beneficios de Nuestros Seguros</h2>
-      <p class="text-muted">Protección diseñada específicamente para profesionales de la salud</p>
-    </div>
-
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="card h-100 border-0 shadow-sm card-hover-effect">
-          <div class="card-body text-center p-4">
-            <div class="icon-box bg-soft-primary rounded-circle mx-auto mb-4">
-              <i class="fas fa-shield-alt fa-2x text-primary"></i>
-            </div>
-            <h5 class="fw-bold mb-3">Protección Integral</h5>
-            <p class="text-muted">Cobertura amplia para múltiples especialidades y riesgos profesionales con las mejores aseguradoras del país.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card h-100 border-0 shadow-sm card-hover-effect">
-          <div class="card-body text-center p-4">
-            <div class="icon-box bg-soft-primary rounded-circle mx-auto mb-4">
-              <i class="fas fa-headset fa-2x text-primary"></i>
-            </div>
-            <h5 class="fw-bold mb-3">Asistencia 24/7</h5>
-            <p class="text-muted">Atención permanente ante emergencias o inquietudes con nuestro equipo especializado.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card h-100 border-0 shadow-sm card-hover-effect">
-          <div class="card-body text-center p-4">
-            <div class="icon-box bg-soft-primary rounded-circle mx-auto mb-4">
-              <i class="fas fa-hand-holding-usd fa-2x text-primary"></i>
-            </div>
-            <h5 class="fw-bold mb-3">Tarifas Competitivas</h5>
-            <p class="text-muted">Planes flexibles con precios ajustados a cada necesidad profesional y especialidad.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 
 <!-- Script para abrir el modal automáticamente si viene con #abrir-modal -->

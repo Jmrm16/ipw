@@ -132,6 +132,11 @@ Route::post('/notificaciones/marcar-todas', [DashboardController::class, 'marcar
     Route::post('/formulario/{id}/constancia-pago', [FormularioMedicoController::class, 'subirConstanciaPago'])
     ->name('formulario.constancia_pago');
 
+    Route::get('/documentos/cumplimiento/{formulario}', [DocumentoController::class, 'verCumplimiento'])->name('documentos.cumplimiento');
+    Route::get('/formularios/{formulario}/documentos-cumplimiento', [DocumentoController::class, 'verCumplimiento'])->name('documentos.cumplimiento');
+
+
+
 });
 
 /*

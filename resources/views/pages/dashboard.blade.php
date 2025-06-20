@@ -158,12 +158,21 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         <div class="flex justify-end space-x-3">
+
+                                                @php
+                                                    $esCumplimiento = $formulario->tipo_proceso === 'cumplimiento';
+                                                    $rutaDocumentos = $esCumplimiento
+                                                        ? route('documentos.cumplimiento', $formulario->id)
+                                                        : route('documentos.por_formulario', $formulario->id);
+                                                @endphp
+
+
                                             <!-- Subir documentos -->
-                                            <a href="{{ route('documentos.por_formulario', $formulario->id) }}" 
-                                               class="text-blue-500 hover:text-blue-700 transition-colors"
-                                               data-tooltip="Subir documentos"
-                                               data-intro="Sube documentos para este formulario" data-step="10">
-                                                <i class="ri-upload-2-line text-lg"></i>
+                                           <a href="{{ $rutaDocumentos }}" 
+                                            class="text-blue-500 hover:text-blue-700 transition-colors"
+                                            data-tooltip="Subir documentos"
+                                            data-intro="Sube documentos para este formulario" data-step="10">
+                                            <i class="ri-upload-2-line text-lg"></i>
                                             </a>
 
                                             <!-- Ver observaciones -->

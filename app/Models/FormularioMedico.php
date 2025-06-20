@@ -119,6 +119,7 @@ class FormularioMedico extends Model
         'tipo_proceso',
         'constancia_pago_path',
         'poliza_path',
+        'tipo_persona', // ← Este es el nombre correcto
 
     ];
 

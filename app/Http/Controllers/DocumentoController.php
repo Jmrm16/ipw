@@ -50,21 +50,22 @@ public function index()
 public function store(Request $request, FormularioMedico $formulario)
 {
     $request->validate([
-        'tipo' => 'required|in:cedula,rut,diploma,tarjeta_profesional,formulario_sarlaft,formulario_medico',
+        'tipo' => 'required|in:cedula,rut,diploma,tarjeta_profesional,formulario_sarlaft,formulario_medico,contrato,cedula_representante,camara_comercio,rut_actualizado,estados_financieros,experiencia_certificada',
         'archivo' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
     ]);
 
     $user = Auth::user();
     $tipo = $request->tipo;
 
-    $esDocumentoGeneral = !in_array($tipo, ['formulario_sarlaft', 'formulario_medico']);
+    // Guardar siempre con el ID del formulario actual (sea médico o cumplimiento)
+    $formularioId = $formulario->id;
 
-    $formularioId = $esDocumentoGeneral ? null : $formulario->id;
-
+    // Guardar archivo en carpeta personalizada
     $archivo = $request->file('archivo');
     $nombre = time() . '_' . $archivo->getClientOriginalName();
     $ruta = $archivo->storeAs("documentos_usuario/{$user->id}", $nombre, 'public');
 
+    // Crear o actualizar el documento
     DocumentoUsuario::updateOrCreate(
         [
             'user_id' => $user->id,
@@ -77,21 +78,27 @@ public function store(Request $request, FormularioMedico $formulario)
         ]
     );
 
-    // Notificación
+    // Crear notificación
     Notificacion::create([
         'tipo' => 'documento_subido',
         'mensaje' => "El usuario {$user->name} ha subido el documento: {$tipo}",
         'leida' => false,
         'data' => [
             'user_id' => $user->id,
-            'formulario_id' => $formulario->id,
-            'tipo_proceso' => 'documento',
+            'formulario_id' => $formularioId,
+            'tipo_proceso' => $formulario->tipo_proceso,
         ],
     ]);
 
-    return redirect()->route('documentos.por_formulario', ['formulario' => $formulario->id])
+    // Redirección dinámica según tipo de proceso
+    $ruta = $formulario->tipo_proceso === 'cumplimiento'
+        ? 'documentos.cumplimiento'
+        : 'documentos.por_formulario';
+
+    return redirect()->route($ruta, ['formulario' => $formularioId])
         ->with('success', 'Documento subido correctamente.');
 }
+
 
 
     // Ver un documento por tipo (usando formulario actual o global)
@@ -142,4 +149,75 @@ public function store(Request $request, FormularioMedico $formulario)
 
         return view('pages.documentos', compact('documentos', 'tipos', 'formulario'));
     }
+
+
+    public function verPorFormularioCumplimiento($formularioId)
+{
+    $user = Auth::user();
+
+    $formulario = FormularioMedico::where('id', $formularioId)
+        ->where('user_id', $user->id)
+        ->firstOrFail();
+
+    $tipos = [
+        'contrato',
+        'cedula_representante',
+        'camara_comercio',
+        'rut_actualizado',
+        'estados_financieros',
+        'experiencia_certificada',
+    ];
+
+    $documentos = DocumentoUsuario::where('user_id', $user->id)
+        ->where(function ($query) use ($formularioId) {
+            $query->whereNull('formulario_medico_id')
+                  ->orWhere('formulario_medico_id', $formularioId);
+        })
+        ->get()
+        ->keyBy('tipo');
+
+    return view('pages.documentos_cumplimiento', compact('documentos', 'tipos', 'formulario'));
+}
+
+public function verCumplimiento($formularioId)
+{
+    $user = Auth::user();
+
+    $formulario = FormularioMedico::where('id', $formularioId)
+        ->where('user_id', $user->id)
+        ->firstOrFail();
+
+    $tipos = [
+        'contrato',
+        'cedula_representante',
+        'camara_comercio',
+        'rut_actualizado',
+        'estados_financieros',
+        'experiencia_certificada',
+    ];
+
+    $documentos = DocumentoUsuario::where('user_id', $user->id)
+        ->where('formulario_medico_id', $formularioId)
+        ->get()
+        ->keyBy('tipo');
+
+    return view('pages.documentos_cumplimiento', compact('documentos', 'tipos', 'formulario'));
+}
+public function cumplimiento(FormularioMedico $formulario)
+{
+    // Puedes aplicar lógica adicional si quieres validar tipo
+    if ($formulario->tipo_proceso !== 'cumplimiento') {
+        abort(403, 'Este formulario no es de tipo cumplimiento.');
+    }
+
+return view('pages.documentos_cumplimiento', [
+    'formulario' => $formulario,
+    'tipo' => 'cumplimiento'
+]);
+
+}
+
+
+
+
 }

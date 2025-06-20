@@ -18,16 +18,29 @@ class FormularioMedicoController extends Controller
 public function iniciarCumplimiento(Request $request)
 {
     if (!Auth::check()) {
-        return response()->json(['error' => 'No autenticado'], 401);
+        return redirect()->route('login')->with('error', 'Debes iniciar sesión para continuar.');
     }
 
+    // Validar tipo_persona correctamente
+    $request->validate([
+        'tipo_persona' => 'required|in:natural,juridica',
+    ]);
+
+    // Crear el formulario
     $formulario = FormularioMedico::create([
         'user_id' => Auth::id(),
         'tipo_proceso' => 'cumplimiento',
+        'tipo_persona' => $request->input('tipo_persona'),
     ]);
 
-    return response()->json(['success' => true], 200);
+    // Redirección según el tipo de persona
+    $sarlaftUrl = $request->input('tipo_persona') === 'juridica'
+        ? 'https://sarlaft.segurosmundial.com.co/forms/f/9211808c-f920-4af2-8eaf-d50ee3c3140d'
+        : 'https://sarlaft.segurosmundial.com.co/forms/f/92c704c9-1967-4c90-b460-212af6bfa7fd';
+
+    return redirect()->away($sarlaftUrl);
 }
+
 
 
  public function store(Request $request)
