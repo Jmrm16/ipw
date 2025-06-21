@@ -1,28 +1,33 @@
 @extends('layouts.app-modern')
 
-@section('title', 'Documentos Cumplimiento')
+@section('title', 'Documentación de Cumplimiento')
 
 @section('content')
 <div class="p-6">
+
+    {{-- Encabezado --}}
     <div class="mb-6">
-        <h1 class="text-2xl font-bold text-blue-700 flex items-center gap-2">
+        <h1 class="text-2xl font-bold text-blue-800 flex items-center gap-2">
             <i class="ri-folder-upload-line text-3xl"></i>
-            Documentos para Cumplimiento Contractual
+            Documentación Requerida para Cumplimiento Contractual
         </h1>
     </div>
 
-    <div class="bg-yellow-50 border border-yellow-200 text-yellow-800 p-4 rounded-lg mb-6">
-        Asegúrate de subir todos los documentos requeridos para validar tu solicitud de póliza de cumplimiento.
+    {{-- Instrucción al usuario --}}
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 p-4 rounded-md shadow-sm mb-6">
+        Para continuar con el proceso de validación de tu solicitud de póliza de cumplimiento, por favor adjunta todos los documentos solicitados. 
+        Asegúrate de que cada archivo esté legible, actualizado y en formato PDF o imagen.
     </div>
 
     @php
         $documentosCumplimiento = [
             'contrato' => 'Contrato firmado',
             'cedula_representante' => 'Cédula del Representante Legal',
-            'camara_comercio' => 'Cámara de Comercio / Personería Jurídica',
-            'rut_actualizado' => 'RUT Actualizado',
-            'estados_financieros' => 'Estados Financieros con Notas y Tarjeta Profesional del Contador',
-            'experiencia_certificada' => 'Experiencia Certificada / Actas / Contratos Similares',
+            'camara_comercio' => 'Cámara de Comercio o Personería Jurídica (vigencia no mayor a 30 días)',
+            'rut_actualizado' => 'RUT actualizado',
+            'estados_financieros' => 'Estados Financieros firmados con notas contables y tarjeta profesional del contador',
+            'experiencia_certificada' => 'Certificados de experiencia / actas de entrega / relación de contratos similares',
+            'formulario_sarlaft' => 'Formulario SARLAFT firmado',
         ];
 
         $renderCard = function ($tipo, $label) use ($formulario, $documentos) {
@@ -30,16 +35,18 @@
         };
     @endphp
 
+    {{-- Tarjetas de carga de documentos --}}
     <div class="mb-10">
-        <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2 flex items-center gap-2">
-            <i class="ri-archive-line"></i> Documentos Requeridos para Empresas o Personas Jurídicas
+        <h2 class="text-xl font-semibold text-gray-700 mb-4 border-b pb-2 flex items-center gap-2">
+            <i class="ri-archive-line"></i> Carga de Documentos Requeridos
         </h2>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
             @foreach ($documentosCumplimiento as $tipo => $label)
                 {!! $renderCard($tipo, $label) !!}
             @endforeach
         </div>
     </div>
+
 </div>
 @endsection

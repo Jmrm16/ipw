@@ -74,114 +74,116 @@
 <!-- Requisitos según tipo de persona -->
 <section class="py-5 bg-light">
   <div class="container">
+
+    {{-- Encabezado principal --}}
     <div class="text-center mb-5">
-      <h2 class="fw-bold text-primary">Selecciona tu tipo de persona</h2>
-      <p class="text-muted">Consulta los requisitos antes de iniciar el proceso SARLAFT</p>
+      <h2 class="fw-bold text-primary">Proceso de Cumplimiento - SARLAFT</h2>
+      <p class="text-muted">
+        Antes de iniciar el proceso, selecciona el tipo de persona correspondiente y revisa cuidadosamente los requisitos exigidos.
+      </p>
     </div>
 
-    <div class="accordion" id="accordionRequisitos">
-      <!-- Persona Natural -->
+    <div class="accordion" id="accordionCumplimiento">
+
+      {{-- Persona Natural --}}
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingNatural">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNatural" aria-expanded="true" aria-controls="collapseNatural">
+          <button class="accordion-button fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNatural" aria-expanded="true" aria-controls="collapseNatural">
             Persona Natural
           </button>
         </h2>
-        <div id="collapseNatural" class="accordion-collapse collapse show" aria-labelledby="headingNatural" data-bs-parent="#accordionRequisitos">
+        <div id="collapseNatural" class="accordion-collapse collapse show" aria-labelledby="headingNatural" data-bs-parent="#accordionCumplimiento">
           <div class="accordion-body">
-            <div class="table-responsive">
-              <table class="table table-bordered align-middle">
-                <thead class="table-light">
-                  <tr>
-                    <th>Requisito</th>
-                    <th>Descripción</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Documento de Identidad</td>
-                    <td>Cédula de ciudadanía (PDF o imagen legible)</td>
-                  </tr>
-                  <tr>
-                    <td>Certificado de Ingresos</td>
-                    <td>Declaración o certificación reciente de ingresos</td>
-                  </tr>
-                  <tr>
-                    <td>Dirección y teléfono</td>
-                    <td>Información actualizada de contacto</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+
+            <p class="mb-3 text-muted">
+              A continuación se detallan los documentos requeridos para personas naturales. Todos deben estar actualizados y ser legibles.
+            </p>
+
+            <ul class="list-group mb-4">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <strong>Documento de Identidad</strong>
+                <span class="text-muted">Cédula de ciudadanía escaneada</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <strong>Certificación de Ingresos</strong>
+                <span class="text-muted">Declaración o certificación de ingresos reciente</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <strong>Información de Contacto</strong>
+                <span class="text-muted">Dirección y teléfono actualizados</span>
+              </li>
+            </ul>
+
             @auth
-            <form action="{{ route('formulario.iniciarCumplimiento') }}" method="POST" target="_blank" class="mt-3 d-inline">
+            <form action="{{ route('formulario.iniciarCumplimiento') }}" method="POST" target="_blank">
               @csrf
               <input type="hidden" name="tipo_persona" value="natural">
-              <button type="submit" class="btn btn-primary-gradient">
-                Ir al formulario SARLAFT - Natural
+              <button type="submit" class="btn btn-outline-primary" id="btnCumplimiento">
+                Iniciar SARLAFT - Persona Natural
               </button>
             </form>
             @else
-            <a href="{{ route('cumplimiento.modal') }}" class="btn btn-primary-gradient mt-3">
-              Iniciar Sesión para continuar
+            <a href="{{ route('cumplimiento.modal') }}" class="btn btn-outline-primary">
+              Iniciar Sesión para Continuar
             </a>
             @endauth
+
           </div>
         </div>
       </div>
 
-      <!-- Persona Jurídica -->
-      <div class="accordion-item mt-3">
+      {{-- Persona Jurídica --}}
+      <div class="accordion-item mt-4">
         <h2 class="accordion-header" id="headingJuridica">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseJuridica" aria-expanded="false" aria-controls="collapseJuridica">
+          <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseJuridica" aria-expanded="false" aria-controls="collapseJuridica">
             Persona Jurídica
           </button>
         </h2>
-        <div id="collapseJuridica" class="accordion-collapse collapse" aria-labelledby="headingJuridica" data-bs-parent="#accordionRequisitos">
+        <div id="collapseJuridica" class="accordion-collapse collapse" aria-labelledby="headingJuridica" data-bs-parent="#accordionCumplimiento">
           <div class="accordion-body">
-            <div class="table-responsive">
-              <table class="table table-bordered align-middle">
-                <thead class="table-light">
-                  <tr>
-                    <th>Requisito</th>
-                    <th>Descripción</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Cámara de Comercio</td>
-                    <td>Certificado vigente no mayor a 30 días</td>
-                  </tr>
-                  <tr>
-                    <td>RUT actualizado</td>
-                    <td>PDF o imagen legible del RUT</td>
-                  </tr>
-                  <tr>
-                    <td>Representante Legal</td>
-                    <td>Identificación y contacto del representante legal</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+
+            <p class="mb-3 text-muted">
+              Si representas una persona jurídica (empresa), asegúrate de contar con los siguientes documentos actualizados:
+            </p>
+
+            <ul class="list-group mb-4">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <strong>Cámara de Comercio</strong>
+                <span class="text-muted">Certificado con vigencia menor a 30 días</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <strong>RUT Actualizado</strong>
+                <span class="text-muted">En formato PDF o imagen</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <strong>Representante Legal</strong>
+                <span class="text-muted">Cédula y datos de contacto</span>
+              </li>
+            </ul>
+
             @auth
-            <form action="{{ route('formulario.iniciarCumplimiento') }}" method="POST" target="_blank" class="mt-3 d-inline">
+            <form action="{{ route('formulario.iniciarCumplimiento') }}" method="POST" target="_blank">
               @csrf
               <input type="hidden" name="tipo_persona" value="juridica">
-              <button type="submit" class="btn btn-primary-gradient">
-                Ir al formulario SARLAFT - Jurídica
+              <button type="submit" class="btn btn-outline-primary" id="btnCumplimiento">
+                Iniciar SARLAFT - Persona Jurídica
               </button>
             </form>
             @else
-            <a href="{{ route('cumplimiento.modal') }}" class="btn btn-primary-gradient mt-3">
-              Iniciar Sesión para continuar
+            <a href="{{ route('cumplimiento.modal') }}" class="btn btn-outline-primary">
+              Iniciar Sesión para Continuar
             </a>
             @endauth
+
           </div>
         </div>
       </div>
+
     </div>
+
   </div>
 </section>
+
 
 
 

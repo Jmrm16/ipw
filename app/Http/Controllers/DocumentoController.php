@@ -188,6 +188,7 @@ public function verCumplimiento($formularioId)
         ->firstOrFail();
 
     $tipos = [
+        'formulario_sarlaft', // ✅ Añadido para incluir el SARLAFT firmado
         'contrato',
         'cedula_representante',
         'camara_comercio',
@@ -203,6 +204,7 @@ public function verCumplimiento($formularioId)
 
     return view('pages.documentos_cumplimiento', compact('documentos', 'tipos', 'formulario'));
 }
+
 public function cumplimiento(FormularioMedico $formulario)
 {
     // Puedes aplicar lógica adicional si quieres validar tipo

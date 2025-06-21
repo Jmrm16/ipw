@@ -134,6 +134,16 @@ Route::post('/notificaciones/marcar-todas', [DashboardController::class, 'marcar
 
     Route::get('/documentos/cumplimiento/{formulario}', [DocumentoController::class, 'verCumplimiento'])->name('documentos.cumplimiento');
     Route::get('/formularios/{formulario}/documentos-cumplimiento', [DocumentoController::class, 'verCumplimiento'])->name('documentos.cumplimiento');
+    Route::get('/cumplimiento/finalizado', function () {
+    $formularioId = session('formulario_id_cumplimiento');
+
+    if ($formularioId) {
+        return redirect()->route('documentos.cumplimiento', ['formulario' => $formularioId]);
+    }
+
+    return redirect('/dashboard')->with('error', 'No se encontró el formulario de cumplimiento.');
+})->name('cumplimiento.finalizado');
+
 
 
 

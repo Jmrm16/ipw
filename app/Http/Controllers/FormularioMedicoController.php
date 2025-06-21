@@ -21,26 +21,27 @@ public function iniciarCumplimiento(Request $request)
         return redirect()->route('login')->with('error', 'Debes iniciar sesión para continuar.');
     }
 
-    // Validar tipo_persona correctamente
     $request->validate([
         'tipo_persona' => 'required|in:natural,juridica',
     ]);
 
-    // Crear el formulario
     $formulario = FormularioMedico::create([
         'user_id' => Auth::id(),
         'tipo_proceso' => 'cumplimiento',
         'tipo_persona' => $request->input('tipo_persona'),
     ]);
 
-    // Redirección según el tipo de persona
+    // URL del SARLAFT
     $sarlaftUrl = $request->input('tipo_persona') === 'juridica'
         ? 'https://sarlaft.segurosmundial.com.co/forms/f/9211808c-f920-4af2-8eaf-d50ee3c3140d'
         : 'https://sarlaft.segurosmundial.com.co/forms/f/92c704c9-1967-4c90-b460-212af6bfa7fd';
 
-    return redirect()->away($sarlaftUrl);
+    // Mostrar vista que abre el SARLAFT en otra pestaña y redirige al sistema
+    return view('pages.ir_a_documentos', [
+        'formularioId' => $formulario->id,
+        'sarlaftUrl' => $sarlaftUrl,
+    ]);
 }
-
 
 
  public function store(Request $request)
