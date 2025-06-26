@@ -116,7 +116,7 @@
       <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="{{ url('/') }}" class="nav-link {{ Request::is('/') ? 'active' : '' }}">Home</a>
+            <a href="{{ url('/') }}" class="nav-link {{ Request::is('/') ? 'active' : '' }}">Inicio</a>
           </li>
           <li class="nav-item">
             <a href="{{ url('/about') }}" class="nav-link {{ Request::is('about') ? 'active' : '' }}">Acerca de</a>

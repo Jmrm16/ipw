@@ -116,7 +116,7 @@
       <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="<?php echo e(url('/')); ?>" class="nav-link <?php echo e(Request::is('/') ? 'active' : ''); ?>">Home</a>
+            <a href="<?php echo e(url('/')); ?>" class="nav-link <?php echo e(Request::is('/') ? 'active' : ''); ?>">Inicio</a>
           </li>
           <li class="nav-item">
             <a href="<?php echo e(url('/about')); ?>" class="nav-link <?php echo e(Request::is('about') ? 'active' : ''); ?>">Acerca de</a>

@@ -6,17 +6,25 @@
 <div class="p-6">
 
     {{-- Encabezado --}}
-    <div class="mb-6">
-        <h1 class="text-2xl font-bold text-blue-800 flex items-center gap-2">
-            <i class="ri-folder-upload-line text-3xl"></i>
-            Documentación Requerida para Cumplimiento Contractual
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-sky-900 tracking-tight flex items-center gap-3">
+            <i class="ri-folder-upload-line text-4xl text-sky-700"></i>
+            Documentación para Validación de Cumplimiento
         </h1>
+        <p class="text-gray-600 mt-2 text-base max-w-3xl">
+            Adjunta todos los documentos requeridos para validar tu solicitud de póliza de cumplimiento. Asegúrate de que estén legibles, actualizados y en formato PDF o imagen (JPG, PNG).
+        </p>
     </div>
 
-    {{-- Instrucción al usuario --}}
-    <div class="bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 p-4 rounded-md shadow-sm mb-6">
-        Para continuar con el proceso de validación de tu solicitud de póliza de cumplimiento, por favor adjunta todos los documentos solicitados. 
-        Asegúrate de que cada archivo esté legible, actualizado y en formato PDF o imagen.
+    {{-- Aviso importante --}}
+    <div class="bg-yellow-100/90 border-l-4 border-yellow-500 text-yellow-900 p-5 rounded-lg shadow-sm mb-8 flex items-start gap-3">
+        <i class="ri-error-warning-line text-2xl mt-1"></i>
+        <div>
+            <p class="font-medium text-lg mb-1">Importante:</p>
+            <p class="text-sm leading-relaxed">
+                Los documentos deben tener vigencia no mayor a 30 días cuando aplique, y deben estar firmados y completos para continuar con el proceso.
+            </p>
+        </div>
     </div>
 
     @php
@@ -35,18 +43,19 @@
         };
     @endphp
 
-    {{-- Tarjetas de carga de documentos --}}
-    <div class="mb-10">
-        <h2 class="text-xl font-semibold text-gray-700 mb-4 border-b pb-2 flex items-center gap-2">
-            <i class="ri-archive-line"></i> Carga de Documentos Requeridos
+    {{-- Sección de carga --}}
+    <section class="mb-12">
+        <h2 class="text-2xl font-semibold text-slate-800 mb-6 flex items-center gap-2 border-b pb-2">
+            <i class="ri-archive-2-line text-xl text-sky-600"></i>
+            Carga de Documentos Requeridos
         </h2>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             @foreach ($documentosCumplimiento as $tipo => $label)
                 {!! $renderCard($tipo, $label) !!}
             @endforeach
         </div>
-    </div>
+    </section>
 
 </div>
 @endsection

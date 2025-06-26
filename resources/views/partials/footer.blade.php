@@ -95,7 +95,7 @@
                 <ul class="list-unstyled">
                     <li class="mb-3 d-flex">
                         <i class="bi bi-geo-alt-fill me-3" style="color: #e74c3c; font-size: 1.2rem;"></i>
-                        <span>Calle 11 #14-58, Maicao, La Guajira</span>
+                        <span>Calle 16#12-100, Maicao, La Guajira</span>
                     </li>
                     <li class="mb-3 d-flex">
                         <i class="bi bi-telephone-fill me-3" style="color: #e74c3c; font-size: 1.2rem;"></i>
@@ -111,14 +111,19 @@
         
         <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
         
-        <div class="row align-items-center">
-            <div class="col-md-6 text-center text-md-start">
-                <p class="mb-0">&copy; <script>document.write(new Date().getFullYear())</script> IPW Agencia de Seguros. Todos los derechos reservados.</p>
-            </div>
-            <div class="col-md-6 text-center text-md-end">
-                <p class="mb-0">Diseñado con <i class="bi bi-heart-fill text-danger"></i> por IPW</p>
-            </div>
-        </div>
+ <div class="row align-items-center border-top pt-4 mt-4" style="border-color: rgba(255, 255, 255, 0.1);">
+    <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+        <p class="mb-0 text-white-50">
+            &copy; <script>document.write(new Date().getFullYear())</script> IPW Agencia de Seguros. Todos los derechos reservados.
+        </p>
+    </div>
+    <div class="col-md-6 text-center text-md-end">
+        <p class="mb-0 text-white-50">
+            Diseñado con <i class="bi bi-heart-fill text-danger"></i> por <strong class="text-white">IPW</strong>
+        </p>
+    </div>
+</div>
+
     </div>
 </footer>
 <!-- Fin del Pie de Página -->
