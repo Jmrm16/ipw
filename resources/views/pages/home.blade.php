@@ -30,7 +30,7 @@
                 <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100">
                     <h5 class="text-uppercase text-white mb-3" style="text-shadow: 1px 1px 8px #000;">Asesoría Personalizada</h5>
                     <h1 class="display-4 fw-bold text-white mb-4 text-center" style="text-shadow: 2px 2px 12px #000;">Te Guiamos en la Elección de tu Póliza</h1>
-                    <a href="{{ url('/contacto') }}" class="btn btn-lg btn-primary px-4 py-2">Contáctanos</a>
+                    <a href="{{ url('/') }}" class="btn btn-lg btn-primary px-4 py-2">Contáctanos</a>
                 </div>
             </div>
 
@@ -96,6 +96,32 @@
 </div>
 
 
+    </div>
+  </div>
+</section>
+
+
+<!-- Aseguradoras Aliadas -->
+<section class="py-5" style="background: linear-gradient(135deg, #f8f9fa, #ffffff);">
+  <div class="container">
+    <div class="text-center mb-4">
+      <span class="badge bg-primary bg-opacity-10 text-primary fw-semibold px-3 py-2 rounded-pill mb-2">
+        Aseguradoras Aliadas
+      </span>
+      <h2 class="fw-bold text-dark">Confianza y Respaldo Garantizados</h2>
+      <p class="text-muted">Trabajamos con las principales compañías aseguradoras del país</p>
+    </div>
+
+    <div class="swiper aseguradorasSwiper px-2">
+      <div class="swiper-wrapper align-items-center py-3">
+        @foreach (['confianza', 'previsora', 'colpatria', 'mundial'] as $logo)
+          <div class="swiper-slide">
+            <div class="logo-wrapper bg-white shadow-sm rounded-4 p-3 mx-2 d-flex align-items-center justify-content-center">
+              <img src="{{ asset("img/aseguradoras/{$logo}.png") }}" alt="{{ ucfirst($logo) }}" class="img-fluid aseguradora-logo">
+            </div>
+          </div>
+        @endforeach
+      </div>
     </div>
   </div>
 </section>
@@ -274,7 +300,7 @@
           <!-- Miembro 1 -->
           <div class="team-item bg-white rounded shadow-sm overflow-hidden">
             <div class="position-relative">
-              <img src="{{ asset('img/aseg.png') }}" class="img-fluid w-100" alt="Mayerlis Pana" style="height: 320px; object-fit: cover;">
+              <img src="{{ asset('img/mayerli.png') }}" class="img-fluid w-100" alt="Mayerlis Pana" style="height: 320px; object-fit: cover;">
               <div class="team-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50 opacity-0 hover-opacity-100 transition">
                 <div class="d-flex gap-2">
                   <a href="#" class="btn btn-outline-light rounded-circle"><i class="fab fa-facebook-f"></i></a>
@@ -283,15 +309,15 @@
               </div>
             </div>
             <div class="text-center py-3 px-3">
-              <h5 class="fw-bold mb-1 text-dark">Mayerlis Pana</h5>
-              <small class="text-muted">Asesora de Seguros</small>
+              <h5 class="fw-bold mb-1 text-dark">Mayerlis Bolaños</h5>
+              <small class="text-muted">Gerente de Seguros</small>
             </div>
           </div>
 
           <!-- Miembro 2 -->
           <div class="team-item bg-white rounded shadow-sm overflow-hidden">
             <div class="position-relative">
-              <img src="{{ asset('img/ibeth.jpg') }}" class="img-fluid w-100" alt="Ibeth Pana" style="height: 320px; object-fit: cover;">
+              <img src="{{ asset('img/presidenta.png') }}" class="img-fluid w-100" alt="Ibeth Pana" style="height: 320px; object-fit: cover;">
               <div class="team-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50 opacity-0 hover-opacity-100 transition">
                 <div class="d-flex gap-2">
                   <a href="#" class="btn btn-outline-light rounded-circle"><i class="fab fa-facebook-f"></i></a>
@@ -300,7 +326,25 @@
               </div>
             </div>
             <div class="text-center py-3 px-3">
-              <h5 class="fw-bold mb-1 text-dark">Ibeth Pana</h5>
+              <h5 class="fw-bold mb-1 text-dark">Ibeth Pana waffer</h5>
+              <small class="text-muted">Presidenta De La compañia</small>
+            </div>
+          </div>
+
+
+                    <!-- Miembro 2 -->
+          <div class="team-item bg-white rounded shadow-sm overflow-hidden">
+            <div class="position-relative">
+              <img src="{{ asset('img/karla.png') }}" class="img-fluid w-100" alt="Ibeth Pana" style="height: 320px; object-fit: cover;">
+              <div class="team-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50 opacity-0 hover-opacity-100 transition">
+                <div class="d-flex gap-2">
+                  <a href="#" class="btn btn-outline-light rounded-circle"><i class="fab fa-facebook-f"></i></a>
+                  <a href="#" class="btn btn-outline-light rounded-circle"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="text-center py-3 px-3">
+              <h5 class="fw-bold mb-1 text-dark">karla Bolaños</h5>
               <small class="text-muted">Asesora Comercial</small>
             </div>
           </div>
@@ -308,7 +352,7 @@
           <!-- Placeholder -->
           <div class="team-item bg-white rounded shadow-sm overflow-hidden">
             <div class="position-relative">
-              <img src="https://em-content.zobj.net/source/apple/118/man-pouting-type-1-2_1f64e-1f3fb-200d-2642-fe0f.png" class="img-fluid w-100" alt="Nuevo miembro" style="height: 320px; object-fit: cover;">
+              <img src="{{ asset('img/sebastian.png') }}" class="img-fluid w-100" alt="Nuevo miembro" style="height: 320px; object-fit: cover;">
               <div class="team-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50 opacity-0 hover-opacity-100 transition">
                 <div class="d-flex gap-2">
                   <a href="#" class="btn btn-outline-light rounded-circle"><i class="fab fa-twitter"></i></a>
@@ -343,30 +387,6 @@
   </div>
 </section>
 
-<!-- Aseguradoras Aliadas -->
-<section class="py-5" style="background: linear-gradient(135deg, #f8f9fa, #ffffff);">
-  <div class="container">
-    <div class="text-center mb-4">
-      <span class="badge bg-primary bg-opacity-10 text-primary fw-semibold px-3 py-2 rounded-pill mb-2">
-        Aseguradoras Aliadas
-      </span>
-      <h2 class="fw-bold text-dark">Confianza y Respaldo Garantizados</h2>
-      <p class="text-muted">Trabajamos con las principales compañías aseguradoras del país</p>
-    </div>
-
-    <div class="swiper aseguradorasSwiper px-2">
-      <div class="swiper-wrapper align-items-center py-3">
-        @foreach (['confianza', 'previsora', 'colpatria', 'mundial'] as $logo)
-          <div class="swiper-slide">
-            <div class="logo-wrapper bg-white shadow-sm rounded-4 p-3 mx-2 d-flex align-items-center justify-content-center">
-              <img src="{{ asset("img/aseguradoras/{$logo}.png") }}" alt="{{ ucfirst($logo) }}" class="img-fluid aseguradora-logo">
-            </div>
-          </div>
-        @endforeach
-      </div>
-    </div>
-  </div>
-</section>
 
 
 

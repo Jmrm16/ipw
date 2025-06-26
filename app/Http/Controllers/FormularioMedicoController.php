@@ -44,23 +44,17 @@ public function iniciarCumplimiento(Request $request)
 }
 
 
- public function store(Request $request)
+public function store(Request $request)
 {
-    // Validar si el usuario está autenticado
     if (!Auth::check()) {
         return redirect()->route('login')->withErrors('Debe iniciar sesión para completar el formulario.');
     }
 
-    // Asegurarse de que se capturen solo los campos rellenables
     $data = $request->only((new FormularioMedico)->getFillable());
-
-    // Agregar el user_id del usuario autenticado
     $data['user_id'] = Auth::id();
 
-    // Crear el registro en la base de datos
     $formulario = FormularioMedico::create($data);
 
-    // Crear notificación con data como ARRAY (no json_encode)
     Notificacion::create([
         'tipo' => 'nuevo_formulario',
         'mensaje' => '📥 Nuevo formulario recibido de ' . Auth::user()->name,
@@ -68,12 +62,14 @@ public function iniciarCumplimiento(Request $request)
             'user_id' => Auth::id(),
             'formulario_id' => $formulario->id,
             'tipo_proceso'=> $formulario->tipo_proceso,
-
         ],
     ]);
 
-    return redirect()->route('dashboard')->with('success', 'Formulario guardado correctamente.');
+    return view('pages.redirigir_pdfs', [
+        'formularioId' => $formulario->id,
+    ]);
 }
+
 
 
 public function subirConstanciaPago(Request $request, $id)
