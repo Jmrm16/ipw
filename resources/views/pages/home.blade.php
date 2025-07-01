@@ -101,6 +101,41 @@
 </section>
 
 
+<section class="py-5" style="background: linear-gradient(135deg, #f8f9fa, #ffffff);">
+  <style>
+    .logo-wrapper {
+      width: 170px;      /* ancho fijo */
+      height: 100px;     /* alto fijo */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      margin: 0 auto;
+      transition: box-shadow 0.2s;
+    }
+    .logo-wrapper:hover {
+      box-shadow: 0 4px 20px rgba(80,80,180,0.10);
+    }
+    .aseguradora-logo {
+      max-width: 80%;
+      max-height: 65px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+    }
+    @media (max-width: 768px) {
+      .logo-wrapper {
+        width: 120px;
+        height: 70px;
+      }
+      .aseguradora-logo {
+        max-height: 40px;
+      }
+    }
+  </style>
+
 <!-- Aseguradoras Aliadas -->
 <section class="py-5" style="background: linear-gradient(135deg, #f8f9fa, #ffffff);">
   <div class="container">

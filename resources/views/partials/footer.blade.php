@@ -91,15 +91,23 @@
             <!-- Contacto -->
             <div class="col-lg-3 col-md-6 mb-4">
                 <h5 class="text-uppercase fw-bold mb-4" style="color: #e74c3c;">Contáctanos</h5>
-                <p class="mb-4">Estamos disponibles para asesorarte y brindarte la mejor opción en seguros.</p>
+                <p class="mb-4">Estamos disponibles para asesorarte </p>
                 <ul class="list-unstyled">
                     <li class="mb-3 d-flex">
                         <i class="bi bi-geo-alt-fill me-3" style="color: #e74c3c; font-size: 1.2rem;"></i>
                         <span>Calle 16#12-100, Maicao, La Guajira</span>
                     </li>
                     <li class="mb-3 d-flex">
+                        <i class="bi bi-geo-alt-fill me-3" style="color: #e74c3c; font-size: 1.2rem;"></i>
+                        <span>Calle 14D # 10-80, Uribia, La Guajira</span>
+                    </li>
+                    <li class="mb-3 d-flex">
                         <i class="bi bi-telephone-fill me-3" style="color: #e74c3c; font-size: 1.2rem;"></i>
-                        <span>+57 300 8000231</span>
+                        <span>Maicao +57 300 8000231</span>
+                    </li>
+                    <li class="mb-3 d-flex">
+                        <i class="bi bi-telephone-fill me-3" style="color: #e74c3c; font-size: 1.2rem;"></i>
+                        <span>Uribia +57 312 7721352</span>
                     </li>
                     <li class="d-flex">
                         <i class="bi bi-envelope-fill me-3" style="color: #e74c3c; font-size: 1.2rem;"></i>

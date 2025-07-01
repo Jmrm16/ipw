@@ -26,6 +26,19 @@
     <!-- Custom CSS -->
     <link href="<?php echo e(asset('css/style.css')); ?>" rel="stylesheet">
 
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- En el head -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+
+
+    <!-- carrousel.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+
+
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -135,6 +148,16 @@
     <!-- jQuery ✅ (solo una vez) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
+    <!-- Swiper JS (antes del cierre de body) -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Antes del cierre de body -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+
     <!-- OwlCarousel -->
     <script src="<?php echo e(asset('lib/owlcarousel/owl.carousel.min.js')); ?>"></script>
 
@@ -150,6 +173,8 @@
     <script src="<?php echo e(asset('js/main.js')); ?>"></script>
     <script src="<?php echo e(asset('js/jquery.marquee.min.js')); ?>"></script>
     <script src="<?php echo e(asset('js/form-validations.js')); ?>"></script>
+
+    
 
     <?php echo $__env->yieldContent('scripts'); ?>
 </body>
@@ -385,6 +410,7 @@
             position: relative;
         }
     </style>
+
 
 
 </html>

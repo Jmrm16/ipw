@@ -124,9 +124,7 @@
           <li class="nav-item">
             <a href="{{ url('/productos') }}" class="nav-link {{ Request::is('productos') ? 'active' : '' }}">Productos</a>
           </li>
-          <li class="nav-item">
-            <a href="{{ url('/contacto') }}" class="nav-link {{ Request::is('contacto') ? 'active' : '' }}">Contacto</a>
-          </li>
+         
         </ul>
 
         <ul class="navbar-nav">

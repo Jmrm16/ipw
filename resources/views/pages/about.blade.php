@@ -65,6 +65,8 @@
           <div class="text-start">
             <h6 class="fw-bold mb-1">Nuestra Oficina</h6>
             <p class="mb-0 text-muted">Calle 16 No. 12 - 100, Maicao, La Guajira</p>
+           
+            <p class="mb-0 text-muted">Calle 14D # 10-80, Uribia, La Guajira</p>
           </div>
         </div>
       </div>
@@ -82,7 +84,8 @@
           <i class="fa fa-phone-alt fa-2x text-primary me-3"></i>
           <div class="text-start">
             <h6 class="fw-bold mb-1">Contáctanos</h6>
-            <p class="mb-0 text-muted">300 800 0231 - 300 278 7271</p>
+            <p class="mb-0 text-muted">300 800 0231 - Maicao</p>
+            <p class="mb-0 text-muted">312 772 1352 - Uribia</p>
           </div>
         </div>
       </div>

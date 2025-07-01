@@ -55,16 +55,13 @@
         <div class="row">
             <!-- Seguros de Vida -->
             <div class="col-md-4 mb-5">
-                <a href="{{ url('/seguros/rce') }}" class="text-decoration-none text-dark">
+                <a href="{{ url('/seguros/Cumplimiento') }}" class="text-decoration-none text-dark">
                     <div class="d-flex service-card">
-                        <i class="fa fa-heartbeat fa-3x text-primary mr-4"></i>
+                        <i class="fa fa-check-circle fa-3x text-primary mr-4"></i>
                         <div>
-                            <h4 class="font-weight-bold mb-3">(RCE)</h4>
+                            <h4 class="font-weight-bold mb-3">Cumplimiento</h4>
                             <ul class="list-unstyled mb-0">
-                                <li>Daño moral - Lucro</li>
-                                <li>Vida grupo</li>
-                                <li>RC Contratistas y subcontratistas</li>
-                                <li>Gastos de defensa</li>
+                               Pólizas de Cumplimiento que garantizan obligaciones contractuales con cobertura total.
                             </ul>
                         </div>
                     </div>

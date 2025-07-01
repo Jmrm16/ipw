@@ -125,7 +125,7 @@
               </li>
               <li class="d-flex align-items-center">
                 <i class="ri-timer-line text-muted me-2"></i>
-                <span>Redirigiendo al Dashboard en <span id="contador">5</span> segundos...</span>
+                <span>Formulario OFICIO generado (PDF SOLO PARA TRABAJADORES DEL HOSPITAL SAN JOSÉ DE MAICAO)</span>
               </li>
             </ul>
           </div>
@@ -138,10 +138,13 @@
             <a href="{{ route('formulario2.pdf', ['id' => $formularioId]) }}" target="_blank" class="btn btn-outline-secondary btn-custom">
               <i class="ri-shield-check-line me-2"></i> Ver Formulario SARLAFT PDF
             </a>
+            <a href="{{ route('formulario3.pdf', ['id' => $formularioId]) }}" target="_blank" class="btn btn-outline-secondary btn-custom">
+              <i class="ri-shield-check-line me-2"></i> Ver Oficio PDF (solo para trabajadores del Hospital San José de Maicao)
+            </a>
           </div>
 
           <a href="{{ route('dashboard') }}" class="btn btn-success btn-custom mt-4 shadow-sm">
-            <i class="ri-dashboard-line me-2"></i> Ir al Dashboard ahora
+            <i class="ri-dashboard-line me-2"></i> Ir a subir los documentos ahora
           </a>
 
         </div>

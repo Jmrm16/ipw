@@ -37,6 +37,10 @@ data-intro=" este es el espacio para subir los documentos requeridos."
            class="flex items-center gap-2 bg-green-100 text-green-700 border border-green-400 px-4 py-2 rounded-lg hover:bg-green-200 transition">
             <i class="ri-shield-check-line"></i> Ver Formulario SARLAFT
         </a>
+        <a href="{{ route('formulario3.pdf', $formulario->id) }}" target="_blank"
+           class="flex items-center gap-2 bg-yellow-100 text-yellow-700 border border-yellow-400 px-4 py-2 rounded-lg hover:bg-yellow-200 transition">
+            <i class="ri-shield-check-line"></i> Ver Oficio (solo para trabajadores del Hospital San José de Maicao)
+        </a>
     </div>
 
     {{-- Secciones --}}
@@ -44,6 +48,7 @@ data-intro=" este es el espacio para subir los documentos requeridos."
         $formularios_firmados = [
             'formulario_sarlaft' => 'Formulario SARLAFT Firmado',
             'formulario_medico' => 'Formulario Médico Firmado',
+            'formulario_oficio' => 'Formulario OFICIO Firmado (solo para trabajadores del Hospital San José de Maicao)',
         ];
 
         $documentos_generales = [

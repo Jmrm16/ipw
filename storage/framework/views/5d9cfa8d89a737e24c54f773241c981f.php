@@ -28,7 +28,7 @@
                 <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100">
                     <h5 class="text-uppercase text-white mb-3" style="text-shadow: 1px 1px 8px #000;">Asesoría Personalizada</h5>
                     <h1 class="display-4 fw-bold text-white mb-4 text-center" style="text-shadow: 2px 2px 12px #000;">Te Guiamos en la Elección de tu Póliza</h1>
-                    <a href="<?php echo e(url('/contacto')); ?>" class="btn btn-lg btn-primary px-4 py-2">Contáctanos</a>
+                    <a href="<?php echo e(url('/')); ?>" class="btn btn-lg btn-primary px-4 py-2">Contáctanos</a>
                 </div>
             </div>
 
@@ -70,36 +70,98 @@
       </div>
 
       <!-- Contenido -->
-      <div class="col-lg-6">
-        <div class="mb-4">
-          <span class="badge px-3 py-2 text-uppercase small" style="background-color: #1f3b4d; color: #fff;">
-            Quiénes Somos
-          </span>
-          <h2 class="fw-bold mt-3" style="color: #1f3b4d;">
-            Tu Aliado en Protección y Seguridad Financiera
-          </h2>
-        </div>
+<div class="col-lg-6">
+  <div class="mb-4">
+    <span class="badge px-3 py-2 text-uppercase small" style="background-color: #1f3b4d; color: #fff;">
+      Quiénes Somos
+    </span>
+    <h2 class="fw-bold mt-3" style="color: #1f3b4d;">
+      Tu Aliado en Seguros Médicos y de Cumplimiento
+    </h2>
+  </div>
 
-        <p class="lead text-muted mb-4">
-          Con más de 20 años de experiencia, nuestra agencia, fundada en 2003 en Maicao, te brinda soluciones en seguros adaptadas a tu realidad.
-        </p>
+  <p class="lead text-muted mb-4">
+    Con más de 20 años de experiencia, nuestra agencia — fundada en 2003 en Maicao — ofrece soluciones especializadas en seguros para profesionales de la salud y garantías contractuales.
+  </p>
 
-        <p class="text-muted mb-4">
-          Ofrecemos pólizas y productos que garantizan tu bienestar y el de los tuyos, con atención personalizada, agilidad en la gestión y respaldo de aseguradoras líderes.
-        </p>
+  <p class="text-muted mb-4">
+    Brindamos atención personalizada, procesos ágiles y respaldo de aseguradoras líderes, protegiendo a quienes ejercen con responsabilidad y compromiso.
+  </p>
 
-        <a href="<?php echo e(url('/about')); ?>" class="btn rounded-pill px-4" style="background-color: #1f3b4d; color: #fff;">
-          <i class="fa fa-arrow-right me-2"></i> Leer Más
-        </a>
-      </div>
+  <a href="<?php echo e(url('/about')); ?>" class="btn rounded-pill px-4" style="background-color: #1f3b4d; color: #fff;">
+    <i class="fa fa-arrow-right me-2"></i> Leer Más
+  </a>
+</div>
+
 
     </div>
   </div>
 </section>
 
 
+<section class="py-5" style="background: linear-gradient(135deg, #f8f9fa, #ffffff);">
+  <style>
+    .logo-wrapper {
+      width: 170px;      /* ancho fijo */
+      height: 100px;     /* alto fijo */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      margin: 0 auto;
+      transition: box-shadow 0.2s;
+    }
+    .logo-wrapper:hover {
+      box-shadow: 0 4px 20px rgba(80,80,180,0.10);
+    }
+    .aseguradora-logo {
+      max-width: 80%;
+      max-height: 65px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+    }
+    @media (max-width: 768px) {
+      .logo-wrapper {
+        width: 120px;
+        height: 70px;
+      }
+      .aseguradora-logo {
+        max-height: 40px;
+      }
+    }
+  </style>
 
-<section class="py-5 bg-light">
+<!-- Aseguradoras Aliadas -->
+<section class="py-5" style="background: linear-gradient(135deg, #f8f9fa, #ffffff);">
+  <div class="container">
+    <div class="text-center mb-4">
+      <span class="badge bg-primary bg-opacity-10 text-primary fw-semibold px-3 py-2 rounded-pill mb-2">
+        Aseguradoras Aliadas
+      </span>
+      <h2 class="fw-bold text-dark">Confianza y Respaldo Garantizados</h2>
+      <p class="text-muted">Trabajamos con las principales compañías aseguradoras del país</p>
+    </div>
+
+    <div class="swiper aseguradorasSwiper px-2">
+      <div class="swiper-wrapper align-items-center py-3">
+        <?php $__currentLoopData = ['confianza', 'previsora', 'colpatria', 'mundial']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $logo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+          <div class="swiper-slide">
+            <div class="logo-wrapper bg-white shadow-sm rounded-4 p-3 mx-2 d-flex align-items-center justify-content-center">
+              <img src="<?php echo e(asset("img/aseguradoras/{$logo}.png")); ?>" alt="<?php echo e(ucfirst($logo)); ?>" class="img-fluid aseguradora-logo">
+            </div>
+          </div>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="py-5" style="background: linear-gradient(135deg, #f8f9fa, #e9ecef);">
   <div class="container">
     <div class="section-title text-center mb-5">
       <span class="badge px-3 py-2 text-uppercase small" style="background-color: #1f3b4d; color: #fff;">
@@ -107,70 +169,79 @@
       </span>
       <h2 class="fw-bold mt-3" style="color: #1f3b4d;">Soluciones en Seguros para Tu Tranquilidad</h2>
       <p class="lead text-muted">Pólizas diseñadas para proteger tu patrimonio, salud y negocios con el respaldo de las mejores aseguradoras.</p>
+      <p class="text-muted mb-4">Atendemos a personas, empresas y profesionales del sector salud con soluciones personalizadas, ágiles y con acompañamiento experto.</p>
     </div>
 
     <div class="row g-4">
       <!-- Servicio 1 -->
-      <div class="col-md-6 col-lg-3">
-        <div class="card h-100 border-0 shadow-sm hover-shadow rounded-4">
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+        <div class="card h-100 border-0 shadow-sm rounded-4 hover-shadow">
           <div class="card-body text-center p-4">
-            <div class="bg-soft-primary rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 70px; height: 70px;">
+            <div class="icon-container mb-4">
               <i class="fa fa-user-shield fa-2x text-primary"></i>
             </div>
-            <h5 class="fw-semibold mb-2">Cumplimiento</h5>
-            <p class="text-muted small">Pólizas de Cumplimiento que garantizan obligaciones contractuales con cobertura total.</p>
-            <a href="<?php echo e(url('/seguros/Cumplimiento')); ?>" class="btn btn-sm text-primary fw-semibold">Leer Más <i class="fa fa-arrow-right ms-1"></i></a>
+            <h5 class="fw-semibold mb-2 text-dark">Cumplimiento</h5>
+            <p class="text-muted" style="font-size: 0.95rem;">Pólizas que garantizan el cumplimiento de tus obligaciones contractuales.</p>
+            <a href="<?php echo e(url('/seguros/Cumplimiento')); ?>" class="btn btn-sm btn-outline-primary rounded-pill mt-2 px-3">
+              Leer Más <i class="fa fa-arrow-right ms-1"></i>
+            </a>
           </div>
         </div>
       </div>
 
       <!-- Servicio 2 -->
-      <div class="col-md-6 col-lg-3">
-        <div class="card h-100 border-0 shadow-sm hover-shadow rounded-4">
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+        <div class="card h-100 border-0 shadow-sm rounded-4 hover-shadow">
           <div class="card-body text-center p-4">
-            <div class="bg-soft-primary rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 70px; height: 70px;">
+            <div class="icon-container mb-4">
               <i class="fa fa-hospital fa-2x text-primary"></i>
             </div>
-            <h5 class="fw-semibold mb-2">Profesionales de la Salud</h5>
-            <p class="text-muted small">Coberturas enfocadas en médicos, enfermeros y especialistas del área de la salud.</p>
-            <a href="<?php echo e(url('/seguros/medicos')); ?>" class="btn btn-sm text-primary fw-semibold">Leer Más <i class="fa fa-arrow-right ms-1"></i></a>
+            <h5 class="fw-semibold mb-2 text-dark">Profesionales de la Salud</h5>
+            <p class="text-muted" style="font-size: 0.95rem;">Coberturas especializadas para médicos, enfermeros y especialistas.</p>
+            <a href="<?php echo e(url('/seguros/medicos')); ?>" class="btn btn-sm btn-outline-primary rounded-pill mt-2 px-3">
+              Leer Más <i class="fa fa-arrow-right ms-1"></i>
+            </a>
           </div>
         </div>
       </div>
 
       <!-- Servicio 3 -->
-      <div class="col-md-6 col-lg-3">
-        <div class="card h-100 border-0 shadow-sm hover-shadow rounded-4">
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+        <div class="card h-100 border-0 shadow-sm rounded-4 hover-shadow">
           <div class="card-body text-center p-4">
-            <div class="bg-soft-primary rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 70px; height: 70px;">
+            <div class="icon-container mb-4">
               <i class="fa fa-car fa-2x text-primary"></i>
             </div>
-            <h5 class="fw-semibold mb-2">Vehículos</h5>
-            <p class="text-muted small">Asegura tu movilidad con coberturas amplias ante siniestros y robos.</p>
-            <a href="<?php echo e(url('/services#vehiculos')); ?>" class="btn btn-sm text-primary fw-semibold">Leer Más <i class="fa fa-arrow-right ms-1"></i></a>
+            <h5 class="fw-semibold mb-2 text-dark">Vehículos</h5>
+            <p class="text-muted" style="font-size: 0.95rem;">Protección amplia para tu vehículo ante accidentes, robos y más.</p>
+            <a href="<?php echo e(url('/services#vehiculos')); ?>" class="btn btn-sm btn-outline-primary rounded-pill mt-2 px-3">
+              Leer Más <i class="fa fa-arrow-right ms-1"></i>
+            </a>
           </div>
         </div>
       </div>
 
       <!-- Servicio 4 -->
-      <div class="col-md-6 col-lg-3">
-        <div class="card h-100 border-0 shadow-sm hover-shadow rounded-4">
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+        <div class="card h-100 border-0 shadow-sm rounded-4 hover-shadow">
           <div class="card-body text-center p-4">
-            <div class="bg-soft-primary rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 70px; height: 70px;">
+            <div class="icon-container mb-4">
               <i class="fa fa-building fa-2x text-primary"></i>
             </div>
-            <h5 class="fw-semibold mb-2">Empresariales</h5>
-            <p class="text-muted small">Soluciones diseñadas para cubrir riesgos operacionales y patrimoniales de tu empresa.</p>
-            <a href="<?php echo e(url('/services#empresariales')); ?>" class="btn btn-sm text-primary fw-semibold">Leer Más <i class="fa fa-arrow-right ms-1"></i></a>
+            <h5 class="fw-semibold mb-2 text-dark">Empresariales</h5>
+            <p class="text-muted" style="font-size: 0.95rem;">Coberturas patrimoniales y operacionales para tu negocio.</p>
+            <a href="<?php echo e(url('/services#empresariales')); ?>" class="btn btn-sm btn-outline-primary rounded-pill mt-2 px-3">
+              Leer Más <i class="fa fa-arrow-right ms-1"></i>
+            </a>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Valor agregado -->
+    <!-- CTA final -->
     <div class="text-center mt-5">
       <p class="text-muted fst-italic mb-3">Más de <strong>20 años de experiencia</strong> brindando confianza, agilidad y respaldo a nuestros asegurados.</p>
-      <a href="<?php echo e(url('/productos')); ?>" class="btn rounded-pill px-4 py-2" style="background-color: #1f3b4d; color: #fff;">
+      <a href="<?php echo e(url('/productos')); ?>" class="btn btn-primary btn-lg rounded-pill shadow-sm px-5 py-3 mt-2">
         <i class="fa fa-layer-group me-2"></i> Ver Todos los Productos
       </a>
     </div>
@@ -262,7 +333,7 @@
           <!-- Miembro 1 -->
           <div class="team-item bg-white rounded shadow-sm overflow-hidden">
             <div class="position-relative">
-              <img src="<?php echo e(asset('img/mayerlis.png')); ?>" class="img-fluid w-100" alt="Mayerlis Pana" style="height: 320px; object-fit: cover;">
+              <img src="<?php echo e(asset('img/mayerli.png')); ?>" class="img-fluid w-100" alt="Mayerlis Pana" style="height: 320px; object-fit: cover;">
               <div class="team-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50 opacity-0 hover-opacity-100 transition">
                 <div class="d-flex gap-2">
                   <a href="#" class="btn btn-outline-light rounded-circle"><i class="fab fa-facebook-f"></i></a>
@@ -271,15 +342,15 @@
               </div>
             </div>
             <div class="text-center py-3 px-3">
-              <h5 class="fw-bold mb-1 text-dark">Mayerlis Pana</h5>
-              <small class="text-muted">Asesora de Seguros</small>
+              <h5 class="fw-bold mb-1 text-dark">Mayerlis Bolaños</h5>
+              <small class="text-muted">Gerente de Seguros</small>
             </div>
           </div>
 
           <!-- Miembro 2 -->
           <div class="team-item bg-white rounded shadow-sm overflow-hidden">
             <div class="position-relative">
-              <img src="<?php echo e(asset('img/ibeth.jpg')); ?>" class="img-fluid w-100" alt="Ibeth Pana" style="height: 320px; object-fit: cover;">
+              <img src="<?php echo e(asset('img/presidenta.png')); ?>" class="img-fluid w-100" alt="Ibeth Pana" style="height: 320px; object-fit: cover;">
               <div class="team-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50 opacity-0 hover-opacity-100 transition">
                 <div class="d-flex gap-2">
                   <a href="#" class="btn btn-outline-light rounded-circle"><i class="fab fa-facebook-f"></i></a>
@@ -288,7 +359,25 @@
               </div>
             </div>
             <div class="text-center py-3 px-3">
-              <h5 class="fw-bold mb-1 text-dark">Ibeth Pana</h5>
+              <h5 class="fw-bold mb-1 text-dark">Ibeth Pana waffer</h5>
+              <small class="text-muted">Presidenta De La compañia</small>
+            </div>
+          </div>
+
+
+                    <!-- Miembro 2 -->
+          <div class="team-item bg-white rounded shadow-sm overflow-hidden">
+            <div class="position-relative">
+              <img src="<?php echo e(asset('img/karla.png')); ?>" class="img-fluid w-100" alt="Ibeth Pana" style="height: 320px; object-fit: cover;">
+              <div class="team-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50 opacity-0 hover-opacity-100 transition">
+                <div class="d-flex gap-2">
+                  <a href="#" class="btn btn-outline-light rounded-circle"><i class="fab fa-facebook-f"></i></a>
+                  <a href="#" class="btn btn-outline-light rounded-circle"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="text-center py-3 px-3">
+              <h5 class="fw-bold mb-1 text-dark">karla Bolaños</h5>
               <small class="text-muted">Asesora Comercial</small>
             </div>
           </div>
@@ -296,7 +385,7 @@
           <!-- Placeholder -->
           <div class="team-item bg-white rounded shadow-sm overflow-hidden">
             <div class="position-relative">
-              <img src="<?php echo e(asset('img/team-placeholder.jpg')); ?>" class="img-fluid w-100" alt="Nuevo miembro" style="height: 320px; object-fit: cover;">
+              <img src="<?php echo e(asset('img/sebastian.png')); ?>" class="img-fluid w-100" alt="Nuevo miembro" style="height: 320px; object-fit: cover;">
               <div class="team-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50 opacity-0 hover-opacity-100 transition">
                 <div class="d-flex gap-2">
                   <a href="#" class="btn btn-outline-light rounded-circle"><i class="fab fa-twitter"></i></a>
@@ -305,8 +394,8 @@
               </div>
             </div>
             <div class="text-center py-3 px-3">
-              <h5 class="fw-bold mb-1 text-dark">Nombre Apellido</h5>
-              <small class="text-muted">Cargo</small>
+              <h5 class="fw-bold mb-1 text-dark">Esteban Nieves</h5>
+              <small class="text-muted">Asesor comercial</small>
             </div>
           </div>
 
@@ -332,10 +421,17 @@
 </section>
 
 
+
+
+
+
+
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('styles'); ?>
 <style>
+
+  
     /* Hero Section */
     .hero-section {
         height: 100vh;
@@ -481,6 +577,51 @@
 }
 
 
+.swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.aseguradora-logo {
+  max-height: 120px;
+  filter: grayscale(100%);
+  transition: all 0.3s ease-in-out;
+}
+
+.aseguradora-logo:hover {
+  filter: grayscale(0%);
+  transform: scale(1.05);
+}
+
+.logo-wrapper {
+  height: 100px;
+  transition: transform 0.3s ease;
+}
+
+.logo-wrapper:hover {
+  transform: translateY(-4px);
+}
+
+
+.icon-container {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(145deg, #ffffff, #dfe6ec);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  transition: transform 0.3s ease;
+}
+.icon-container:hover {
+  transform: scale(1.1);
+}
+
+
 
 </style>
 <?php $__env->stopSection(); ?>
@@ -521,6 +662,25 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    new Swiper(".aseguradorasSwiper", {
+      loop: true,
+      slidesPerView: "auto",
+      spaceBetween: 30,
+      speed: 3000, // velocidad de deslizamiento continuo
+      autoplay: {
+        delay: 0,             // sin pausas
+        disableOnInteraction: false
+      },
+      freeMode: true,
+      freeModeMomentum: false, // muy importante
+      grabCursor: true
+    });
+  });
+</script>
+
+
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\aseguradora\resources\views/pages/home.blade.php ENDPATH**/ ?>

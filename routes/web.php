@@ -32,9 +32,7 @@ Route::view('/seguros/Cumplimiento', 'seguros.Cumplimiento')->name('seguros.Cump
 | Contacto
 |--------------------------------------------------------------------------
 */
-Route::get('/contacto', [ContactoController::class, 'index'])->name('contacto.index');
-Route::post('/contacto', [ContactoController::class, 'store'])->name('contacto.store');
-Route::get('/list', [ContactoController::class, 'show'])->name('contacto.show');
+
 
     // routes/web.php
 Route::post('/api/chatbot', [ChatbotController::class, 'responder'])->name('api.chatbot');
@@ -90,6 +88,7 @@ Route::get('/Formulario', [FormularioMedicoController::class, 'create'])
     Route::post('/llenar-pdf2', [PDFController::class, 'llenarPDF2'])->name('llenar-pdf2');
     Route::get('/ver-pdf/{id}', [PDFController::class, 'verPDF'])->name('formulario1.pdf');
     Route::get('/ver-pdf2/{id}', [PDFController::class, 'llenarPDF2'])->name('formulario2.pdf');
+    Route::get('/ver-pdf3/{id}', [PDFController::class, 'llenarPDF3'])->name('formulario3.pdf');;
 
     // 📊 Dashboard
    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

@@ -50,8 +50,8 @@ public function index()
 public function store(Request $request, FormularioMedico $formulario)
 {
     $request->validate([
-        'tipo' => 'required|in:cedula,rut,diploma,tarjeta_profesional,formulario_sarlaft,formulario_medico,contrato,cedula_representante,camara_comercio,rut_actualizado,estados_financieros,experiencia_certificada',
-        'archivo' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
+        'tipo' => 'required|in:cedula,rut,diploma,tarjeta_profesional,formulario_sarlaft,formulario_medico,contrato,cedula_representante,camara_comercio,rut_actualizado,estados_financieros,experiencia_certificada,formulario_oficio',
+        'archivo' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120', // Máximo 5MB
     ]);
 
     $user = Auth::user();
@@ -137,6 +137,7 @@ public function store(Request $request, FormularioMedico $formulario)
             'tarjeta_profesional',
             'formulario_sarlaft',
             'formulario_medico',
+            'formulario_oficio', // Añadido para incluir el Oficio
         ];
 
         $documentos = DocumentoUsuario::where('user_id', $user->id)
