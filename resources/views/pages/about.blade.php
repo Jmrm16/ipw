@@ -14,74 +14,76 @@
 </div>
 <!-- Page Header Start -->
 
-<!-- About Start -->
-<div class="container-fluid bg-light py-5">
+<!-- About Start Mejorado -->
+<section class="py-5 bg-light">
   <div class="container">
     <div class="row align-items-center g-5">
-      <!-- Imagen -->
+      
+      <!-- Imagen profesional -->
       <div class="col-lg-5">
-        <img class="img-fluid rounded shadow-sm" src="{{ asset('img/about.jpg') }}" alt="Sobre nosotros">
+        <img class="img-fluid rounded-4 shadow-sm" src="{{ asset('img/logoB.png') }}" alt="Equipo de seguros IPW">
       </div>
 
-      <!-- Contenido Institucional -->
+      <!-- Contenido -->
       <div class="col-lg-7">
-        <span class="badge bg-primary text-uppercase px-3 py-2 mb-3 shadow-sm">Quiénes Somos</span>
-        <h2 class="fw-bold mb-3 text-dark">Agencia de Seguros IPW</h2>
-        <p class="fs-5 text-muted mb-4">
-          Fundada en 2003 en Maicao, somos una agencia con amplia trayectoria brindando soluciones efectivas en pólizas de seguros y productos afines.
+        <span class="badge bg-primary text-white px-3 py-2 text-uppercase mb-3">Quiénes Somos</span>
+        <h2 class="fw-bold text-dark mb-3">Agencia de Seguros IPW</h2>
+        <p class="lead text-muted mb-4">
+          Fundada en 2003 en Maicao, somos una agencia con amplia trayectoria ofreciendo soluciones reales en seguros. Protegemos lo que más valoras.
         </p>
 
-        <!-- Misión -->
-        <div class="mb-4">
-          <h5 class="fw-bold text-primary">Misión</h5>
-          <p class="text-muted mb-0">Brindar asesoría experta y personalizada en seguros a nuestros clientes, protegiendo su patrimonio con respaldo confiable.</p>
+        <!-- Misión y Visión en columnas -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <h5 class="fw-bold text-primary"><i class="bi bi-bullseye me-2"></i>Misión</h5>
+            <p class="text-muted mb-0">Asesorar de forma cercana y profesional, garantizando protección y confianza en cada póliza.</p>
+          </div>
+          <div class="col-md-6">
+            <h5 class="fw-bold text-primary"><i class="bi bi-eye me-2"></i>Visión</h5>
+            <p class="text-muted mb-0">Ser referentes en La Guajira al 2026 por nuestra ética, compromiso y alianzas sólidas.</p>
+          </div>
         </div>
 
-        <!-- Visión -->
+        <!-- Valores en dos columnas -->
         <div class="mb-4">
-          <h5 class="fw-bold text-primary">Visión</h5>
-          <p class="text-muted mb-0">Ser líderes en La Guajira para 2026, reconocidos por nuestro servicio, calidad y alianzas sólidas con las mejores aseguradoras del país.</p>
-        </div>
-
-        <!-- Valores -->
-        <div class="mb-4">
-          <h5 class="fw-bold text-primary">Valores Corporativos</h5>
-          <ul class="list-unstyled text-muted">
+          <h5 class="fw-bold text-primary"><i class="bi bi-stars me-2"></i>Valores Corporativos</h5>
+          <ul class="row list-unstyled text-muted ps-3">
             @foreach(['Responsabilidad', 'Compromiso', 'Respeto', 'Integridad', 'Transparencia', 'Equidad', 'Tolerancia', 'Honestidad'] as $valor)
-              <li class="mb-1"><i class="fa fa-check-circle text-primary me-2"></i>{{ $valor }}</li>
+              <li class="col-6 mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i>{{ $valor }}</li>
             @endforeach
           </ul>
         </div>
 
-        <a href="{{ url('/about') }}" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">Leer Más</a>
+        <a href="{{ url('/about') }}" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">Conócenos más</a>
       </div>
     </div>
 
-    <!-- Contact Info -->
+    <!-- Contacto -->
     <div class="row text-center mt-5 g-4">
       <div class="col-md-4">
-        <div class="bg-white p-4 rounded shadow-sm d-flex align-items-center justify-content-center h-100">
-          <i class="fa fa-map-marker-alt fa-2x text-primary me-3"></i>
+        <div class="bg-white p-4 rounded shadow-sm h-100 d-flex align-items-center justify-content-center">
+          <i class="bi bi-geo-alt-fill fa-2x text-primary me-3"></i>
           <div class="text-start">
             <h6 class="fw-bold mb-1">Nuestra Oficina</h6>
-            <p class="mb-0 text-muted">Calle 16 No. 12 - 100, Maicao, La Guajira</p>
-           
-            <p class="mb-0 text-muted">Calle 14D # 10-80, Uribia, La Guajira</p>
+            <p class="mb-0 text-muted">Calle 16 No. 12 - 100, Maicao</p>
+            <p class="mb-0 text-muted">Calle 14D #10-80, Uribia</p>
           </div>
         </div>
       </div>
+
       <div class="col-md-4">
-        <div class="bg-white p-4 rounded shadow-sm d-flex align-items-center justify-content-center h-100">
-          <i class="fa fa-envelope-open fa-2x text-primary me-3"></i>
+        <div class="bg-white p-4 rounded shadow-sm h-100 d-flex align-items-center justify-content-center">
+          <i class="bi bi-envelope-open-fill fa-2x text-primary me-3"></i>
           <div class="text-start">
             <h6 class="fw-bold mb-1">Correo Electrónico</h6>
             <p class="mb-0 text-muted">ibethpana@gmail.com</p>
           </div>
         </div>
       </div>
+
       <div class="col-md-4">
-        <div class="bg-white p-4 rounded shadow-sm d-flex align-items-center justify-content-center h-100">
-          <i class="fa fa-phone-alt fa-2x text-primary me-3"></i>
+        <div class="bg-white p-4 rounded shadow-sm h-100 d-flex align-items-center justify-content-center">
+          <i class="bi bi-telephone-fill fa-2x text-primary me-3"></i>
           <div class="text-start">
             <h6 class="fw-bold mb-1">Contáctanos</h6>
             <p class="mb-0 text-muted">300 800 0231 - Maicao</p>
@@ -90,9 +92,9 @@
         </div>
       </div>
     </div>
-
   </div>
-</div>
+</section>
+
 
 <!-- About End -->
 

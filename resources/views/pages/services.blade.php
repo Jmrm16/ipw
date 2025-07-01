@@ -1,169 +1,221 @@
 @extends('layouts.app')
 
-@section('title', 'Servicios')
+@section('title', 'Nuestros Productos de Seguro')
 
 @section('content')
 
 <style>
     .service-card {
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        background: #fff;
+        border-radius: 12px;
+        border: 1px solid #e6e6e6;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .service-icon {
+        font-size: 2.5rem;
+        color: #0078D4;
+        margin-bottom: 1.5rem;
         transition: all 0.3s ease;
-        background-color: #ffffff;
-        padding: 20px;
-        border-radius: 8px;
-        border: 1px solid #e0e0e0;
     }
 
-    .service-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
-        background-color: #f9f9f9;
+    .service-card:hover .service-icon {
+        color: #0BCEAF;
+        transform: scale(1.1);
     }
 
-    .service-card i {
-        transition: color 0.3s ease;
+    .section-title::after {
+        content: '';
+        display: block;
+        width: 80px;
+        height: 3px;
+        margin: 10px auto 0;
+        background: linear-gradient(90deg, #0BCEAF, #0078D4);
     }
 
-    .service-card:hover i {
-        color: #0BCEAF !important; /* o tu color primario */
+    .gradient-bg {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     }
 </style>
 
-
-<!-- Page Header Start -->
-<div class="container-fluid page-header d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5 mb-5">
-    <h1 class="display-4 text-white mb-3 mt-0 mt-lg-5">Productos</h1>
-    <div class="d-inline-flex text-white">
-        <p class="m-0"><a class="text-white" href="">Inicio</a></p>
-        <p class="m-0 px-2">/</p>
-        <p class="m-0">Productos</p>
+<!-- Encabezado -->
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, #0078D4 0%, #0BCEAF 100%);">
+    <div class="container text-center text-white py-5">
+        <h1 class="display-5 fw-bold">Nuestros Productos de Seguro</h1>
+        <nav aria-label="breadcrumb" class="d-flex justify-content-center mt-3">
+            <ol class="breadcrumb bg-transparent p-0 m-0">
+                <li class="breadcrumb-item"><a href="{{ url('/') }}" class="text-white-50">Inicio</a></li>
+                <li class="breadcrumb-item active text-white" aria-current="page">Productos</li>
+            </ol>
+        </nav>
     </div>
 </div>
-<!-- Page Header Start -->
 
-<!-- Servicios Inicio -->
-<div class="container-fluid pt-5 pb-3">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-lg-6 text-center mb-5">
-                <small class="bg-primary text-white text-uppercase font-weight-bold px-2 py-1">Nuestros Productos</small>
-                <h1 class="mt-2 mb-3">Soluciones en Seguros</h1>
-                <p class="text-muted">
-                    Contamos con una amplia gama de pólizas diseñadas para proteger tu salud, tu patrimonio y tu tranquilidad financiera.
+<!-- Servicios -->
+<section class="container py-5">
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-8 text-center">
+            <span class="badge bg-gradient-primary-to-secondary text-uppercase fw-bold px-3 py-2 mb-3">Soluciones Integrales</span>
+            <h2 class="section-title mb-3">Protección a la Medida para tus Necesidades</h2>
+            <p class="lead text-muted">
+                Ofrecemos una gama completa de productos de seguros diseñados para proteger lo que más valoras, con coberturas adaptables y soporte experto las 24 horas.
+            </p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        @php
+            $productos = [
+                [
+                    'icon' => 'fas fa-file-contract',
+                    'titulo' => 'Seguros de Cumplimiento',
+                    'descripcion' => 'Garantía de obligaciones contractuales con cobertura integral para proyectos y contratos.',
+                    'beneficios' => [
+                        'Fiel cumplimiento de contratos',
+                        'Garantías licitatorias',
+                        'Cumplimiento regulatorio'
+                    ],
+                    'url' => '/seguros/Cumplimiento'
+                ],
+                [
+                    'icon' => 'fas fa-user-md',
+                    'titulo' => 'Responsabilidad Civil Médica',
+                    'descripcion' => 'Protección especializada para profesionales y centros de salud contra reclamaciones por negligencia.',
+                    'beneficios' => [
+                        'Cobertura por errores médicos',
+                        'Asistencia legal especializada',
+                        'Cumplimiento RETHUS'
+                    ],
+                    'url' => '/seguros/medicos'
+                ],
+                [
+                    'icon' => 'fas fa-building',
+                    'titulo' => 'Soluciones Corporativas',
+                    'descripcion' => 'Protección integral para empresas de todos los tamaños y sectores industriales.',
+                    'beneficios' => [
+                        'Responsabilidad civil',
+                        'Seguros de cumplimiento',
+                        'ARL y riesgos laborales',
+                        'Protección patrimonial'
+                    ],
+                    'url' => '/seguros/empresariales'
+                ],
+                [
+                    'icon' => 'fas fa-car',
+                    'titulo' => 'Protección Vehicular',
+                    'descripcion' => 'Coberturas completas para automóviles, motocicletas y flotas comerciales.',
+                    'beneficios' => [
+                        'Seguro Todo Riesgo',
+                        'SOAT obligatorio',
+                        'Transporte de mercancías',
+                        'Asistencia en carretera'
+                    ],
+                    'url' => '/seguros/vehiculos'
+                ],
+                [
+                    'icon' => 'fas fa-graduation-cap',
+                    'titulo' => 'Protección Educativa',
+                    'descripcion' => 'Soluciones diseñadas para instituciones educativas y estudiantes.',
+                    'beneficios' => [
+                        'Seguro para prácticas profesionales',
+                        'Turismo educativo',
+                        'Previsión educativa',
+                        'Responsabilidad civil escolar'
+                    ],
+                    'url' => '/seguros/educativos'
+                ],
+                [
+                    'icon' => 'fas fa-shield-alt',
+                    'titulo' => 'Coberturas Especializadas',
+                    'descripcion' => 'Soluciones a medida para necesidades específicas de protección.',
+                    'beneficios' => [
+                        'Hotelería y turismo',
+                        'Restaurantes y alimentos',
+                        'Estaciones de servicio',
+                        'Entidades gubernamentales'
+                    ],
+                    'url' => '/seguros/especializados'
+                ],
+            ];
+        @endphp
+
+        @foreach ($productos as $producto)
+        <div class="col-md-6 col-lg-4">
+            <div class="service-card p-4">
+                <div class="text-center">
+                    <i class="{{ $producto['icon'] }} service-icon" role="img" aria-label="Icono del seguro"></i>
+                    <h4 class="fw-bold mb-3">{{ $producto['titulo'] }}</h4>
+                    <p class="text-muted mb-3">{{ $producto['descripcion'] }}</p>
+                    <ul class="list-unstyled text-start mb-4">
+                        @foreach ($producto['beneficios'] as $beneficio)
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>{{ $beneficio }}</li>
+                        @endforeach
+                    </ul>
+                    <a href="{{ url($producto['url']) }}" class="btn btn-outline-primary btn-sm">Más información</a>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+
+    <!-- CTA -->
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <div class="bg-primary text-white p-5 rounded shadow">
+                <h4 class="mb-3">¿Requieres asesoría especializada?</h4>
+                <p class="mb-4">Nuestro equipo está listo para ayudarte a encontrar la mejor opción para ti o tu empresa.</p>
+                <a href="{{ url('/contacto') }}" class="btn btn-light btn-lg px-4 fw-bold shadow-sm">Solicitar Asesoría</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Beneficios -->
+<section class="container-fluid py-5 gradient-bg">
+    <div class="container py-5">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="text-dark mb-3">¿Por qué elegir nuestros seguros?</h2>
+                <p class="lead text-secondary">
+                    Ofrecemos más que pólizas, brindamos tranquilidad y respaldo cuando más lo necesitas.
                 </p>
             </div>
         </div>
-        <div class="row">
-            <!-- Seguros de Vida -->
-            <div class="col-md-4 mb-5">
-                <a href="{{ url('/seguros/Cumplimiento') }}" class="text-decoration-none text-dark">
-                    <div class="d-flex service-card">
-                        <i class="fa fa-check-circle fa-3x text-primary mr-4"></i>
-                        <div>
-                            <h4 class="font-weight-bold mb-3">Cumplimiento</h4>
-                            <ul class="list-unstyled mb-0">
-                               Pólizas de Cumplimiento que garantizan obligaciones contractuales con cobertura total.
-                            </ul>
-                        </div>
-                    </div>
-                </a>
-            </div>
 
-            <!-- Seguros Médicos -->
-            <div class="col-md-4 mb-5">
-                <a href="{{ url('/seguros/medicos') }}" class="text-decoration-none text-dark">
-                    <div class="d-flex service-card">
-                        <i class="fa fa-user-md fa-3x text-primary mr-4"></i>
-                        <div>
-                            <h4 class="font-weight-bold mb-3">Responsabilidad civil medica</h4>
-                            <ul class="list-unstyled mb-0">
-                                <li>Responsabilidad civil médica</li>
-                                <li>Requisitos médicos (RETHUS)</li>
-                                <li>Plan profesional</li>
-                            </ul>
-                        </div>
-                    </div>
-                </a>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="bg-white p-4 rounded text-center h-100">
+                    <i class="fas fa-headset fa-3x text-primary mb-3" aria-hidden="true"></i>
+                    <h5 class="mb-2">Asesoría Personalizada</h5>
+                    <p class="text-muted">Expertos en seguros que analizan tus necesidades para ofrecerte la mejor solución.</p>
+                </div>
             </div>
-            
-            <!-- Seguros Empresariales -->
-            <div class="col-md-4 mb-5">
-                <a href="{{ url('/') }}" class="text-decoration-none text-dark">
-                    <div class="d-flex service-card">
-                        <i class="fa fa-building fa-3x text-primary mr-4"></i>
-                        <div>
-                            <h4 class="font-weight-bold mb-3">Seguros Empresariales</h4>
-                            <ul class="list-unstyled mb-0">
-                                <li>Pólizas para contratos</li>
-                                <li>Responsabilidad civil empresarial</li>
-                                <li>Pólizas de cumplimiento</li>
-                                <li>ARL</li>
-                            </ul>
-                        </div>
-                    </div>
-                </a>
+            <div class="col-md-4">
+                <div class="bg-white p-4 rounded text-center h-100">
+                    <i class="fas fa-clock fa-3x text-primary mb-3" aria-hidden="true"></i>
+                    <h5 class="mb-2">Respuesta Rápida</h5>
+                    <p class="text-muted">Procesamiento ágil de siniestros con atención disponible 24/7.</p>
+                </div>
             </div>
-
-            <!-- Seguros para Vehículos -->
-            <div class="col-md-4 mb-5">
-                <a href="{{ url('/') }}" class="text-decoration-none text-dark">
-                    <div class="d-flex service-card">
-                        <i class="fa fa-car fa-3x text-primary mr-4"></i>
-                        <div>
-                            <h4 class="font-weight-bold mb-3">Seguros para Vehículos</h4>
-                            <ul class="list-unstyled mb-0">
-                                <li>Seguro todo riesgo</li>
-                                <li>SOAT</li>
-                                <li>Seguros para motos y carros</li>
-                                <li>Transporte de mercancías</li>
-                            </ul>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Seguros Educativos -->
-            <div class="col-md-4 mb-5">
-                <a href="{{ url('/') }}" class="text-decoration-none text-dark">
-                    <div class="d-flex service-card">
-                        <i class="fa fa-graduation-cap fa-3x text-primary mr-4"></i>
-                        <div>
-                            <h4 class="font-weight-bold mb-3">Seguros Educativos</h4>
-                            <ul class="list-unstyled mb-0">
-                                <li>Pólizas para estudiantes en prácticas</li>
-                                <li>Turismo educativo</li>
-                                <li>Previ educativa</li>
-                            </ul>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Otros Servicios -->
-            <div class="col-md-4 mb-5">
-                <a href="{{ url('/') }}" class="text-decoration-none text-dark">
-                    <div class="d-flex">
-                        <i class="fa fa-shield-alt fa-3x text-primary mr-4"></i>
-                        <div>
-                            <h4 class="font-weight-bold mb-3">Otras Coberturas</h4>
-                            <ul class="list-unstyled mb-0">
-                                <li>Responsabilidad civil hoteles</li>
-                                <li>Responsabilidad civil restaurantes</li>
-                                <li>Estaciones de servicio</li>
-                                <li>Pymes y alcaldías</li>
-                            </ul>
-                        </div>
-                    </div>
-                </a>
+            <div class="col-md-4">
+                <div class="bg-white p-4 rounded text-center h-100">
+                    <i class="fas fa-hand-holding-usd fa-3x text-primary mb-3" aria-hidden="true"></i>
+                    <h5 class="mb-2">Coberturas Competitivas</h5>
+                    <p class="text-muted">Pólizas con amplias garantías a precios altamente competitivos.</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Servicios Fin -->
+</section>
 
-<!-- Servicios Fin -->
-
-<!-- Testimonios Inicio -->
-
-<!-- Testimonios Fin -->
+<!-- Footer institucional -->
+<section class="py-4 bg-light border-top">
+    <div class="container text-center">
+        <small class="text-muted">© {{ date('Y') }} Tu Empresa de Seguros. Todos los derechos reservados. | <a href="#" class="text-decoration-none text-muted">Política de privacidad</a></small>
+    </div>
+</section>
 
 @endsection

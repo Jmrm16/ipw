@@ -13,7 +13,7 @@ use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\HomeController;
-
+use App\Http\Controllers\EventoPublicoController;
 /*
 |--------------------------------------------------------------------------
 | Rutas Públicas
@@ -25,6 +25,8 @@ Route::view('/productos', 'pages.services');
 Route::view('/Pricing', 'pages.pricing');
 Route::view('/seguros/medicos', 'seguros.medicos');
 Route::view('/seguros/Cumplimiento', 'seguros.Cumplimiento')->name('seguros.Cumplimiento');
+Route::get('/eventos', [EventoPublicoController::class, 'index'])->name('eventos.index');
+Route::get('/eventos/{evento}', [EventoPublicoController::class, 'show'])->name('eventos.show');
 
 
 /*

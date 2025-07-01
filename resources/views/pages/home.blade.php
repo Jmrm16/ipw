@@ -80,12 +80,12 @@
     </div>
 </section>
 
-<!-- Aseguradoras Section -->
-<section class="py-5 bg-white">
+<!-- Aseguradoras Section Mejorado -->
+<section class="py-5" style="background: linear-gradient(to right, #f8f9fa, #eef2f7);">
     <div class="container">
         <div class="text-center mb-5">
-            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 mb-2">Aseguradoras Aliadas</span>
-            <h2 class="fw-bold mb-3">Confianza y Respaldo Garantizados</h2>
+            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 mb-2">🔒 Aseguradoras Aliadas</span>
+            <h2 class="fw-bold text-dark mb-3">Confianza y Respaldo Garantizados</h2>
             <p class="text-muted">Trabajamos con las principales compañías aseguradoras del país</p>
         </div>
 
@@ -93,8 +93,12 @@
             <div class="swiper-wrapper align-items-center py-3">
                 @foreach (['confianza', 'previsora', 'colpatria', 'mundial'] as $logo)
                 <div class="swiper-slide">
-                    <div class="logo-wrapper">
-                        <img src="{{ asset("img/aseguradoras/{$logo}.png") }}" alt="{{ ucfirst($logo) }}" class="aseguradora-logo">
+                    <div class="logo-wrapper p-3 d-flex align-items-center justify-content-center h-100 bg-white rounded-4 shadow-sm hover-scale transition">
+                    <img src="{{ asset("img/aseguradoras/{$logo}.png") }}"
+                        alt="{{ ucfirst($logo) }}"
+                        class="aseguradora-logo"
+                        style="max-height: 80px; object-fit: contain;">
+
                     </div>
                 </div>
                 @endforeach
@@ -102,6 +106,17 @@
         </div>
     </div>
 </section>
+
+<!-- Estilos adicionales -->
+<style>
+    .hover-scale {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hover-scale:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+</style>
 
 <!-- Servicios Section -->
 <section class="py-5" style="background: linear-gradient(135deg, #f8f9fa, #e9ecef);">
@@ -394,17 +409,13 @@
         box-shadow: 0 4px 20px rgba(80,80,180,0.10);
     }
     
-    .aseguradora-logo {
-        max-width: 80%;
-        max-height: 65px;
-        object-fit: contain;
-        filter: grayscale(100%);
-        transition: all 0.3s ease;
-    }
-    
-    .aseguradora-logo:hover {
-        filter: grayscale(0%);
-    }
+.aseguradora-logo {
+    max-width: 80%;
+    max-height: 65px;
+    object-fit: contain;
+    transition: all 0.3s ease;
+}
+
     
     /* Icon Box */
     .icon-container {
