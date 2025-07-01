@@ -1,7 +1,4 @@
-<!-- Inicio del Pie de Página -->
-<div class="padding-top-5">
-    <!-- Espacio para el contenido principal de la página -->
-<!-- Inicio del Pie de Página -->
+<!-- Footer IPW -->
 <footer class="bg-dark text-white pt-5 pb-4">
     <div class="container">
         <div class="row g-4">
@@ -23,7 +20,6 @@
                     </a>
                 </div>
             </div>
-
             <!-- Navegación -->
             <div class="col-lg-3 col-md-6 mb-4">
                 <h5 class="text-uppercase fw-bold mb-4" style="color: #e74c3c;">Enlaces Rápidos</h5>
@@ -55,7 +51,6 @@
                     </li>
                 </ul>
             </div>
-
             <!-- Productos y Pólizas -->
             <div class="col-lg-3 col-md-6 mb-4">
                 <h5 class="text-uppercase fw-bold mb-4" style="color: #e74c3c;">Nuestros Productos</h5>
@@ -87,7 +82,6 @@
                     </li>
                 </ul>
             </div>
-
             <!-- Contacto -->
             <div class="col-lg-3 col-md-6 mb-4">
                 <h5 class="text-uppercase fw-bold mb-4" style="color: #e74c3c;">Contáctanos</h5>
@@ -116,24 +110,19 @@
                 </ul>
             </div>
         </div>
-        
         <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
-        
- <div class="row align-items-center border-top pt-4 mt-4" style="border-color: rgba(255, 255, 255, 0.1);">
-    <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
-        <p class="mb-0 text-white-50">
-            &copy; <script>document.write(new Date().getFullYear())</script> IPW Agencia de Seguros. Todos los derechos reservados.
-        </p>
-    </div>
-    <div class="col-md-6 text-center text-md-end">
-        <p class="mb-0 text-white-50">
-            Diseñado con <i class="bi bi-heart-fill text-danger"></i> por <strong class="text-white">IPW</strong>
-        </p>
-    </div>
-</div>
-
+        <div class="row align-items-center border-top pt-4 mt-4" style="border-color: rgba(255, 255, 255, 0.1);">
+            <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+                <p class="mb-0 text-white-50">
+                    &copy; <script>document.write(new Date().getFullYear())</script> IPW Agencia de Seguros. Todos los derechos reservados.
+                </p>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <p class="mb-0 text-white-50">
+                    Diseñado con <i class="bi bi-heart-fill text-danger"></i> por <strong class="text-white">IPW</strong>
+                </p>
+            </div>
+        </div>
     </div>
 </footer>
-<!-- Fin del Pie de Página -->
-</div>
 <!-- Fin del Pie de Página -->

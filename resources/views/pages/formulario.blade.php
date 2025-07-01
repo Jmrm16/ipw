@@ -511,7 +511,7 @@
 
     <!-- Ejercicio Exclusivo en Consultorio -->
     <div class="mb-3">
-        <label class="form-label">Ejercicio de las Actividades Profecionales Exclusivamente en el Consultorio Arriba indicado:</label>
+        <label class="form-label">Ejercicio de las Actividades Profesionales Exclusivamente en el Consultorio Arriba indicado:</label>
         <div>
             <input type="radio" name="ejercicio_exclusivo" value="SI" required> SI
             <input type="radio" name="ejercicio_exclusivo" value="NO"> NO
@@ -520,7 +520,7 @@
 
     <!-- Prestación de Servicios en Otras Instituciones -->
     <div class="mb-3">
-        <label class="form-label">Prestación de Servicios  Profecionales Tambien en Otras Instituciones de Salud o Empresa:</label>
+        <label class="form-label">Prestación de Servicios  Profesionales También en Otras Instituciones de Salud o Empresa:</label>
         <div>
             <input type="radio" name="prestacion_servicios" value="SI" required> SI
             <input type="radio" name="prestacion_servicios" value="NO"> NO

@@ -432,7 +432,7 @@
                       <i class="fas fa-file-invoice-dollar requirement-icon mt-1"></i>
                       <div>
                         <h5 class="mb-2">Información financiera</h5>
-                        <p class="mb-0 text-muted">Declaración de renta o estados financieros.</p>
+                        <p class="mb-0 text-muted">Declaración de renta o estados financieros del  año anterior.</p>
                       </div>
                     </div>
                   </div>
@@ -444,7 +444,7 @@
                       <i class="fas fa-briefcase requirement-icon mt-1"></i>
                       <div>
                         <h5 class="mb-2">Experiencia</h5>
-                        <p class="mb-0 text-muted"></p>
+                        <p class="mb-0 text-muted"></p>Contratos iguales o similares en objeto o valor.
                       </div>
                     </div>
                   </div>

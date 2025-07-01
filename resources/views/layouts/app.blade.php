@@ -4,8 +4,17 @@
     <meta charset="utf-8">
     <title>@yield('title', 'Aseguradora-IPW')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
+
+    <!-- Descripción SEO -->
+    <meta name="description" content="Agencia de seguros con más de 20 años de experiencia en Maicao y Uribia. Especialistas en pólizas de vida, médicos, vehículos, empresariales y cumplimiento. Protección, confianza y respaldo en La Guajira.">
+    <meta name="keywords" content="seguros, pólizas, Maicao, Uribia, médicos, cumplimiento, vida, IPW, aseguradora, La Guajira">
+
+    <!-- Open Graph (para WhatsApp, Facebook, etc) -->
+    <meta property="og:title" content="Aseguradora-IPW | Protege tu Futuro">
+    <meta property="og:description" content="Expertos en pólizas médicas, de vida, empresariales y de cumplimiento en La Guajira. Más de 20 años de confianza y respaldo.">
+    <meta property="og:image" content="https://ipwseguros.com.co/img/logoB.png">
+    <meta property="og:url" content="https://ipwseguros.com.co/">
+    <meta property="og:type" content="website">
 
     <!-- Favicon -->
     <link href="{{ asset('img/favicon.ico') }}" rel="icon">
@@ -17,7 +26,7 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
 
-    <!-- Bootstrap 5 CSS ✅ -->
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- OwlCarousel CSS -->
@@ -29,21 +38,19 @@
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
-    <!-- En el head -->
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- AOS Animaciones -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-
-
-    <!-- carrousel.js -->
+    <!-- OwlCarousel (extra, si lo usas) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
-
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     @yield('styles')
 </head>
+
 
 <body>
 
