@@ -36,75 +36,51 @@ class DocumentoController extends Controller
         return view('pages.documentos', compact('documentos', 'tipos', 'formulario'));
     }
 
-    // Subir documentos (masivo o individual) SIEMPRE como global/heredado
-    public function store(Request $request, FormularioMedico $formulario)
-    {
-        $user = Auth::user();
+public function store(Request $request, FormularioMedico $formulario)
+{
+    $user = Auth::user();
+    $isCumplimiento = $formulario->tipo_proceso === 'cumplimiento';
 
-        // Subida masiva
-        if ($request->has('archivos') && is_array($request->archivos)) {
-            $tiposValidos = [
-                'contrato',
-                'cedula_representante',
-                'camara_comercio',
-                'rut_actualizado',
-                'estados_financieros',
-                'experiencia_certificada',
-                'formulario_sarlaft',
-            ];
+    // Documentos que deben ser específicos por formulario en pólizas médicas
+    $documentosPorFormulario = [
+        'formulario_sarlaft',
+        'formulario_medico',
+        'formulario_oficio',
+    ];
 
-            foreach ($request->archivos as $tipo => $archivo) {
-                if (!$archivo) continue;
+    // Subida masiva
+    if ($request->has('archivos') && is_array($request->archivos)) {
+        $tiposValidos = [
+            'contrato',
+            'cedula_representante',
+            'camara_comercio',
+            'rut_actualizado',
+            'estados_financieros',
+            'experiencia_certificada',
+            'formulario_sarlaft',
+        ];
 
-                $request->validate([
-                    "archivos.$tipo" => 'file|mimes:pdf,jpg,jpeg,png|max:5120',
-                ]);
-                if (!in_array($tipo, $tiposValidos)) continue;
+        foreach ($request->archivos as $tipo => $archivo) {
+            if (!$archivo) continue;
 
-                $nombre = time() . '_' . $archivo->getClientOriginalName();
-                $ruta = $archivo->storeAs("documentos_usuario/{$user->id}", $nombre, 'public');
-
-                // SIEMPRE GUARDA COMO HEREDADO (null)
-                DocumentoUsuario::updateOrCreate(
-                    [
-                        'user_id' => $user->id,
-                        'formulario_medico_id' => null,
-                        'tipo' => $tipo,
-                    ],
-                    [
-                        'archivo' => $ruta,
-                        'estado' => 'subido',
-                    ]
-                );
-
-                Notificacion::create([
-                    'tipo' => 'documento_subido',
-                    'mensaje' => "El usuario {$user->name} ha subido el documento: {$tipo}",
-                    'leida' => false,
-                    'data' => [
-                        'user_id' => $user->id,
-                        'formulario_id' => $formulario->id,
-                        'tipo_proceso' => $formulario->tipo_proceso,
-                    ],
-                ]);
-            }
-        }
-        // Subida individual
-        elseif ($request->hasFile('archivo')) {
             $request->validate([
-                'tipo' => 'required|in:cedula,rut,diploma,tarjeta_profesional,formulario_sarlaft,formulario_medico,contrato,cedula_representante,camara_comercio,rut_actualizado,estados_financieros,experiencia_certificada,formulario_oficio',
-                'archivo' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120',
+                "archivos.$tipo" => 'file|mimes:pdf,jpg,jpeg,png|max:5120',
             ]);
-            $tipo = $request->tipo;
-            $archivo = $request->file('archivo');
+
+            if (!in_array($tipo, $tiposValidos)) continue;
+
             $nombre = time() . '_' . $archivo->getClientOriginalName();
             $ruta = $archivo->storeAs("documentos_usuario/{$user->id}", $nombre, 'public');
 
-            // SIEMPRE GUARDA COMO HEREDADO (null)
+            // ¿Documento global o por formulario?
+            $formularioId = (!$isCumplimiento && in_array($tipo, $documentosPorFormulario))
+                ? $formulario->id
+                : null;
+
             DocumentoUsuario::updateOrCreate(
                 [
                     'user_id' => $user->id,
-                    'formulario_medico_id' => null,
+                    'formulario_medico_id' => $formularioId,
                     'tipo' => $tipo,
                 ],
                 [
@@ -112,6 +88,7 @@ class DocumentoController extends Controller
                     'estado' => 'subido',
                 ]
             );
+
             Notificacion::create([
                 'tipo' => 'documento_subido',
                 'mensaje' => "El usuario {$user->name} ha subido el documento: {$tipo}",
@@ -123,15 +100,57 @@ class DocumentoController extends Controller
                 ],
             ]);
         }
-
-        // Redirección dinámica según tipo de proceso
-        $ruta = $formulario->tipo_proceso === 'cumplimiento'
-            ? 'documentos.cumplimiento'
-            : 'documentos.por_formulario';
-
-        return redirect()->route($ruta, ['formulario' => $formulario->id])
-            ->with('success', 'Documento(s) subido(s) correctamente.');
     }
+
+    // Subida individual
+    elseif ($request->hasFile('archivo')) {
+        $request->validate([
+            'tipo' => 'required|in:cedula,rut,diploma,tarjeta_profesional,formulario_sarlaft,formulario_medico,contrato,cedula_representante,camara_comercio,rut_actualizado,estados_financieros,experiencia_certificada,formulario_oficio',
+            'archivo' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120',
+        ]);
+
+        $tipo = $request->tipo;
+        $archivo = $request->file('archivo');
+        $nombre = time() . '_' . $archivo->getClientOriginalName();
+        $ruta = $archivo->storeAs("documentos_usuario/{$user->id}", $nombre, 'public');
+
+        $formularioId = (!$isCumplimiento && in_array($tipo, $documentosPorFormulario))
+            ? $formulario->id
+            : null;
+
+        DocumentoUsuario::updateOrCreate(
+            [
+                'user_id' => $user->id,
+                'formulario_medico_id' => $formularioId,
+                'tipo' => $tipo,
+            ],
+            [
+                'archivo' => $ruta,
+                'estado' => 'subido',
+            ]
+        );
+
+        Notificacion::create([
+            'tipo' => 'documento_subido',
+            'mensaje' => "El usuario {$user->name} ha subido el documento: {$tipo}",
+            'leida' => false,
+            'data' => [
+                'user_id' => $user->id,
+                'formulario_id' => $formulario->id,
+                'tipo_proceso' => $formulario->tipo_proceso,
+            ],
+        ]);
+    }
+
+    // Redirección dinámica según tipo de proceso
+    $ruta = $isCumplimiento
+        ? 'documentos.cumplimiento'
+        : 'documentos.por_formulario';
+
+    return redirect()->route($ruta, ['formulario' => $formulario->id])
+        ->with('success', 'Documento(s) subido(s) correctamente.');
+}
+
 
     // Ver un documento por tipo (usando global)
     public function ver($tipo, $formularioId)
@@ -169,10 +188,15 @@ class DocumentoController extends Controller
             'formulario_oficio',
         ];
 
-        $documentos = DocumentoUsuario::where('user_id', $user->id)
-            ->whereNull('formulario_medico_id')
-            ->get()
-            ->keyBy('tipo');
+            $documentos = DocumentoUsuario::where('user_id', $user->id)
+                ->where(function ($query) use ($formulario) {
+                    $query->whereNull('formulario_medico_id')
+                        ->orWhere('formulario_medico_id', $formulario->id);
+                })
+                ->orderByRaw('CASE WHEN formulario_medico_id IS NULL THEN 1 ELSE 0 END') // primero los que tienen formulario_id
+                ->get()
+                ->keyBy('tipo');
+
 
         return view('pages.documentos', compact('documentos', 'tipos', 'formulario'));
     }

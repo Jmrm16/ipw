@@ -184,7 +184,7 @@
         <div class="d-flex align-items-center mb-1">
           <label class="form-label mb-0">Título Profesional:</label>
           <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalTituloProfesional">
-            <i class="bi bi-info-circle"></i>
+            <i class="bi bi-info-circle"></i> Más información
           </button>
         </div>
         <input type="text" class="form-control" name="titulo_profesional" required>
@@ -203,15 +203,27 @@
               
               <ul class="mb-3">
                 <li><strong>Ejemplos válidos:</strong></li>
-                <li>Médico General</li>
+                <li>Medicina General</li>
                 <li>Auxiliar de Enfermería</li>
-                <li>Especialización en Pediatría</li>
-                <li>Técnico en Radiología</li>
+                <li>Enfermera Jefe</li>
+                <li>Odontología</li>
+                <li>Anestesiología</li>
+                <li>Fisioterapia</li>
+                <li>Ginecobstetricia</li>
+                <li>Pediatría</li>
+                <li>Psicología</li>
+                <li>Medicina Interna</li>
+                <li>Cirujano General</li>
+                <li>Ortopedia</li>
+                <li>Bacteriología</li>
+                <li>Oftalmología</li>
+
+
               </ul>
               
               <div class="alert alert-warning p-2 small">
                 <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                Debe coincidir exactamente con el nombre en su diploma o acta de grado.
+                Debe coincidir exactamente con el nombre en su diploma.
               </div>
             </div>
             <div class="modal-footer bg-light p-2 justify-content-start">
@@ -236,36 +248,54 @@
         <div class="d-flex align-items-center mb-1">
           <label class="form-label mb-0">No. Registro Profesional:</label>
           <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalRegistroProfesional">
-            <i class="bi bi-info-circle"></i>
+            <i class="bi bi-info-circle"></i> Más información
           </button>
         </div>
         <input type="text" class="form-control" name="registro_profecional" required>
       </div>
       
       <!-- Modal para Registro Profesional -->
-      <div class="modal fade" id="modalRegistroProfesional" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header bg-light p-3">
-              <h5 class="modal-title fs-6">Información sobre Registro Profesional</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-3">
-              <p>El número de registro profesional es el numero asignado en el RETHUS (Acto Administrativo).</p>
-              
-              <div class="alert alert-info p-2 mt-2 small">
-                <i class="bi bi-info-circle-fill me-2"></i>
-                Ejemplo: 12345
-              </div>
-              
-              <p class="small text-muted mb-0">Este número valida su autorización para ejercer la profesión en Colombia.</p>
-            </div>
-            <div class="modal-footer bg-light p-2 justify-content-start">
-              <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
-            </div>
-          </div>
+<!-- Modal para Registro Profesional -->
+<div class="modal fade" id="modalRegistroProfesional" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg"><!-- Cambié a modal-lg -->
+    <div class="modal-content">
+      <div class="modal-header bg-light p-3">
+        <h5 class="modal-title fs-6">Información sobre Registro Profesional</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-3">
+        <p>
+          El número de registro profesional es el número asignado en el RETHUS (Acto Administrativo) o número de la resolución o número de la tarjeta profesional.
+        </p>
+        <div class="alert alert-info p-2 mt-2 small">
+          <i class="bi bi-info-circle-fill me-2"></i>
+          Ejemplo: 12345
+        </div>
+        <p class="small text-muted mb-3">
+          Este número valida su autorización para ejercer la profesión en Colombia.
+        </p>
+        
+        <!-- VIDEO MÁS GRANDE -->
+        <div style="width:100%;max-width:700px;margin:auto;">
+          <iframe
+            width="100%"
+            height="350"
+            style="border-radius: 12px;"
+            src="https://www.youtube.com/embed/z2o3Eihg7Qc"
+            title="Guía Registro Profesional"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
         </div>
       </div>
+      <div class="modal-footer bg-light p-2 justify-content-start">
+        <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 <!-- Especialización Practicada -->
@@ -289,7 +319,7 @@
         </label>
     </div>
     <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalMedicoGeneral">
-        <i class="bi bi-info-circle"></i>
+        <i class="bi bi-info-circle"></i> Más información
     </button>
 </div>
 
@@ -314,8 +344,8 @@
                 <li>- NUTRICIONISTA</li>
                 <li>- TECNICOS EN ATENCIÓN INICIAL RESOLUCION O REMISIÓN DE PACIENTES EN URGENCIAS TRIAGE</li>
               </ul>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+              <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
             </div>
         </div>
     </div>
@@ -335,6 +365,9 @@
         <label class="form-label">Ejercicio Privado Por Cuenta Propia. Sin relacion laboral con una institucion de salud 
         o Cualquier Empresa, Sea Particular o Publica
         </label>
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalEjercicioPrivado">
+            <i class="bi bi-info-circle"></i>
+        </button>
         <div>
             <input type="radio" name="ejercicio_privado" value="SI" required> SI
             <input type="radio" name="ejercicio_privado" value="NO"> NO
@@ -344,6 +377,23 @@
             <input type="text" class="form-control" name="ubicacion_consultorio">
             <label class="form-label">Número y especialización médica o paramédica de los empleados</label>
             <input type="text" class="form-control" name="Numero_especialización">
+        </div>
+    </div>
+    <!-- Modal para Ejercicio Privado -->
+    <div class="modal fade" id="modalEjercicioPrivado" tabindex="-1" aria-labelledby="modalEjercicioPrivadoLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEjercicioPrivadoLabel">Información - Ejercicio Privado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    Hace referencia a los contratos por prestación de servicios profesionales,
+                </div>
+                <div class="modal-footer bg-light p-2 justify-content-start">
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -387,21 +437,63 @@
     <!-- Alojar Pacientes Durante Tratamiento -->
     <div class="mb-3">
         <label class="form-label">Existe la Posibilidad de Alojar a los Pacientes Durante Tratamiento:</label>
+                <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalAlojarPacientes">
+            <i class="bi bi-info-circle"></i> Más información
+        </button>
         <div>
             <input type="radio" name="alojar_pacientes" value="SI" required> SI
             <input type="radio" name="alojar_pacientes" value="NO"> NO
         </div>
 
     </div>
+    <!-- Modal para Alojar Pacientes -->                
+    <div class="modal fade" id="modalAlojarPacientes" tabindex="-1" aria-labelledby="modalAlojarPacientesLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAlojarPacientesLabel">Información - Alojar Pacientes</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    Esta pregunta se refiere a si en el área que trabaja quedan paciente hospitalizados 
+                </div>
+                
+                <div class="modal-footer bg-light p-2 justify-content-start">
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Tratamiento Solo Ambulatorio -->
     <div class="mb-3">
         <label class="form-label">Tratamiento de Pacientes es Solo Ambulatorio:</label>
+         <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalTratamientoAmbulatorio">
+            <i class="bi bi-info-circle"></i> Más información
+        </button>
         <div>
             <input type="radio" name="tratamiento_ambulatorio" value="SI" required> SI
             <input type="radio" name="tratamiento_ambulatorio" value="NO"> NO
         </div>
+       
 
+    </div>
+    <!-- Modal para Tratamiento Ambulatorio -->
+    <div class="modal fade" id="modalTratamientoAmbulatorio" tabindex="-1" aria-labelledby="modalTratamientoAmbulatorioLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTratamientoAmbulatorioLabel">Información - Tratamiento Ambulatorio</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    Esta pregunta se refiere a si el tratamiento de los pacientes se realiza exclusivamente de forma ambulatoria, sin hospitalización.
+                </div>
+                <div class="modal-footer bg-light p-2 justify-content-start">
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Otros Riesgos -->
@@ -419,7 +511,7 @@
 
     <!-- Ejercicio Exclusivo en Consultorio -->
     <div class="mb-3">
-        <label class="form-label">Ejercicio de las Actividades Profecionales Exclusivamente en el Consultorio Arriba indicado:</label>
+        <label class="form-label">Ejercicio de las Actividades Profesionales Exclusivamente en el Consultorio Arriba indicado:</label>
         <div>
             <input type="radio" name="ejercicio_exclusivo" value="SI" required> SI
             <input type="radio" name="ejercicio_exclusivo" value="NO"> NO
@@ -428,7 +520,7 @@
 
     <!-- Prestación de Servicios en Otras Instituciones -->
     <div class="mb-3">
-        <label class="form-label">Prestación de Servicios  Profecionales Tambien en Otras Instituciones de Salud o Empresa:</label>
+        <label class="form-label">Prestación de Servicios  Profesionales También en Otras Instituciones de Salud o Empresa:</label>
         <div>
             <input type="radio" name="prestacion_servicios" value="SI" required> SI
             <input type="radio" name="prestacion_servicios" value="NO"> NO
@@ -545,11 +637,13 @@
                 <h5 class="modal-title" id="modal_info_seguro_label">Información sobre el Seguro</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
+            
             <div class="modal-body">
-                 Debe colocar la información de la póliza anterior.
+                <p>Si ha comprado pólizas de responsabilidad civil profesional en los ultimos 5 años responda SI</p>
+                <p class="small text-muted mb-0">Debe colocar la información de la póliza anterior.</p>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+              <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
             </div>
         </div>
     </div>
@@ -602,48 +696,72 @@
 
     <!-- Código CIIU -->
     <div class="mb-3">
-        <label class="form-label">Código CIIU:</label>
+        <label class="form-label">Código CIIU:
+            <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalCodigoCIIU">
+            <i class="bi bi-info-circle"></i> Más información
+          </button>
+        </label>
         <input type="text" class="form-control" name="codigo_ciiu" required>
+ 
+
     </div>
-
-
-         <!-- Sector y Tipo de Actividad -->
-    <div class="mb-3">
-        <label class="form-label">Sector y Tipo de Actividad:</label>
-        <select class="form-select" name="sector_actividad" id="sectorActividad" required>
-          <option value="">Selecciona una opción</option>
-          <option value="Agrícola">Agrícola</option>
-          <option value="Alimentos">Alimentos</option>
-          <option value="Campaña Política">Campaña Política</option>
-          <option value="Comercio">Comercio</option>
-          <option value="Construcción">Construcción</option>
-          <option value="Educación">Educación</option>
-          <option value="Farmacéutica">Farmacéutica</option>
-          <option value="Financiero">Financiero</option>
-          <option value="Industrial">Industrial</option>
-          <option value="Informática">Informática</option>
-          <option value="Metalmecánico">Metalmecánico</option>
-          <option value="Minero y Energético">Minero y Energético</option>
-          <option value="Petróleo">Petróleo</option>
-          <option value="Químico">Químico</option>
-          <option value="Salud">Salud</option>
-          <option value="Servicios">Servicios</option>
-          <option value="Servicios Financieros">Servicios Financieros</option>
-          <option value="Solidario">Solidario</option>
-          <option value="Telecomunicaciones">Telecomunicaciones</option>
-          <option value="Textiles">Textiles</option>
-          <option value="Transporte">Transporte</option>
-          <option value="Turismo">Turismo</option>
-          <option value="Otro">Otro, ¿cuál?</option>
-        </select>
-      </div> 
-
-      <div class="row">
-        <div class="col-md-6">
-            <label class="form-label">¿Cual?:</label>
-            <input type="text" class="form-control" name="cual" required>
+    <!-- Modal para Código CIIU -->
+    <div class="modal fade" id="modalCodigoCIIU" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title fs-6">Información sobre Código CIIU</        h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>El Código CIIU  Hace refrencia a los 4 numeros de su actividad  principal en el rut </p>
+                </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+              <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
+            </div>
+            
         </div>
     </div>
+
+
+<!-- Sector y Tipo de Actividad -->
+<div class="mb-3">
+    <label class="form-label">Sector y Tipo de Actividad:</label>
+    <select class="form-select" name="sector_actividad" id="sectorActividad" required>
+      <option value="">Selecciona una opción</option>
+      <option value="Agrícola">Agrícola</option>
+      <option value="Alimentos">Alimentos</option>
+      <option value="Campaña Política">Campaña Política</option>
+      <option value="Comercio">Comercio</option>
+      <option value="Construcción">Construcción</option>
+      <option value="Educación">Educación</option>
+      <option value="Farmacéutica">Farmacéutica</option>
+      <option value="Financiero">Financiero</option>
+      <option value="Industrial">Industrial</option>
+      <option value="Informática">Informática</option>
+      <option value="Metalmecánico">Metalmecánico</option>
+      <option value="Minero y Energético">Minero y Energético</option>
+      <option value="Petróleo">Petróleo</option>
+      <option value="Químico">Químico</option>
+      <option value="Salud">Salud</option>
+      <option value="Servicios">Servicios</option>
+      <option value="Servicios Financieros">Servicios Financieros</option>
+      <option value="Solidario">Solidario</option>
+      <option value="Telecomunicaciones">Telecomunicaciones</option>
+      <option value="Textiles">Textiles</option>
+      <option value="Transporte">Transporte</option>
+      <option value="Turismo">Turismo</option>
+      <option value="Otro">Otro, ¿cuál?</option>
+    </select>
+
+    <!-- Campo "¿Cuál?" SOLO aparece si selecciona "Otro" -->
+    <div id="cual_sector_row" style="display: none; margin-top: 10px;">
+        <label class="form-label">¿Cuál?:</label>
+        <input type="text" class="form-control" name="cual" id="cual_sector">
+    </div>
+</div>
+
 
       
 
@@ -701,13 +819,14 @@
 <input type="text" class="form-control money" name="ingresos_mensuales" required>
 </div>
 <div class="col-md-4">
-<label class="form-label">Otros Ingresos:</label>
-<input type="text" class="form-control money" name="otros_ingresos">
+  <label class="form-label">Otros Ingresos:</label>
+  <input type="text" class="form-control money" name="otros_ingresos" id="otros_ingresos">
 </div>
-<div class="col-md-4">
-<label class="form-label">Concepto de Otros Ingresos:</label>
-<input type="text" class="form-control" name="concepto_otros_ingresos">
+<div class="col-md-4" id="concepto_otros_ingresos_div" style="display: none;">
+  <label class="form-label">Concepto de Otros Ingresos:</label>
+  <input type="text" class="form-control" name="concepto_otros_ingresos" id="concepto_otros_ingresos">
 </div>
+
 </div>
 
 <div class="row mt-3">
@@ -721,7 +840,7 @@
 </div>
 <div class="col-md-3">
 <label class="form-label">Pasivos:</label>
-<input type="text" class="form-control money" name="pasivos" id="pasivos" required>
+<input type="text" class="form-control money" name="pasivos" id="pasivos" >
 </div>
 <div class="col-md-3">
 <label class="form-label">Patrimonio:</label>
@@ -800,13 +919,36 @@
 
     <div class="row">
         <div class="col-md-6">
-            <label class="form-label">Origen de fondos:</label>
+            <label class="form-label">Origen de fondos:
+                 <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalOrigenFondos">
+                <i class="bi bi-info-circle"></i> Más información
+            </button>
+            </label>
             <input type="text" class="form-control" name="fondos"  required>
+           
         </div>
-    
+
     </div>
 
-    
+    <!-- Modal para Origen de Fondos -->
+    <div class="modal fade" id="modalOrigenFondos" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title fs-6">Información sobre Origen de Fondos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Indique el origen de los ingresos, por ejemplo: ingresos laborales, ahorros, herencias, venta de bienes, entre otros.</p>
+
+                </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+              <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-6">
             <label class="form-label">Asi mismo, entiendase como INTERMEDIARIO DE SEGUROS:</label>
@@ -1005,6 +1147,54 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(err => console.error('Error al cargar el archivo de departamentos:', err));
 });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const otrosIngresos = document.getElementById('otros_ingresos');
+  const conceptoDiv = document.getElementById('concepto_otros_ingresos_div');
+  const conceptoInput = document.getElementById('concepto_otros_ingresos');
+
+  // Mostrar u ocultar al cargar (si hay valor)
+  if (otrosIngresos.value.trim() !== "") {
+    conceptoDiv.style.display = 'block';
+  } else {
+    conceptoDiv.style.display = 'none';
+    conceptoInput.value = "";
+  }
+
+  otrosIngresos.addEventListener('input', function () {
+    if (this.value.trim() !== "") {
+      conceptoDiv.style.display = 'block';
+    } else {
+      conceptoDiv.style.display = 'none';
+      conceptoInput.value = "";
+    }
+  });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const sectorActividad = document.getElementById('sectorActividad');
+  const cualRow = document.getElementById('cual_sector_row');
+  const cualInput = document.getElementById('cual_sector');
+
+  function toggleCual() {
+    if (sectorActividad.value === 'Otro') {
+      cualRow.style.display = 'block';
+      cualInput.required = true;
+    } else {
+      cualRow.style.display = 'none';
+      cualInput.value = '';
+      cualInput.required = false;
+    }
+  }
+
+  // Ejecutar al cargar la página (útil para edición)
+  toggleCual();
+
+  sectorActividad.addEventListener('change', toggleCual);
+});
+</script>
+
 
 
 

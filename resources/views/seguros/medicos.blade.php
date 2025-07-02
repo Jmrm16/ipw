@@ -156,15 +156,28 @@
           </span>
         </button>
       </div>
-          <div class="container">
-      <div class="cta-content">
-        <h3>¿Tienes dudas sobre el proceso de cumplimiento?</h3>
-        <p>Nuestro equipo está listo para ayudarte con cualquier inquietud que puedas tener sobre el proceso o los documentos requeridos.</p>
-        <a href="https://wa.me/573008000231" target="_blank" rel="noopener" class="btn btn-success btn-lg">
-        <i class="fab fa-whatsapp me-2"></i> Contactar por WhatsApp
+
+<div class="container mt-5">
+  <div class="card border-0 shadow-sm rounded-4 bg-white p-4 text-center">
+    <div class="card-body px-4 py-3">
+      <div class="d-flex flex-column align-items-center">
+        <div class="bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+          <i class="fab fa-whatsapp fa-2x"></i>
+        </div>
+        <h4 class="fw-bold text-dark mb-2">¿No encontraste tu profesión o el valor asegurado?</h4>
+        <p class="text-muted mb-4" style="max-width: 600px;">
+          Si tu especialidad médica o el monto deseado no está disponible en el simulador, comunícate con uno de nuestros asesores. Estaremos encantados de brindarte una cotización personalizada.
+        </p>
+        <a href="https://wa.me/573008000231" target="_blank" rel="noopener"
+           class="btn btn-success btn-lg px-5 py-2 rounded-pill shadow-sm">
+          <i class="fab fa-whatsapp me-2"></i> Hablar con un asesor
         </a>
       </div>
     </div>
+  </div>
+</div>
+
+
 
       <!-- Resultado -->
       <div id="resultado" class="text-center mt-4 fs-5 fw-bold text-success"></div>
