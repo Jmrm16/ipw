@@ -78,12 +78,12 @@
     </div>
 </section>
 
-<!-- Aseguradoras Section -->
-<section class="py-5 bg-white">
+<!-- Aseguradoras Section Mejorado -->
+<section class="py-5" style="background: linear-gradient(to right, #f8f9fa, #eef2f7);">
     <div class="container">
         <div class="text-center mb-5">
-            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 mb-2">Aseguradoras Aliadas</span>
-            <h2 class="fw-bold mb-3">Confianza y Respaldo Garantizados</h2>
+            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 mb-2">🔒 Aseguradoras Aliadas</span>
+            <h2 class="fw-bold text-dark mb-3">Confianza y Respaldo Garantizados</h2>
             <p class="text-muted">Trabajamos con las principales compañías aseguradoras del país</p>
         </div>
 
@@ -91,8 +91,12 @@
             <div class="swiper-wrapper align-items-center py-3">
                 <?php $__currentLoopData = ['confianza', 'previsora', 'colpatria', 'mundial']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $logo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="swiper-slide">
-                    <div class="logo-wrapper">
-                        <img src="<?php echo e(asset("img/aseguradoras/{$logo}.png")); ?>" alt="<?php echo e(ucfirst($logo)); ?>" class="aseguradora-logo">
+                    <div class="logo-wrapper p-3 d-flex align-items-center justify-content-center h-100 bg-white rounded-4 shadow-sm hover-scale transition">
+                    <img src="<?php echo e(asset("img/aseguradoras/{$logo}.png")); ?>"
+                        alt="<?php echo e(ucfirst($logo)); ?>"
+                        class="aseguradora-logo"
+                        style="max-height: 80px; object-fit: contain;">
+
                     </div>
                 </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -100,6 +104,17 @@
         </div>
     </div>
 </section>
+
+<!-- Estilos adicionales -->
+<style>
+    .hover-scale {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hover-scale:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+</style>
 
 <!-- Servicios Section -->
 <section class="py-5" style="background: linear-gradient(135deg, #f8f9fa, #e9ecef);">
@@ -275,22 +290,7 @@
                         </div>
                     </div>
 
-                    <!-- Miembro 2 -->
-                    <div class="team-item bg-white rounded shadow-sm overflow-hidden">
-                        <div class="position-relative">
-                            <img src="<?php echo e(asset('img/presidenta.png')); ?>" class="img-fluid w-100" alt="Ibeth Pana" style="height: 320px; object-fit: cover;">
-                            <div class="team-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50 opacity-0">
-                                <div class="d-flex gap-2">
-                                    <a href="#" class="btn btn-outline-light rounded-circle"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#" class="btn btn-outline-light rounded-circle"><i class="fab fa-linkedin-in"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center py-3 px-3">
-                            <h5 class="fw-bold mb-1">Ibeth Pana waffer</h5>
-                            <small class="text-muted">Presidenta De La compañia</small>
-                        </div>
-                    </div>
+               
 
                     <!-- Miembro 3 -->
                     <div class="team-item bg-white rounded shadow-sm overflow-hidden">
@@ -392,17 +392,13 @@
         box-shadow: 0 4px 20px rgba(80,80,180,0.10);
     }
     
-    .aseguradora-logo {
-        max-width: 80%;
-        max-height: 65px;
-        object-fit: contain;
-        filter: grayscale(100%);
-        transition: all 0.3s ease;
-    }
-    
-    .aseguradora-logo:hover {
-        filter: grayscale(0%);
-    }
+.aseguradora-logo {
+    max-width: 80%;
+    max-height: 65px;
+    object-fit: contain;
+    transition: all 0.3s ease;
+}
+
     
     /* Icon Box */
     .icon-container {

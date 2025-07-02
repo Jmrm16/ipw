@@ -41,7 +41,8 @@ $pdf->SetXY(37, 42.5);
 $pdf->Cell(0, 10, $formulario->nombres.' '.$formulario->primer_apellido.' '.$formulario->segundo_apellido, 0, 0, '', false, 1);
 
 $pdf->SetXY(14.5, 50);
-$pdf->Cell(0, 10, $formulario->numero_identificacion, 0, 0, '', false, 1);
+$pdf->Cell(0, 10, number_format($formulario->numero_identificacion, 0, '', '.'), 0, 0, '', false, 1);
+
 
 $pdf->SetXY(103, 50);
 $pdf->Cell(0, 10, $formulario->direccion . ' - ' . $formulario->ciudad_residencia, 0, 0, '', false, 1);
@@ -58,7 +59,8 @@ $pdf->Cell(0, 10, substr($formulario->fecha_graduacion,0,10), 0, 0, '', false, 1
 
 
 $pdf->SetXY(14.15, 70.5);
-$pdf->Cell(0, 10, $formulario->numero_identificacion, 0, 0, '', false, 1);
+$pdf->Cell(0, 10, number_format($formulario->numero_identificacion, 0, '', '.'), 0, 0, '', false, 1);
+
 
 $pdf->SetXY(100, 70.5);
 $pdf->Cell(0, 10, $formulario->registro_profecional, 0, 0, '', false, 1);
@@ -407,7 +409,7 @@ $pdf->Cell(0, 10, $valorFormateado, 0, 0, '', false, 1);
                 $pdf->Cell(0, 10, $request->nombres.' '.$request->primer_apellido.' '.$request->segundo_apellido, 0, 0, '', false, 1);
 
                 $pdf->SetXY(14.5, 50);
-                $pdf->Cell(0, 10, $request->numero_identificacion, 0, 0, '', false, 1);
+                $pdf->Cell(0, 10, number_format($request->numero_identificacion, 0, '', '.'), 0, 0, '', false, 1);
 
                 $pdf->SetXY(103, 50);
                 $pdf->Cell(0, 10, $request->direccion . ' - ' . $request->ciudad_residencia, 0, 0, '', false, 1);
@@ -1271,7 +1273,8 @@ $pdf->SetFont('Helvetica', '', 8);
                 $pdf->SetXY(28, 240);
                 $pdf->Cell(0, 10, $formulario->nombres . ' ' . $formulario->primer_apellido . ' ' . $formulario->segundo_apellido, 0, 1);
                 $pdf->SetXY(28, 246.5);
-                $pdf->Cell(0, 10, "{$formulario->tipo_documento}{$formulario->numero_identificacion}", 0, 1);
+                $pdf->Cell(0, 10, "{$formulario->tipo_documento} " . number_format($formulario->numero_identificacion, 0, '', '.'), 0, 1);
+
                 
    
                 

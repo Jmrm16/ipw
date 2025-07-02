@@ -16,7 +16,7 @@ class RegisteredUserController extends Controller
     /**
      * Mostrar la página de registro.
      */
-    public function create()
+    public function create(Request $request)
     {
         return view('auth.register');
     }
@@ -42,6 +42,19 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        // REDIRECCIÓN PERSONALIZADA DESPUÉS DEL REGISTRO
+        if (session()->has('register_redirect')) {
+            $url = session()->pull('register_redirect');
+
+            // Si la url contiene "seguros/medicos", redirige a formulario.create
+            if (str_contains($url, 'seguros/medicos')) {
+                return redirect()->route('formulario.create');
+            }
+            // O simplemente redirige a la url guardada
+            return redirect($url);
+        }
+
+        // Fallback por defecto
         return redirect()->route('dashboard');
     }
 }

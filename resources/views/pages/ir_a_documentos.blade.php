@@ -158,7 +158,9 @@
           <!-- Mensaje secundario -->
           <p class="mt-4 text-muted small">
             Si tienes problemas con el formulario o necesitas asistencia, por favor contacta a nuestro 
-            <a href="mailto:soporte@segurosmundial.com.co">equipo de soporte</a>.
+            <a href="https://wa.me/573008000231" target="_blank" rel="noopener" class="btn btn-success btn-lg">
+            <i class="fab fa-whatsapp me-2"></i> Contactar por WhatsApp
+            </a>
           </p>
         </div>
       </div>

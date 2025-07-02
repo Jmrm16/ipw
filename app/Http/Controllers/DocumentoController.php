@@ -6,102 +6,134 @@ use App\Models\DocumentoUsuario;
 use App\Models\FormularioMedico;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use App\Models\Notificacion;
 
 class DocumentoController extends Controller
 {
     // Mostrar lista de documentos requeridos para el formulario más reciente
-public function index()
-{
-    $user = Auth::user();
-    $formulario = FormularioMedico::where('user_id', $user->id)->latest()->first();
+    public function index()
+    {
+        $user = Auth::user();
+        $formulario = FormularioMedico::where('user_id', $user->id)->latest()->first();
 
-    if (!$formulario) {
-        return view('pages.documentos-vacio');
+        if (!$formulario) {
+            return view('pages.documentos-vacio');
+        }
+
+        // SOLO documentos heredados (globales)
+        $documentos = DocumentoUsuario::where('user_id', $user->id)
+            ->whereNull('formulario_medico_id')
+            ->get()
+            ->keyBy('tipo');
+
+        $tipos = [
+            'cedula',
+            'rut',
+            'diploma',
+            'tarjeta_profesional',
+        ];
+
+        return view('pages.documentos', compact('documentos', 'tipos', 'formulario'));
     }
 
-    // Cargar documentos específicos de este formulario
-    $documentosFormulario = DocumentoUsuario::where('user_id', $user->id)
-        ->where('formulario_medico_id', $formulario->id)
-        ->get()
-        ->keyBy('tipo');
+    // Subir documentos (masivo o individual) SIEMPRE como global/heredado
+    public function store(Request $request, FormularioMedico $formulario)
+    {
+        $user = Auth::user();
 
-    // Cargar documentos generales del usuario (sin formulario asignado)
-    $documentosGenerales = DocumentoUsuario::where('user_id', $user->id)
-        ->whereNull('formulario_medico_id')
-        ->get()
-        ->keyBy('tipo');
+        // Subida masiva
+        if ($request->has('archivos') && is_array($request->archivos)) {
+            $tiposValidos = [
+                'contrato',
+                'cedula_representante',
+                'camara_comercio',
+                'rut_actualizado',
+                'estados_financieros',
+                'experiencia_certificada',
+                'formulario_sarlaft',
+            ];
 
-    // Mezclar: prioridad a los específicos, pero si no hay, usar el general
-    $documentos = $documentosGenerales->merge($documentosFormulario);
+            foreach ($request->archivos as $tipo => $archivo) {
+                if (!$archivo) continue;
 
-    $tipos = [
-        'cedula',
-        'rut',
-        'diploma',
-        'tarjeta_profesional',
-    ];
+                $request->validate([
+                    "archivos.$tipo" => 'file|mimes:pdf,jpg,jpeg,png|max:5120',
+                ]);
+                if (!in_array($tipo, $tiposValidos)) continue;
 
-    return view('pages.documentos', compact('documentos', 'tipos', 'formulario'));
-}
+                $nombre = time() . '_' . $archivo->getClientOriginalName();
+                $ruta = $archivo->storeAs("documentos_usuario/{$user->id}", $nombre, 'public');
 
+                // SIEMPRE GUARDA COMO HEREDADO (null)
+                DocumentoUsuario::updateOrCreate(
+                    [
+                        'user_id' => $user->id,
+                        'formulario_medico_id' => null,
+                        'tipo' => $tipo,
+                    ],
+                    [
+                        'archivo' => $ruta,
+                        'estado' => 'subido',
+                    ]
+                );
 
-public function store(Request $request, FormularioMedico $formulario)
-{
-    $request->validate([
-        'tipo' => 'required|in:cedula,rut,diploma,tarjeta_profesional,formulario_sarlaft,formulario_medico,contrato,cedula_representante,camara_comercio,rut_actualizado,estados_financieros,experiencia_certificada,formulario_oficio',
-        'archivo' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120', // Máximo 5MB
-    ]);
+                Notificacion::create([
+                    'tipo' => 'documento_subido',
+                    'mensaje' => "El usuario {$user->name} ha subido el documento: {$tipo}",
+                    'leida' => false,
+                    'data' => [
+                        'user_id' => $user->id,
+                        'formulario_id' => $formulario->id,
+                        'tipo_proceso' => $formulario->tipo_proceso,
+                    ],
+                ]);
+            }
+        }
+        // Subida individual
+        elseif ($request->hasFile('archivo')) {
+            $request->validate([
+                'tipo' => 'required|in:cedula,rut,diploma,tarjeta_profesional,formulario_sarlaft,formulario_medico,contrato,cedula_representante,camara_comercio,rut_actualizado,estados_financieros,experiencia_certificada,formulario_oficio',
+                'archivo' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            ]);
+            $tipo = $request->tipo;
+            $archivo = $request->file('archivo');
+            $nombre = time() . '_' . $archivo->getClientOriginalName();
+            $ruta = $archivo->storeAs("documentos_usuario/{$user->id}", $nombre, 'public');
 
-    $user = Auth::user();
-    $tipo = $request->tipo;
+            // SIEMPRE GUARDA COMO HEREDADO (null)
+            DocumentoUsuario::updateOrCreate(
+                [
+                    'user_id' => $user->id,
+                    'formulario_medico_id' => null,
+                    'tipo' => $tipo,
+                ],
+                [
+                    'archivo' => $ruta,
+                    'estado' => 'subido',
+                ]
+            );
+            Notificacion::create([
+                'tipo' => 'documento_subido',
+                'mensaje' => "El usuario {$user->name} ha subido el documento: {$tipo}",
+                'leida' => false,
+                'data' => [
+                    'user_id' => $user->id,
+                    'formulario_id' => $formulario->id,
+                    'tipo_proceso' => $formulario->tipo_proceso,
+                ],
+            ]);
+        }
 
-    // Guardar siempre con el ID del formulario actual (sea médico o cumplimiento)
-    $formularioId = $formulario->id;
+        // Redirección dinámica según tipo de proceso
+        $ruta = $formulario->tipo_proceso === 'cumplimiento'
+            ? 'documentos.cumplimiento'
+            : 'documentos.por_formulario';
 
-    // Guardar archivo en carpeta personalizada
-    $archivo = $request->file('archivo');
-    $nombre = time() . '_' . $archivo->getClientOriginalName();
-    $ruta = $archivo->storeAs("documentos_usuario/{$user->id}", $nombre, 'public');
+        return redirect()->route($ruta, ['formulario' => $formulario->id])
+            ->with('success', 'Documento(s) subido(s) correctamente.');
+    }
 
-    // Crear o actualizar el documento
-    DocumentoUsuario::updateOrCreate(
-        [
-            'user_id' => $user->id,
-            'formulario_medico_id' => $formularioId,
-            'tipo' => $tipo,
-        ],
-        [
-            'archivo' => $ruta,
-            'estado' => 'subido',
-        ]
-    );
-
-    // Crear notificación
-    Notificacion::create([
-        'tipo' => 'documento_subido',
-        'mensaje' => "El usuario {$user->name} ha subido el documento: {$tipo}",
-        'leida' => false,
-        'data' => [
-            'user_id' => $user->id,
-            'formulario_id' => $formularioId,
-            'tipo_proceso' => $formulario->tipo_proceso,
-        ],
-    ]);
-
-    // Redirección dinámica según tipo de proceso
-    $ruta = $formulario->tipo_proceso === 'cumplimiento'
-        ? 'documentos.cumplimiento'
-        : 'documentos.por_formulario';
-
-    return redirect()->route($ruta, ['formulario' => $formularioId])
-        ->with('success', 'Documento subido correctamente.');
-}
-
-
-
-    // Ver un documento por tipo (usando formulario actual o global)
+    // Ver un documento por tipo (usando global)
     public function ver($tipo, $formularioId)
     {
         $user = Auth::user();
@@ -112,16 +144,13 @@ public function store(Request $request, FormularioMedico $formulario)
 
         $documento = DocumentoUsuario::where('user_id', $user->id)
             ->where('tipo', $tipo)
-            ->where(function ($query) use ($formularioId) {
-                $query->where('formulario_medico_id', $formularioId)
-                      ->orWhereNull('formulario_medico_id');
-            })
+            ->whereNull('formulario_medico_id')
             ->firstOrFail();
 
         return response()->file(storage_path('app/public/' . $documento->archivo));
     }
 
-    // Ver vista de documentos por formulario (usa herencia también)
+    // Vista por formulario (usa heredado)
     public function verPorFormulario($formularioId)
     {
         $user = Auth::user();
@@ -137,90 +166,78 @@ public function store(Request $request, FormularioMedico $formulario)
             'tarjeta_profesional',
             'formulario_sarlaft',
             'formulario_medico',
-            'formulario_oficio', // Añadido para incluir el Oficio
+            'formulario_oficio',
         ];
 
         $documentos = DocumentoUsuario::where('user_id', $user->id)
-            ->where(function ($query) use ($formularioId) {
-                $query->whereNull('formulario_medico_id')
-                      ->orWhere('formulario_medico_id', $formularioId);
-            })
+            ->whereNull('formulario_medico_id')
             ->get()
             ->keyBy('tipo');
 
         return view('pages.documentos', compact('documentos', 'tipos', 'formulario'));
     }
 
-
     public function verPorFormularioCumplimiento($formularioId)
-{
-    $user = Auth::user();
+    {
+        $user = Auth::user();
 
-    $formulario = FormularioMedico::where('id', $formularioId)
-        ->where('user_id', $user->id)
-        ->firstOrFail();
+        $formulario = FormularioMedico::where('id', $formularioId)
+            ->where('user_id', $user->id)
+            ->firstOrFail();
 
-    $tipos = [
-        'contrato',
-        'cedula_representante',
-        'camara_comercio',
-        'rut_actualizado',
-        'estados_financieros',
-        'experiencia_certificada',
-    ];
+        $tipos = [
+            'contrato',
+            'cedula_representante',
+            'camara_comercio',
+            'rut_actualizado',
+            'estados_financieros',
+            'experiencia_certificada',
+            'formulario_sarlaft',
+        ];
 
-    $documentos = DocumentoUsuario::where('user_id', $user->id)
-        ->where(function ($query) use ($formularioId) {
-            $query->whereNull('formulario_medico_id')
-                  ->orWhere('formulario_medico_id', $formularioId);
-        })
-        ->get()
-        ->keyBy('tipo');
+        $documentos = DocumentoUsuario::where('user_id', $user->id)
+            ->whereNull('formulario_medico_id')
+            ->get()
+            ->keyBy('tipo');
 
-    return view('pages.documentos_cumplimiento', compact('documentos', 'tipos', 'formulario'));
-}
-
-public function verCumplimiento($formularioId)
-{
-    $user = Auth::user();
-
-    $formulario = FormularioMedico::where('id', $formularioId)
-        ->where('user_id', $user->id)
-        ->firstOrFail();
-
-    $tipos = [
-        'formulario_sarlaft', // ✅ Añadido para incluir el SARLAFT firmado
-        'contrato',
-        'cedula_representante',
-        'camara_comercio',
-        'rut_actualizado',
-        'estados_financieros',
-        'experiencia_certificada',
-    ];
-
-    $documentos = DocumentoUsuario::where('user_id', $user->id)
-        ->where('formulario_medico_id', $formularioId)
-        ->get()
-        ->keyBy('tipo');
-
-    return view('pages.documentos_cumplimiento', compact('documentos', 'tipos', 'formulario'));
-}
-
-public function cumplimiento(FormularioMedico $formulario)
-{
-    // Puedes aplicar lógica adicional si quieres validar tipo
-    if ($formulario->tipo_proceso !== 'cumplimiento') {
-        abort(403, 'Este formulario no es de tipo cumplimiento.');
+        return view('pages.documentos_cumplimiento', compact('documentos', 'tipos', 'formulario'));
     }
 
-return view('pages.documentos_cumplimiento', [
-    'formulario' => $formulario,
-    'tipo' => 'cumplimiento'
-]);
+    public function verCumplimiento($formularioId)
+    {
+        $user = Auth::user();
 
-}
+        $formulario = FormularioMedico::where('id', $formularioId)
+            ->where('user_id', $user->id)
+            ->firstOrFail();
 
+        $tipos = [
+            'formulario_sarlaft',
+            'contrato',
+            'cedula_representante',
+            'camara_comercio',
+            'rut_actualizado',
+            'estados_financieros',
+            'experiencia_certificada',
+        ];
 
+        $documentos = DocumentoUsuario::where('user_id', $user->id)
+            ->whereNull('formulario_medico_id')
+            ->get()
+            ->keyBy('tipo');
 
+        return view('pages.documentos_cumplimiento', compact('documentos', 'tipos', 'formulario'));
+    }
 
+    public function cumplimiento(FormularioMedico $formulario)
+    {
+        if ($formulario->tipo_proceso !== 'cumplimiento') {
+            abort(403, 'Este formulario no es de tipo cumplimiento.');
+        }
+
+        return view('pages.documentos_cumplimiento', [
+            'formulario' => $formulario,
+            'tipo' => 'cumplimiento'
+        ]);
+    }
 }

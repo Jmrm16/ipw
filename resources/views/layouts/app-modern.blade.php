@@ -14,6 +14,40 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
     <style>
+        /* Estilos para el sidebar */
+        .sidebar-collapsed .sidebar-label {
+            display: none;
+        }
+        /* Mejoras para móviles */
+        @media (max-width: 768px) {
+            #sidebar {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                height: 100vh;
+                z-index: 50;
+                transition: left 0.3s ease;
+            }
+            #sidebar.mobile-open {
+                left: 0;
+            }
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0,0,0,0.5);
+                z-index: 40;
+            }
+            .sidebar-overlay.active {
+                display: block;
+            }
+            body.sidebar-open {
+                overflow: hidden;
+            }
+        }
         /* Permite ver el texto completo de las notificaciones */
         .notificacion-mensaje {
             white-space: pre-line;
@@ -22,87 +56,32 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 font-sans text-gray-800" x-data="{
-    sidebarCollapsed: false,
-    mobileSidebarOpen: false,
-    notificationsOpen: false,
-    markNotificationsAsRead() {
-        fetch('{{ route('notificaciones.marcar-leidas') }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify({})
-        }).then(response => {
-            if(response.ok) {
-                const badge = document.querySelector('.notification-badge');
-                if(badge) {
-                    badge.remove();
-                }
-            }
-        });
-    }
-}" x-init="
-    // Ajustar estado inicial del sidebar según el tamaño de pantalla
-    if (window.innerWidth < 768) {
-        sidebarCollapsed = false;
-        mobileSidebarOpen = false;
-    } else {
-        // Opcional: puedes cargar el estado desde localStorage
-        sidebarCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
-    }
-    
-    // Manejar cambios de tamaño de pantalla
-    window.addEventListener('resize', () => {
-        if (window.innerWidth < 768) {
-            mobileSidebarOpen = false;
-            sidebarCollapsed = false;
-        }
-    });
-">
+<body class="bg-gray-50 font-sans text-gray-800">
 
 <!-- Overlay para móviles -->
-<div x-show="mobileSidebarOpen" @click="mobileSidebarOpen = false" 
-    class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden transition-opacity duration-300"
-    x-transition:enter="ease-out duration-300"
-    x-transition:enter-start="opacity-0"
-    x-transition:enter-end="opacity-100"
-    x-transition:leave="ease-in duration-200"
-    x-transition:leave-start="opacity-100"
-    x-transition:leave-end="opacity-0">
-</div>
+<div id="sidebarOverlay" class="sidebar-overlay"></div>
 
-<div class="flex flex-col md:flex-row h-screen overflow-hidden">
+<div class="flex flex-col md:flex-row h-screen">
 
-    <!-- Sidebar -->
-    <aside 
-        x-bind:class="{
-            'translate-x-0': mobileSidebarOpen || !(window.innerWidth < 768),
-            '-translate-x-full': !mobileSidebarOpen && window.innerWidth < 768,
-            'md:w-20': sidebarCollapsed,
-            'md:w-64': !sidebarCollapsed
-        }"
-        class="fixed md:relative z-50 w-64 bg-white shadow-md flex flex-col h-full transition-all duration-300 ease-in-out transform md:transform-none"
-        :class="{'overflow-y-auto': mobileSidebarOpen || !sidebarCollapsed}">
-        
-        <a href="{{ url('/') }}" title="Ir a Inicio" class="block">
-            <div class="p-4 border-b border-gray-100 flex items-center gap-3">
+    <!-- Sidebar - Versión móvil -->
+    <aside id="sidebar" class="bg-white w-64 md:w-20 lg:w-64 transition-all duration-300 shadow-md flex flex-col z-50">
+        <a href="{{ url('/') }}" title="Ir a Inicio">
+            <div class="p-4 md:p-3 border-b border-gray-100 flex items-center gap-3">
                 <div class="bg-blue-500 p-2 rounded-lg">
                     <img src="https://firebasestorage.googleapis.com/v0/b/spotify-clone-db93c.firebasestorage.app/o/logoB.png?alt=media&token=79427397-a113-4f70-ad28-30646f37feee" alt="Logo IPW" class="h-8 w-8 object-contain">
                 </div>
-                <div class="flex flex-col overflow-hidden" x-show="!sidebarCollapsed || (window.innerWidth < 768)">
-                    <h1 class="text-lg font-bold text-gray-800">IPW</h1>
-                    <p class="text-xs text-gray-500 mt-1 truncate">{{ Auth::user()->name }}</p>
+                <div class="flex flex-col overflow-hidden">
+                    <h1 class="text-lg font-bold text-gray-800 sidebar-label">IPW</h1>
+                    <p class="text-xs text-gray-500 mt-1 sidebar-label truncate">{{ Auth::user()->name }}</p>
                 </div>
             </div>
         </a>
 
         <!-- Menú -->
-        <nav class="p-2 space-y-1 flex-1 overflow-y-auto">
-            <x-nav-link route="dashboard" icon="ri-home-5-line" label="Inicio" :collapsed="$sidebarCollapsed ?? false" />
-            <x-nav-link route="perfil.show" icon="ri-user-line" label="Perfil" :collapsed="$sidebarCollapsed ?? false" />
-            <x-nav-link route="documentos.index" icon="ri-folder-line" label="Documentos" :collapsed="$sidebarCollapsed ?? false" />
+        <nav class="p-2 md:p-1 space-y-1 flex-1 overflow-y-auto">
+            <x-nav-link route="dashboard" icon="ri-home-5-line" label="Inicio" />
+            <x-nav-link route="perfil.show" icon="ri-user-line" label="Perfil" />
+            <x-nav-link route="documentos.index" icon="ri-folder-line" label="Documentos" />
         </nav>
 
         <!-- Logout -->
@@ -110,29 +89,22 @@
             @csrf
             <button class="w-full flex items-center justify-center gap-2 py-2 px-3 text-red-500 hover:bg-red-50 rounded-lg transition-all duration-200">
                 <i class="ri-logout-box-r-line"></i>
-                <span x-show="!sidebarCollapsed || (window.innerWidth < 768)">Salir</span>
+                <span class="sidebar-label">Salir</span>
             </button>
         </form>
     </aside>
 
     <!-- Main -->
-    <div class="flex-1 flex flex-col overflow-hidden" 
-         :class="{
-             'md:ml-20': sidebarCollapsed,
-             'md:ml-64': !sidebarCollapsed
-         }"
-         x-bind:style="window.innerWidth < 768 ? '' : {transition: 'margin-left 300ms ease-in-out'}">
-        
+    <div class="flex-1 flex flex-col overflow-hidden">
         <!-- Header -->
-        <header class="h-16 px-4 md:px-6 flex items-center justify-between bg-white border-b shadow-sm sticky top-0 z-30">
+        <header class="h-16 px-4 md:px-6 flex items-center justify-between bg-white border-b shadow-sm sticky top-0 z-40">
             <div class="flex items-center gap-4">
                 <!-- Botón para mostrar/ocultar sidebar en móviles -->
-                <button @click="mobileSidebarOpen = !mobileSidebarOpen" class="text-gray-600 hover:text-blue-500 focus:outline-none transition-colors md:hidden">
+                <button id="sidebarToggle" class="text-gray-600 hover:text-blue-500 focus:outline-none transition-colors md:hidden">
                     <i class="ri-menu-line text-2xl"></i>
                 </button>
                 <!-- Botón para colapsar/expandir sidebar en desktop -->
-                <button @click="sidebarCollapsed = !sidebarCollapsed; localStorage.setItem('sidebarCollapsed', sidebarCollapsed)" 
-                        class="text-gray-600 hover:text-blue-500 focus:outline-none transition-colors hidden md:block">
+                <button id="desktopSidebarToggle" class="text-gray-600 hover:text-blue-500 focus:outline-none transition-colors hidden md:block">
                     <i class="ri-menu-line text-2xl"></i>
                 </button>
                 <h2 class="text-lg font-semibold truncate max-w-xs">@yield('title', 'Panel')</h2>
@@ -140,26 +112,19 @@
 
             <!-- Notificaciones -->
             <div class="relative">
-                <button @click="notificationsOpen = !notificationsOpen; if(notificationsOpen) markNotificationsAsRead()"
+                <button id="notificacionesBtn"
                         class="relative p-2 rounded-full bg-white shadow hover:bg-blue-50 transition z-50">
                     <i class="ri-notification-3-line text-2xl text-blue-600"></i>
                     @if($notificaciones->where('leida', false)->count() > 0)
-                        <span class="notification-badge absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
                             {{ $notificaciones->where('leida', false)->count() }}
                         </span>
                     @endif
                 </button>
 
                 <!-- Dropdown modal -->
-                <div x-show="notificationsOpen" 
-                     @click.away="notificationsOpen = false"
-                     class="absolute top-12 right-0 w-80 md:w-96 bg-white rounded-lg shadow-lg ring-1 ring-gray-200 z-40"
-                     x-transition:enter="transition ease-out duration-200"
-                     x-transition:enter-start="opacity-0 translate-y-1"
-                     x-transition:enter-end="opacity-100 translate-y-0"
-                     x-transition:leave="transition ease-in duration-150"
-                     x-transition:leave-start="opacity-100 translate-y-0"
-                     x-transition:leave-end="opacity-0 translate-y-1">
+                <div id="notificacionesModal"
+                     class="hidden absolute top-12 right-0 w-80 md:w-96 bg-white rounded-lg shadow-lg ring-1 ring-gray-200 z-40">
                     <div class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-t-lg flex items-center gap-2">
                         <i class="ri-notification-3-line"></i> Notificaciones
                     </div>
@@ -202,6 +167,92 @@
 </button>
 
 <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const mobileToggle = document.getElementById('sidebarToggle');
+        const desktopToggle = document.getElementById('desktopSidebarToggle');
+        const body = document.body;
+
+        // Control del sidebar en móviles
+        mobileToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('mobile-open');
+            sidebarOverlay.classList.toggle('active');
+            body.classList.toggle('sidebar-open');
+        });
+
+        // Cerrar sidebar al hacer clic en el overlay
+        sidebarOverlay.addEventListener('click', () => {
+            sidebar.classList.remove('mobile-open');
+            sidebarOverlay.classList.remove('active');
+            body.classList.remove('sidebar-open');
+        });
+
+        // Control del sidebar en desktop
+        desktopToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('w-64');
+            sidebar.classList.toggle('w-20');
+            sidebar.classList.toggle('sidebar-collapsed');
+        });
+
+        // Control del modal de notificaciones
+        const notificacionesBtn = document.getElementById('notificacionesBtn');
+        const notificacionesModal = document.getElementById('notificacionesModal');
+        let modalAbierto = false;
+
+        notificacionesBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            modalAbierto = !modalAbierto;
+            
+            if (modalAbierto) {
+                notificacionesModal.classList.remove('hidden');
+                marcarNotificacionesComoLeidas();
+            } else {
+                notificacionesModal.classList.add('hidden');
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            if (modalAbierto && !notificacionesModal.contains(e.target) && e.target !== notificacionesBtn) {
+                notificacionesModal.classList.add('hidden');
+                modalAbierto = false;
+            }
+        });
+
+        function marcarNotificacionesComoLeidas() {
+            fetch("{{ route('notificaciones.marcar-leidas') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({})
+            }).then(response => {
+                if(response.ok) {
+                    const badge = document.querySelector('.absolute.-top-1.-right-1.bg-red-500');
+                    if(badge) {
+                        badge.remove();
+                    }
+                }
+            });
+        }
+
+        // Ajustar el tamaño del sidebar al cargar en móviles
+        function ajustarSidebar() {
+            if (window.innerWidth < 768) {
+                sidebar.classList.remove('w-64', 'w-20', 'sidebar-collapsed');
+            } else {
+                sidebar.classList.add('w-64');
+                sidebar.classList.remove('mobile-open', 'sidebar-collapsed');
+            }
+        }
+
+        ajustarSidebar();
+        window.addEventListener('resize', ajustarSidebar);
+    });
+</script>
 
 </body>
 </html>

@@ -18,6 +18,8 @@
 
     <!-- Favicon -->
     <link href="<?php echo e(asset('img/favicon.ico')); ?>" rel="icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">

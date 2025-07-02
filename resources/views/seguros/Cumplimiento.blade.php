@@ -317,8 +317,7 @@
   <section class="hero-section" style="background-image: url('{{ asset('img/rce.png') }}');">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <h1 class="display-4 fw-bold">Cumplimiento SARLAFT</h1>
-      <p class="lead">Proceso obligatorio para la prevención de lavado de activos y financiación del terrorismo</p>
+
     </div>
   </section>
 
@@ -655,10 +654,10 @@
   <section class="cta-section">
     <div class="container">
       <div class="cta-content">
-        <h3>¿Tienes dudas sobre el proceso SARLAFT?</h3>
-        <p>Nuestro equipo de cumplimiento está listo para ayudarte con cualquier inquietud que puedas tener sobre el proceso o los documentos requeridos.</p>
-        <a href="mailto:cumplimiento@segurosmundial.com.co" class="btn btn-light btn-lg">
-          <i class="fas fa-envelope me-2"></i> Contactar al equipo
+        <h3>¿Tienes dudas sobre el proceso de cumplimiento?</h3>
+        <p>Nuestro equipo está listo para ayudarte con cualquier inquietud que puedas tener sobre el proceso o los documentos requeridos.</p>
+        <a href="https://wa.me/573008000231" target="_blank" rel="noopener" class="btn btn-success btn-lg">
+        <i class="fab fa-whatsapp me-2"></i> Contactar por WhatsApp
         </a>
       </div>
     </div>

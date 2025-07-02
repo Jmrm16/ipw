@@ -292,22 +292,7 @@
                         </div>
                     </div>
 
-                    <!-- Miembro 2 -->
-                    <div class="team-item bg-white rounded shadow-sm overflow-hidden">
-                        <div class="position-relative">
-                            <img src="{{ asset('img/presidenta.png') }}" class="img-fluid w-100" alt="Ibeth Pana" style="height: 320px; object-fit: cover;">
-                            <div class="team-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50 opacity-0">
-                                <div class="d-flex gap-2">
-                                    <a href="#" class="btn btn-outline-light rounded-circle"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#" class="btn btn-outline-light rounded-circle"><i class="fab fa-linkedin-in"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center py-3 px-3">
-                            <h5 class="fw-bold mb-1">Ibeth Pana waffer</h5>
-                            <small class="text-muted">Presidenta De La compañia</small>
-                        </div>
-                    </div>
+               
 
                     <!-- Miembro 3 -->
                     <div class="team-item bg-white rounded shadow-sm overflow-hidden">

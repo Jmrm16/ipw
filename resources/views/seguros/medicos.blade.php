@@ -116,6 +116,7 @@
               <option value="CLASE 4" data-profesion="AUXILIAR DE ENFERMERIA">Auxiliar de Enfermería</option>
               <option value="CLASE 1" data-profesion="GINECOBSTETRICIA">Ginecología</option>
               <option value="CLASE 4" data-profesion="ODONTOLOGIA">Odontología</option>
+              <option value="CLASE 3" data-profesion="BACTERIOLOGA">Bacteriologa</option>
               <option value="CLASE 2" data-profesion="PSICOLOGIA">Psicología</option>
               <option value="CLASE 4" data-profesion="NUTRICIONISTA">Nutricionista</option>
               <option value="CLASE 3" data-profesion="PEDIATRIA">Pediatra</option>
@@ -155,6 +156,15 @@
           </span>
         </button>
       </div>
+          <div class="container">
+      <div class="cta-content">
+        <h3>¿Tienes dudas sobre el proceso de cumplimiento?</h3>
+        <p>Nuestro equipo está listo para ayudarte con cualquier inquietud que puedas tener sobre el proceso o los documentos requeridos.</p>
+        <a href="https://wa.me/573008000231" target="_blank" rel="noopener" class="btn btn-success btn-lg">
+        <i class="fab fa-whatsapp me-2"></i> Contactar por WhatsApp
+        </a>
+      </div>
+    </div>
 
       <!-- Resultado -->
       <div id="resultado" class="text-center mt-4 fs-5 fw-bold text-success"></div>
