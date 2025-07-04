@@ -16,10 +16,15 @@ class RegisteredUserController extends Controller
     /**
      * Mostrar la página de registro.
      */
-    public function create(Request $request)
-    {
-        return view('auth.register');
+ public function create(Request $request)
+{
+    // Guardar redirección si se pasa por parámetro
+    if ($request->has('redirect_to')) {
+        session(['register_redirect' => $request->query('redirect_to')]);
     }
+
+    return view('auth.register');
+}
 
     /**
      * Procesar la solicitud de registro.

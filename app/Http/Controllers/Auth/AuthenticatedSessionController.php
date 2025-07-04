@@ -11,10 +11,15 @@ use Illuminate\Http\RedirectResponse;
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Mostrar la vista de login (Blade).
+     * Mostrar la vista de login.
      */
     public function create(Request $request)
     {
+        // ✅ Guardar redirección si viene desde ?redirect_to=...
+        if ($request->has('redirect_to')) {
+            session(['redirect_after_login' => $request->query('redirect_to')]);
+        }
+
         return view('auth.login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => $request->session()->get('status'),
@@ -24,42 +29,41 @@ class AuthenticatedSessionController extends Controller
     /**
      * Procesar el inicio de sesión.
      */
-public function store(Request $request): RedirectResponse
-{
-    $credentials = $request->validate([
-        'email'    => ['required', 'email'],
-        'password' => ['required'],
-    ]);
-    
-    if (Auth::attempt($credentials, $request->filled('remember'))) {
-        $request->session()->regenerate();
+    public function store(Request $request): RedirectResponse
+    {
+        $credentials = $request->validate([
+            'email'    => ['required', 'email'],
+            'password' => ['required'],
+        ]);
 
-        // 1. Si Laravel ya tiene una URL protegida guardada (automático)
-        if (session()->has('url.intended')) {
-            return redirect()->intended(route('dashboard'));
-        }
+        if (Auth::attempt($credentials, $request->filled('remember'))) {
+            $request->session()->regenerate();
 
-        // 2. Si manualmente guardaste una URL anterior
-        if (session()->has('redirect_after_login')) {
-            $url = session()->pull('redirect_after_login');
-
-            // O redireccionas condicionalmente
-            if (str_contains($url, 'seguros/medicos')) {
-                return redirect()->route('formulario.create');
+            // ✅ 1. Redirección segura de Laravel (por ejemplo, si quiso ir a una ruta protegida)
+            if (session()->has('url.intended')) {
+                return redirect()->intended(route('dashboard'));
             }
 
-            return redirect($url);
+            // ✅ 2. Redirección personalizada si se guardó `redirect_to` previamente
+            if (session()->has('redirect_after_login')) {
+                $url = session()->pull('redirect_after_login');
+
+                // Redirigir específicamente a formulario.create si vino desde seguros/medicos
+                if (str_contains($url, 'seguros/medicos')) {
+                    return redirect()->route('formulario.create');
+                }
+
+                return redirect($url);
+            }
+
+            // ✅ 3. Fallback por defecto
+            return redirect()->route('dashboard');
         }
 
-        // 3. Fallback por defecto
-        return redirect()->route('dashboard');
+        return back()->withErrors([
+            'email' => 'Las credenciales ingresadas no son válidas.',
+        ])->onlyInput('email');
     }
-
-    return back()->withErrors([
-        'email' => 'Las credenciales ingresadas no son válidas.',
-    ])->onlyInput('email');
-}
-
 
     /**
      * Cerrar sesión.

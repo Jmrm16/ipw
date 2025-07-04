@@ -493,9 +493,8 @@ const tablaValores = {
             </button>
           </td>
           <td class="text-center">
-            <a href="${url}" class="btn btn-sm btn-primary">
-              <i class="fas fa-paper-plane me-1"></i> Solicitar
-            </a>
+<a href="#" class="btn btn-primary solicitar-poliza-btn">Solicitar Póliza</a>
+
           </td>
         </tr>
         <tr>
@@ -512,5 +511,22 @@ const tablaValores = {
     });
   });
 </script>
+<script>
+    document.addEventListener('click', function (e) {
+        if (e.target && e.target.classList.contains('solicitar-poliza-btn')) {
+            e.preventDefault();
+
+            @if(Auth::check())
+                window.location.href = "{{ route('formulario.create') }}";
+            @else
+                window.location.href = "{{ route('login') }}?redirect_to={{ urlencode('/seguros/medicos') }}";
+            @endif
+        }
+    });
+</script>
+
+
+
+
 
 @endsection

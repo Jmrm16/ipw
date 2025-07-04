@@ -14,6 +14,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventoPublicoController;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Rutas Públicas
@@ -126,6 +127,18 @@ Route::post('/notificaciones/marcar-todas', [DashboardController::class, 'marcar
     Route::post('/observaciones/{observacion}/responder', [ObservacionClienteController::class, 'responder'])
     ->name('observaciones.responder')
     ->middleware('auth');
+
+
+
+Route::get('/solicitar-poliza', function (Request $request) {
+    if (Auth::check()) {
+        return redirect()->route('formulario.create');
+    }
+
+    session(['redirect_after_login' => '/Formulario']);
+    return redirect()->route('login');
+})->name('redirigir.formulario');
+
     
 
 

@@ -6,7 +6,7 @@
 
 <!-- Encabezado de la Página -->
 <div class="container-fluid page-header d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5 mb-5">
-    <h1 class="display-4 text-white mb-3 mt-0 mt-lg-5">Poliza de responsabilidad civil para profecioanles de la salud</h1>
+    <h1 class="display-4 text-white mb-3 mt-0 mt-lg-5">Poliza de responsabilidad civil para profesionales de la salud</h1>
     <div class="d-inline-flex text-white">
         <p class="m-0"><a class="text-white" href="{{ url('/') }}">Inicio</a></p>
         <p class="m-0 px-2">/</p>
@@ -18,237 +18,728 @@
     <div class="card shadow p-4">
         <h2 class="text-center mb-4">Complete sus Datos</h2>
         @if(Auth::check())
-    <div class="alert alert-success text-center">
-        Usuario autenticado: {{ Auth::user()->name }}
-    </div>
-@else
-    <div class="alert alert-danger text-center">
-        No estás autenticado. Algunos datos pueden no guardarse correctamente.
-    </div>
-@endif
-
-<form action="{{ route('formulario.store') }}" method="POST">
-   
-    @csrf
-
-    <!-- Fecha, Ciudad y Sucursal -->
-    <div class="mb-3">
-        <label class="form-label">Fecha:</label>
-        <input type="text" class="form-control" name="fecha" value="{{ date('Y-m-d') }}" readonly>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
-            <label class="form-label">Ciudad:</label>
-            <input type="text" class="form-control" name="ciudad" value="MAICAO" readonly>
+        <div class="alert alert-success text-center">
+            Usuario autenticado: {{ Auth::user()->name }}
         </div>
-        <div class="col-md-6">
-            <label class="form-label">Sucursal:</label>
-            <input type="text" class="form-control" name="sucursal" value="SANTA MARTA" readonly>
+        @else
+        <div class="alert alert-danger text-center">
+            No estás autenticado. Algunos datos pueden no guardarse correctamente.
         </div>
-    </div>
-    <!-- Tipo de Proceso -->
-<input type="hidden" name="tipo_proceso" value="poliza medica">
+        @endif
 
+        <form action="{{ route('formulario.store') }}" method="POST">
+            @csrf
 
-    <!-- Tipo de Solicitud -->
-    <label>Tipo de Solicitud:</label>
-    <select name="tipo_solicitud">
+            <!-- Fecha, Ciudad y Sucursal -->
+            <div class="mb-3">
+                <label class="form-label">Fecha:</label>
+                <input type="text" class="form-control" name="fecha" value="{{ date('Y-m-d') }}" readonly>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">Ciudad:</label>
+                    <input type="text" class="form-control" name="ciudad" value="MAICAO" readonly>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Sucursal:</label>
+                    <input type="text" class="form-control" name="sucursal" value="SANTA MARTA" readonly>
+                </div>
+            </div>
+            
+            <!-- Tipo de Proceso -->
+            <input type="hidden" name="tipo_proceso" value="poliza medica">
+
+<!-- Tipo de Solicitud -->
+<div class="mb-3">
+    <label class="form-label d-flex align-items-center">
+        Tipo de Solicitud:
+        <button type="button" class="btn btn-sm btn-outline-info ms-2 p-0 border-0" data-bs-toggle="modal" data-bs-target="#modalTipoSolicitud">
+            <i class="bi bi-info-circle"></i> Más información
+        </button>
+    </label>
+    <select class="form-select" name="tipo_solicitud" required>
         <option value="VINCULACION">VINCULACIÓN</option>
         <option value="RENOVACION">RENOVACIÓN</option>
-        <option value="ACTUALIZACION">ACTUALIZACIÓN</option>
-    </select><br><br>
-
-
-    <!-- Clase de Vinculación -->
-        <div class="row">
-        <div class="col-md-6">
-            <label class="form-label">Clase de vinculacion:</label>
-            <input type="text" class="form-control" name="clase_vinculacion" value="TOMADOR" readonly>
-        </div>
-
-    </div>
-
-
-
-    <!-- Información Personal -->
-    <div class="row">
-        <div class="col-md-6">
-            <label class="form-label">Primer Apellido:</label>
-            <input type="text" class="form-control" name="primer_apellido" required>
-        </div>
-        <div class="col-md-6">
-            <label class="form-label">Segundo Apellido:</label>
-            <input type="text" class="form-control" name="segundo_apellido" >
-        </div>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Nombre:</label>
-        <input type="text" class="form-control" name="nombres" required>
-    </div>
-
-    <!-- Tipo de Documento y Número de Identificación -->
-    <div class="row">
-        <div class="col-md-6">
-            <label class="form-label">Tipo de Documento:</label>
-            <select class="form-select" name="tipo_documento" required>
-                <option value="C.C.">Cédula de Ciudadanía</option>
-                <option value="C.E.">Cédula de Extranjería</option>
-                <option value="NUIP">NUIP</option>
-                <option value="T.I.">Tarjeta de Identidad</option>
-                <option value="PASAPORTE">Pasaporte</option>
-            </select>
-        </div>
-        <div class="col-md-6">
-            <label class="form-label">Número de Identificación:</label>
-            <input type="text" class="form-control" name="numero_identificacion" required>
-        </div>
-    </div>
-
-    <!-- Fecha de Expedición y Lugar de Expedición -->
-    <div class="row">
-        <div class="col-md-6">
-            <label class="form-label">Fecha de Expedición:</label>
-            <input type="date" class="form-control" name="fecha_expedicion" required>
-        </div>
-        <div class="col-md-6">
-            <label class="form-label">Lugar de Expedición:</label>
-            <input type="text" class="form-control" name="lugar_expedicion" required>
-        </div>
-    </div>
-
-    <!-- Fecha de Nacimiento y Lugar de Nacimiento -->
-    <div class="row">
-        <div class="col-md-6">
-            <label class="form-label">Fecha de Nacimiento:</label>
-            <input type="date" class="form-control" name="fecha_nacimiento" required>
-        </div>
-        <div class="col-md-6">
-            <label class="form-label">Lugar de Nacimiento:</label>
-            <input type="text" class="form-control" name="lugar_nacimiento" required>
-        </div>
-    </div>
-
-    <!-- Nacionalidad 1 y Nacionalidad 2 -->
-    <div class="row">
-        <div class="col-md-6">
-            <label class="form-label">Nacionalidad 1:</label>
-            <input type="text" class="form-control" name="nacionalidad_1" required>
-        </div>
-        <div class="col-md-6">
-            <label class="form-label">Nacionalidad 2:</label>
-            <input type="text" class="form-control" name="nacionalidad_2">
-        </div>
-    </div>
-
-    <!-- Email y Celular -->
-    <div class="row">
-        <div class="col-md-6">
-            <label class="form-label">Email:</label>
-            <input type="email" class="form-control" name="email" required>
-        </div>
-        <div class="col-md-6">
-            <label class="form-label">Celular:</label>
-            <input type="text" class="form-control" name="celular" required>
-        </div>
-    </div>
-
-<!-- Departamento -->
-<div class="mb-3">
-    <label class="form-label">Departamento:</label>
-    <select class="form-select" id="departamento" name="departamento" required>
-        <option value="">Seleccione un departamento</option>
-        <!-- Se llena dinámicamente con JS -->
+        <option value="ACTUALIZACIÓN">ACTUALIZACIÓN</option>
     </select>
 </div>
 
-<!-- Ciudad/Municipio -->
-<div class="mb-3">
-    <label class="form-label">Ciudad o Municipio:</label>
-    <select class="form-select" id="ciudad_residencia" name="ciudad_residencia" required>
-        <option value="">Seleccione un municipio</option>
-        <!-- Se llena dinámicamente con JS -->
-    </select>
-</div>
-
-<!-- Dirección -->
-<div class="mb-3">
-    <label class="form-label">Dirección:</label>
-    <input type="text" class="form-control" name="direccion" required>
-</div>
-
-
-    <!-- Título Profesional, Otorgado Por y Fecha de Graduación -->
-    <div class="mb-3">
-        <div class="d-flex align-items-center mb-1">
-          <label class="form-label mb-0">Título Profesional:</label>
-          <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalTituloProfesional">
-            <i class="bi bi-info-circle"></i> Más información
-          </button>
-        </div>
-        <input type="text" class="form-control" name="titulo_profesional" required>
+<!-- Modal para Tipo de Solicitud -->
+<div class="modal fade" id="modalTipoSolicitud" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-light p-3">
+        <h5 class="modal-title fs-6">Información sobre Tipo de Solicitud</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      
-      <!-- Modal para Título Profesional -->
-      <div class="modal fade" id="modalTituloProfesional" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header bg-light p-3">
-              <h5 class="modal-title fs-6">Información sobre Título Profesional</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-3">
-              <p>Ingrese el nombre completo del título obtenido al finalizar sus estudios:</p>
-              
-              <ul class="mb-3">
-                <li><strong>Ejemplos válidos:</strong></li>
-                <li>Medicina General</li>
-                <li>Auxiliar de Enfermería</li>
-                <li>Enfermera Jefe</li>
-                <li>Odontología</li>
-                <li>Anestesiología</li>
-                <li>Fisioterapia</li>
-                <li>Ginecobstetricia</li>
-                <li>Pediatría</li>
-                <li>Psicología</li>
-                <li>Medicina Interna</li>
-                <li>Cirujano General</li>
-                <li>Ortopedia</li>
-                <li>Bacteriología</li>
-                <li>Oftalmología</li>
-
-
-              </ul>
-              
-              <div class="alert alert-warning p-2 small">
-                <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                Debe coincidir exactamente con el nombre en su diploma.
-              </div>
-            </div>
-            <div class="modal-footer bg-light p-2 justify-content-start">
-              <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
-            </div>
-          </div>
+      <div class="modal-body p-3">
+        <p>Seleccione el tipo de solicitud que corresponde:</p>
+        <ul>
+          <li><strong>VINCULACIÓN:</strong> Si es la primera vez que adquiere esta póliza</li>
+          <li><strong>RENOVACIÓN:</strong> Si ya ha tenido esta póliza anteriormente y desea renovarla</li>
+          <li><strong>ACTUALIZACIÓN:</strong> Si necesita actualizar los datos de su póliza existente</li>
+        </ul>
+        <!-- VIDEO MÁS GRANDE -->
+        <div style="width:100%;max-width:700px;margin:auto;">
+          <iframe
+            width="100%"
+            height="350"
+            style="border-radius: 12px;"
+            src="https://www.youtube.com/embed/LWHHJcaQiH4"
+            title="Tipo solicitud"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
         </div>
       </div>
-
-    <div class="mb-3">
-        <label class="form-label">Otorgado Por (Entidad que otorgó el diploma):</label>
-        <input type="text" class="form-control" name="otorgado_por" required>
+      <div class="modal-footer bg-light p-2 justify-content-start">
+        <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+      </div>
     </div>
+  </div>
+</div>
 
-    <div class="mb-3">
-        <label class="form-label">Fecha de Graduación:</label>
-        <input type="date" class="form-control" name="fecha_graduacion" required>
+
+            <!-- Clase de Vinculación -->
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label d-flex align-items-center">
+                        Clase de vinculación:
+                        <button type="button" class="btn btn-sm btn-outline-info ms-2 p-0 border-0" data-bs-toggle="modal" data-bs-target="#modalClaseVinculacion">
+                            <i class="bi bi-info-circle"></i> Más información
+                        </button>
+                        
+                    </label>
+                    <input type="text" class="form-control" name="clase_vinculacion" value="TOMADOR" readonly>
+                </div>
+            </div>
+
+            <!-- Modal para Clase de Vinculación -->
+            <div class="modal fade" id="modalClaseVinculacion" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-light p-3">
+                            <h5 class="modal-title fs-6">Información sobre Clase de Vinculación</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>El tomador es la persona que contrata el seguro y asume las obligaciones derivadas del contrato, como el pago de la prima.</p>
+                        </div>
+                        <div class="modal-footer bg-light p-2 justify-content-start">
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Información Personal -->
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label d-flex align-items-center">
+                        Primer Apellido:
+                        <button type="button" class="btn btn-sm btn-outline-info ms-2 p-0 border-0" data-bs-toggle="modal" data-bs-target="#modalPrimerApellido">
+                            <i class="bi bi-info-circle"></i> Más información
+                        </button>
+                    </label>
+                    <input type="text" class="form-control" name="primer_apellido" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Segundo Apellido:</label>
+                    <input type="text" class="form-control" name="segundo_apellido">
+                </div>
+            </div>
+
+            <!-- Modal para Primer Apellido -->
+            <div class="modal fade" id="modalPrimerApellido" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-light p-3">
+                            <h5 class="modal-title fs-6">Información sobre Primer Apellido</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Ingrese su primer apellido tal como aparece en su documento de identidad.</p>
+                        </div>
+                        <div class="modal-footer bg-light p-2 justify-content-start">
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label d-flex align-items-center">
+                    Nombres:
+                    <button type="button" class="btn btn-sm btn-outline-info ms-2 p-0 border-0" data-bs-toggle="modal" data-bs-target="#modalNombres">
+                        <i class="bi bi-info-circle"></i> Más información
+                    </button>
+                </label>
+                <input type="text" class="form-control" name="nombres" required>
+            </div>
+
+            <!-- Modal para Nombres -->
+            <div class="modal fade" id="modalNombres" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-light p-3">
+                            <h5 class="modal-title fs-6">Información sobre Nombres</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Ingrese sus nombres completos tal como aparecen en su documento de identidad.</p>
+                        </div>
+                        <div class="modal-footer bg-light p-2 justify-content-start">
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tipo de Documento y Número de Identificación -->
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label d-flex align-items-center">
+                        Tipo de Documento:
+                        <button type="button" class="btn btn-sm btn-outline-info ms-2 p-0 border-0" data-bs-toggle="modal" data-bs-target="#modalTipoDocumento">
+                            <i class="bi bi-info-circle"></i> Más información
+                        </button>
+                    </label>
+                    <select class="form-select" name="tipo_documento" required>
+                        <option value="C.C.">Cédula de Ciudadanía</option>
+                        <option value="C.E.">Cédula de Extranjería</option>
+                        <option value="NUIP">NUIP</option>
+                        <option value="T.I.">Tarjeta de Identidad</option>
+                        <option value="PASAPORTE">Pasaporte</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label d-flex align-items-center">
+                        Número de Identificación:
+                        <button type="button" class="btn btn-sm btn-outline-info ms-2 p-0 border-0" data-bs-toggle="modal" data-bs-target="#modalNumeroIdentificacion">
+                            <i class="bi bi-info-circle"></i> Más información
+                        </button>
+                    </label>
+                    <input type="text" class="form-control" name="numero_identificacion" required>
+                </div>
+            </div>
+
+            <!-- Modal para Tipo de Documento -->
+            <div class="modal fade" id="modalTipoDocumento" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-light p-3">
+                            <h5 class="modal-title fs-6">Información sobre Tipo de Documento</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Seleccione el tipo de documento de identidad con el que se va a registrar:</p>
+                            <ul>
+                                <li><strong>C.C.:</strong> Cédula de Ciudadanía</li>
+                                <li><strong>C.E.:</strong> Cédula de Extranjería</li>
+                                <li><strong>NUIP:</strong> Número Único de Identificación Personal</li>
+                                <li><strong>T.I.:</strong> Tarjeta de Identidad</li>
+                                <li><strong>PASAPORTE:</strong> Pasaporte</li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer bg-light p-2 justify-content-start">
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal para Número de Identificación -->
+            <div class="modal fade" id="modalNumeroIdentificacion" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-light p-3">
+                            <h5 class="modal-title fs-6">Información sobre Número de Identificación</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Ingrese su número de documento de identidad sin puntos ni comas.</p>
+                            <div class="alert alert-warning p-2 small">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                Asegúrese de ingresar correctamente su número de identificación.
+                            </div>
+                        </div>
+                        <div class="modal-footer bg-light p-2 justify-content-start">
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fecha de Expedición y Lugar de Expedición -->
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label d-flex align-items-center">
+                        Fecha de Expedición:
+                        <button type="button" class="btn btn-sm btn-outline-info ms-2 p-0 border-0" data-bs-toggle="modal" data-bs-target="#modalFechaExpedicion">
+                            <i class="bi bi-info-circle"></i> Más información
+                        </button>
+                    </label>
+                    <input type="date" class="form-control" name="fecha_expedicion" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label d-flex align-items-center">
+                        Lugar de Expedición:
+                        <button type="button" class="btn btn-sm btn-outline-info ms-2 p-0 border-0" data-bs-toggle="modal" data-bs-target="#modalLugarExpedicion">
+                            <i class="bi bi-info-circle"></i> Más información
+                        </button>
+                    </label>
+                    <input type="text" class="form-control" name="lugar_expedicion" required>
+                </div>
+            </div>
+
+            <!-- Modal para Fecha de Expedición -->
+            <div class="modal fade" id="modalFechaExpedicion" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-light p-3">
+                            <h5 class="modal-title fs-6">Información sobre Fecha de Expedición</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Ingrese la fecha en que fue expedido su documento de identidad.</p>
+                        </div>
+                        <div class="modal-footer bg-light p-2 justify-content-start">
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal para Lugar de Expedición -->
+            <div class="modal fade" id="modalLugarExpedicion" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-light p-3">
+                            <h5 class="modal-title fs-6">Información sobre Lugar de Expedición</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Ingrese la ciudad y departamento donde fue expedido su documento de identidad.</p>
+                            <p><strong>Ejemplo:</strong> Bogotá D.C.</p>
+                        </div>
+                        <div class="modal-footer bg-light p-2 justify-content-start">
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fecha de Nacimiento y Lugar de Nacimiento -->
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label d-flex align-items-center">
+                        Fecha de Nacimiento:
+                        <button type="button" class="btn btn-sm btn-outline-info ms-2 p-0 border-0" data-bs-toggle="modal" data-bs-target="#modalFechaNacimiento">
+                            <i class="bi bi-info-circle"></i> Más información
+                        </button>
+                    </label>
+                    <input type="date" class="form-control" name="fecha_nacimiento" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label d-flex align-items-center">
+                        Lugar de Nacimiento:
+                        <button type="button" class="btn btn-sm btn-outline-info ms-2 p-0 border-0" data-bs-toggle="modal" data-bs-target="#modalLugarNacimiento">
+                            <i class="bi bi-info-circle"></i> Más información
+                        </button>
+                    </label>
+                    <input type="text" class="form-control" name="lugar_nacimiento" required>
+                </div>
+            </div>
+
+            <!-- Modal para Fecha de Nacimiento -->
+            <div class="modal fade" id="modalFechaNacimiento" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-light p-3">
+                            <h5 class="modal-title fs-6">Información sobre Fecha de Nacimiento</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Ingrese su fecha de nacimiento tal como aparece en su documento de identidad.</p>
+                        </div>
+                        <div class="modal-footer bg-light p-2 justify-content-start">
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal para Lugar de Nacimiento -->
+            <div class="modal fade" id="modalLugarNacimiento" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-light p-3">
+                            <h5 class="modal-title fs-6">Información sobre Lugar de Nacimiento</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Ingrese la ciudad y departamento donde nació.</p>
+                            <p><strong>Ejemplo:</strong> Barranquilla, Atlántico</p>
+                        </div>
+                        <div class="modal-footer bg-light p-2 justify-content-start">
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nacionalidad 1 y Nacionalidad 2 -->
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label d-flex align-items-center">
+                        Nacionalidad 1:
+                        <button type="button" class="btn btn-link btn-sm p-0 ms-2 text-info" data-bs-toggle="modal" data-bs-target="#modalNacionalidad1">
+                            <i class="bi bi-info-circle"></i>
+                        </button>
+                    </label>
+                    <input type="text" class="form-control" name="nacionalidad_1" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Nacionalidad 2:</label>
+                    <input type="text" class="form-control" name="nacionalidad_2">
+                </div>
+            </div>
+
+<!-- Modal para Nacionalidad 1 -->
+<div class="modal fade" id="modalNacionalidad1" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-light p-3">
+        <h5 class="modal-title fs-6">Información sobre Nacionalidad</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-3">
+        <p>Ingrese su nacionalidad principal.</p>
+        <div class="alert alert-info p-2 mt-2 small">
+          <i class="bi bi-info-circle-fill me-2"></i>
+          <strong>Ejemplo:</strong> Colombiano
+        </div>
+        <!-- VIDEO MÁS GRANDE -->
+        <div style="width:100%;max-width:700px;margin:auto;">
+          <iframe
+            width="100%"
+            height="350"
+            style="border-radius: 12px;"
+            src="https://www.youtube.com/embed/kInCQaKORBc"
+            title="Tipo solicitud"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+      <div class="modal-footer bg-light p-2 justify-content-start">
+        <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+      </div>
     </div>
+  </div>
+</div>
 
 
-    <div class="mb-3">
-        <div class="d-flex align-items-center mb-1">
-          <label class="form-label mb-0">No. Registro Profesional:</label>
-          <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalRegistroProfesional">
-            <i class="bi bi-info-circle"></i> Más información
+            <!-- Email y Celular -->
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label d-flex align-items-center">
+                        Email:
+                        <button type="button" class="btn btn-link btn-sm p-0 ms-2 text-info" data-bs-toggle="modal" data-bs-target="#modalEmail">
+                            <i class="bi bi-info-circle"></i>
+                        </button>
+                    </label>
+                    <input type="email" class="form-control" name="email" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label d-flex align-items-center">
+                        Celular:
+                        <button type="button" class="btn btn-link btn-sm p-0 ms-2 text-info" data-bs-toggle="modal" data-bs-target="#modalCelular">
+                            <i class="bi bi-info-circle"></i>
+                        </button>
+                    </label>
+                    <input type="text" class="form-control" name="celular" required>
+                </div>
+            </div>
+
+            <!-- Modal para Email -->
+            <div class="modal fade" id="modalEmail" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-light p-3">
+                            <h5 class="modal-title fs-6">Información sobre Email</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Ingrese una dirección de correo electrónico válida donde podamos contactarlo.</p>
+                            <p><strong>Ejemplo:</strong> nombre@dominio.com</p>
+                        </div>
+                        <div class="modal-footer bg-light p-2 justify-content-start">
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal para Celular -->
+            <div class="modal fade" id="modalCelular" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-light p-3">
+                            <h5 class="modal-title fs-6">Información sobre Celular</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Ingrese su número de celular incluyendo el código de área.</p>
+                            <p><strong>Ejemplo:</strong> 3001234567</p>
+                        </div>
+                        <div class="modal-footer bg-light p-2 justify-content-start">
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Departamento -->
+            <div class="mb-3">
+                <label class="form-label d-flex align-items-center">
+                    Departamento:
+                    <button type="button" class="btn btn-link btn-sm p-0 ms-2 text-info" data-bs-toggle="modal" data-bs-target="#modalDepartamento">
+                        <i class="bi bi-info-circle"></i>
+                    </button>
+                </label>
+                <select class="form-select" id="departamento" name="departamento" required>
+                    <option value="">Seleccione un departamento</option>
+                    <!-- Se llena dinámicamente con JS -->
+                </select>
+            </div>
+
+            <!-- Modal para Departamento -->
+            <div class="modal fade" id="modalDepartamento" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-light p-3">
+                            <h5 class="modal-title fs-6">Información sobre Departamento</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Seleccione el departamento donde reside actualmente.</p>
+                        </div>
+                        <div class="modal-footer bg-light p-2 justify-content-start">
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ciudad/Municipio -->
+            <div class="mb-3">
+                <label class="form-label d-flex align-items-center">
+                    Ciudad o Municipio:
+                    <button type="button" class="btn btn-link btn-sm p-0 ms-2 text-info" data-bs-toggle="modal" data-bs-target="#modalCiudadResidencia">
+                        <i class="bi bi-info-circle"></i>
+                    </button>
+                </label>
+                <select class="form-select" id="ciudad_residencia" name="ciudad_residencia" required>
+                    <option value="">Seleccione un municipio</option>
+                    <!-- Se llena dinámicamente con JS -->
+                </select>
+            </div>
+
+            <!-- Modal para Ciudad/Municipio -->
+            <div class="modal fade" id="modalCiudadResidencia" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-light p-3">
+                            <h5 class="modal-title fs-6">Información sobre Ciudad/Municipio</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Seleccione la ciudad o municipio donde reside actualmente.</p>
+                        </div>
+                        <div class="modal-footer bg-light p-2 justify-content-start">
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dirección -->
+            <div class="mb-3">
+                <label class="form-label d-flex align-items-center">
+                    Dirección:
+                    <button type="button" class="btn btn-link btn-sm p-0 ms-2 text-info" data-bs-toggle="modal" data-bs-target="#modalDireccion">
+                        <i class="bi bi-info-circle"></i>
+                    </button>
+                </label>
+                <input type="text" class="form-control" name="direccion" required>
+            </div>
+
+            <!-- Modal para Dirección -->
+            <div class="modal fade" id="modalDireccion" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-light p-3">
+                            <h5 class="modal-title fs-6">Información sobre Dirección</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Ingrese su dirección completa incluyendo calle, carrera, número, barrio, etc.</p>
+                            <p><strong>Ejemplo:</strong> Calle 123 #45-67, Barrio El Prado</p>
+                        </div>
+                        <div class="modal-footer bg-light p-2 justify-content-start">
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Título Profesional -->
+            <div class="mb-3">
+                <div class="d-flex align-items-center mb-1">
+                    <label class="form-label mb-0">Título Profesional:</label>
+                    <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalTituloProfesional">
+                        <i class="bi bi-info-circle"></i> Más información
+                    </button>
+                </div>
+                <input type="text" class="form-control" name="titulo_profesional" required>
+            </div>
+            
+
+            <!-- Modal para Título Profesional -->
+            <div class="modal fade" id="modalTituloProfesional" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg"><!-- Grande y centrado -->
+                <div class="modal-content">
+                <div class="modal-header bg-light p-3">
+                    <h5 class="modal-title fs-6">Información sobre Título Profesional</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Ingrese el nombre completo del título obtenido al finalizar sus estudios:</p>
+                    <ul class="mb-3">
+                    <li><strong>Ejemplos válidos:</strong></li>
+                    <li>Medicina General</li>
+                    <li>Auxiliar de Enfermería</li>
+                    <li>Enfermera Jefe</li>
+                    <li>Odontología</li>
+                    <li>Anestesiología</li>
+                    <li>Fisioterapia</li>
+                    <li>Ginecobstetricia</li>
+                    <li>Pediatría</li>
+                    <li>Psicología</li>
+                    <li>Medicina Interna</li>
+                    <li>Cirujano General</li>
+                    <li>Ortopedia</li>
+                    <li>Bacteriología</li>
+                    <li>Oftalmología</li>
+                    </ul>
+                    <div class="alert alert-warning p-2 small mb-3">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    Debe coincidir exactamente con el nombre en su diploma.
+                    </div>
+                    <!-- Video grande -->
+                    <div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/QtL-G6AF_1g" 
+                        title="Guía Título Profesional"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light p-2 justify-content-start">
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+                </div>
+                </div>
+            </div>
+            </div>
+
+
+            <!-- Otorgado Por -->
+            <div class="mb-3">
+                <label class="form-label d-flex align-items-center">
+                    Otorgado Por (Entidad que otorgó el diploma):
+                    <button type="button" class="btn btn-link btn-sm p-0 ms-2 text-info" data-bs-toggle="modal" data-bs-target="#modalOtorgadoPor">
+                        <i class="bi bi-info-circle"></i>
+                    </button>
+                </label>
+                <input type="text" class="form-control" name="otorgado_por" required>
+            </div>
+
+                <!-- Modal para Otorgado Por -->
+                <div class="modal fade" id="modalOtorgadoPor" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                    <div class="modal-header bg-light p-3">
+                        <h5 class="modal-title fs-6">Información sobre Entidad que Otorgó el Diploma</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Ingrese el nombre completo de la universidad o institución educativa que le otorgó el título profesional.</p>
+                        <p><strong>Ejemplo:</strong> Universidad Nacional de Colombia</p>
+                        <!-- Video grande -->
+                        <div style="width:100%;max-width:700px;margin:auto;">
+                        <iframe
+                            width="100%"
+                            height="350"
+                            style="border-radius: 12px;"
+                            src="https://www.youtube.com/embed/6OCwpsafCBU"
+                            title="Entidad que Otorgó el Diploma"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                        ></iframe>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light p-2 justify-content-start">
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+
+            <!-- Fecha de Graduación -->
+            <div class="mb-3">
+                <label class="form-label d-flex align-items-center">
+                    Fecha de Graduación:
+                    <button type="button" class="btn btn-link btn-sm p-0 ms-2 text-info" data-bs-toggle="modal" data-bs-target="#modalFechaGraduacion">
+                        <i class="bi bi-info-circle"></i>
+                    </button>
+                </label>
+                <input type="date" class="form-control" name="fecha_graduacion" required>
+            </div>
+
+            <!-- Modal para Fecha de Graduación -->
+            <div class="modal fade" id="modalFechaGraduacion" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-light p-3">
+                            <h5 class="modal-title fs-6">Información sobre Fecha de Graduación</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Ingrese la fecha en que obtuvo su título profesional.</p>
+                        </div>
+                        <div class="modal-footer bg-light p-2 justify-content-start">
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- No. Registro Profesional -->
+            <div class="mb-3">
+                <div class="d-flex align-items-center mb-1">
+                    <label class="form-label mb-0">No. Registro Profesional:</label>
+                    <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalRegistroProfesional">
+                        <i class="bi bi-info-circle"></i> Más información
           </button>
         </div>
         <input type="text" class="form-control" name="registro_profecional" required>
@@ -281,7 +772,7 @@
             width="100%"
             height="350"
             style="border-radius: 12px;"
-            src="https://www.youtube.com/embed/z2o3Eihg7Qc"
+            src="https://www.youtube.com/embed/BBgZi_xCvU8"
             title="Guía Registro Profesional"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -323,32 +814,47 @@
     </button>
 </div>
 
-<!-- El modal -->
+<!-- Modal para Otra Especialización -->
 <div class="modal fade" id="modalMedicoGeneral" tabindex="-1" aria-labelledby="modalMedicoGeneralLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalMedicoGeneralLabel">Información - Otra Especialización</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
-                Marque esta casilla si tu profesion es:
-            </div>
-            <ul class="mb-3">
-                <li>- AUXILIARES DE ENFERMERÍA</li>
-                <li>- AUXILIAR DE LABORATORIO BÁSICO ESPECIALIZADO</li>
-                <li>- AUXILIAR DE RADIOLOGÍA E IMAGENOLOGÍA</li>
-                <li>- AUXILIARES DE DIFERENTES ÁREAS MÉDICAS</li>
-                <li>- FONOAUDIÓLOGO</li>
-                <li>- HIGIENISTA ORAL Y ODONTÓLOGOS SIN ESPECIALIDAD</li>
-                <li>- NUTRICIONISTA</li>
-                <li>- TECNICOS EN ATENCIÓN INICIAL RESOLUCION O REMISIÓN DE PACIENTES EN URGENCIAS TRIAGE</li>
-              </ul>
-            <div class="modal-footer bg-light p-2 justify-content-start">
-              <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
-            </div>
+  <div class="modal-dialog modal-dialog-centered modal-lg"><!-- modal-lg para más ancho -->
+    <div class="modal-content">
+      <div class="modal-header bg-light p-3">
+        <h5 class="modal-title" id="modalMedicoGeneralLabel">Información - Otra Especialización</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <p>Marque esta casilla si su profesión es:</p>
+        <ul class="mb-3">
+          <li>- AUXILIARES DE ENFERMERÍA</li>
+          <li>- AUXILIAR DE LABORATORIO BÁSICO ESPECIALIZADO</li>
+          <li>- AUXILIAR DE RADIOLOGÍA E IMAGENOLOGÍA</li>
+          <li>- AUXILIARES DE DIFERENTES ÁREAS MÉDICAS</li>
+          <li>- FONOAUDIÓLOGO</li>
+          <li>- HIGIENISTA ORAL Y ODONTÓLOGOS SIN ESPECIALIDAD</li>
+          <li>- NUTRICIONISTA</li>
+          <li>- TÉCNICOS EN ATENCIÓN INICIAL, RESOLUCIÓN O REMISIÓN DE PACIENTES EN URGENCIAS (TRIAGE)</li>
+        </ul>
+        <!-- Si en algún momento quieres agregar video, puedes copiar aquí el iframe igual que en los otros modales -->
+       
+        <div style="width:100%;max-width:700px;margin:auto;">
+          <iframe
+            width="100%"
+            height="350"
+            style="border-radius: 12px;"
+            src="https://www.youtube.com/embed/_4COR5anqqE"
+            title="Video de ejemplo"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
         </div>
+       
+      </div>
+      <div class="modal-footer bg-light p-2 justify-content-start">
+        <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+      </div>
     </div>
+  </div>
 </div>
 
         <label>
@@ -379,27 +885,49 @@
             <input type="text" class="form-control" name="Numero_especialización">
         </div>
     </div>
-    <!-- Modal para Ejercicio Privado -->
-    <div class="modal fade" id="modalEjercicioPrivado" tabindex="-1" aria-labelledby="modalEjercicioPrivadoLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalEjercicioPrivadoLabel">Información - Ejercicio Privado</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+<!-- Modal para Ejercicio Privado -->
+<div class="modal fade" id="modalEjercicioPrivado" tabindex="-1" aria-labelledby="modalEjercicioPrivadoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg"><!-- Ajustado ancho y centrado -->
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6" id="modalEjercicioPrivadoLabel">Información - Ejercicio Privado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Hace referencia a los contratos por prestación de servicios profesionales.
+                </p>
+                <!-- Si algún día quieres agregar un video informativo, aquí puedes agregar el iframe igual que en los otros modales: -->
+                
+                <div style="width:100%;max-width:700px;margin:auto;">
+                  <iframe
+                    width="100%"
+                    height="350"
+                    style="border-radius: 12px;"
+                    src="https://www.youtube.com/embed/tI3qMlM-KqY"
+                    title="Información Ejercicio Privado"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
                 </div>
-                <div class="modal-body">
-                    Hace referencia a los contratos por prestación de servicios profesionales,
-                </div>
-                <div class="modal-footer bg-light p-2 justify-content-start">
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
-                </div>
+              
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
             </div>
         </div>
     </div>
+</div>
+
 
     <!-- Posee Equipos -->
     <div class="mb-3">
         <label class="form-label">Posee Uno o Varios de los SIguientes Equipos:</label>
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalPoseeEquipos">
+            <i class="bi bi-info-circle"></i>
+        </button>
+
         <div style="display: flex; flex-direction: column;">
             <label>
                 <input type="hidden" name="equipo_radiografia" value="NO">
@@ -432,7 +960,41 @@
             </label>
         </div>
     </div>
-    
+<!-- Modal para Posee Equipos -->
+<div class="modal fade" id="modalPoseeEquipos" tabindex="-1" aria-labelledby="modalPoseeEquiposLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg"><!-- ancho y centrado -->
+    <div class="modal-content">
+      <div class="modal-header bg-light p-3">
+        <h5 class="modal-title" id="modalPoseeEquiposLabel">Información - Posee Equipos</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Esta pregunta se refiere a si usted posee equipos médicos especializados, como radiografías, tomografías, láser, entre otros.
+        </p>
+        <!-- Si algún día deseas poner un video explicativo, puedes agregar el iframe aquí, igual que en otros modales -->
+       
+        <div style="width:100%;max-width:700px;margin:auto;">
+          <iframe
+            width="100%"
+            height="350"
+            style="border-radius: 12px;"
+            src="https://www.youtube.com/embed/IcjftRtzk3s"
+            title="Video explicativo"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+      
+      </div>
+      <div class="modal-footer bg-light p-2 justify-content-start">
+        <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
     <!-- Alojar Pacientes Durante Tratamiento -->
     <div class="mb-3">
@@ -446,24 +1008,39 @@
         </div>
 
     </div>
-    <!-- Modal para Alojar Pacientes -->                
-    <div class="modal fade" id="modalAlojarPacientes" tabindex="-1" aria-labelledby="modalAlojarPacientesLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalAlojarPacientesLabel">Información - Alojar Pacientes</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    Esta pregunta se refiere a si en el área que trabaja quedan paciente hospitalizados 
-                </div>
-                
-                <div class="modal-footer bg-light p-2 justify-content-start">
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
-                </div>
-            </div>
+<!-- Modal para Alojar Pacientes -->
+<div class="modal fade" id="modalAlojarPacientes" tabindex="-1" aria-labelledby="modalAlojarPacientesLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-light p-3">
+        <h5 class="modal-title" id="modalAlojarPacientesLabel">Información - Alojar Pacientes</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Esta pregunta se refiere a si en el área donde usted trabaja quedan pacientes hospitalizados.
+        </p>
+        <!-- VIDEO INFORMATIVO -->
+        <div style="width:100%;max-width:700px;margin:auto;">
+          <iframe
+            width="100%"
+            height="350"
+            style="border-radius: 12px;"
+            src="https://www.youtube.com/embed/a6UtRqnNqlo" 
+            title="Información Alojar Pacientes"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
         </div>
+      </div>
+      <div class="modal-footer bg-light p-2 justify-content-start">
+        <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+      </div>
     </div>
+  </div>
+</div>
+
 
     <!-- Tratamiento Solo Ambulatorio -->
     <div class="mb-3">
@@ -478,120 +1055,388 @@
        
 
     </div>
-    <!-- Modal para Tratamiento Ambulatorio -->
-    <div class="modal fade" id="modalTratamientoAmbulatorio" tabindex="-1" aria-labelledby="modalTratamientoAmbulatorioLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalTratamientoAmbulatorioLabel">Información - Tratamiento Ambulatorio</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    Esta pregunta se refiere a si el tratamiento de los pacientes se realiza exclusivamente de forma ambulatoria, sin hospitalización.
-                </div>
-                <div class="modal-footer bg-light p-2 justify-content-start">
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
-                </div>
+<!-- Modal para Tratamiento Ambulatorio -->
+<div class="modal fade" id="modalTratamientoAmbulatorio" tabindex="-1" aria-labelledby="modalTratamientoAmbulatorioLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-light p-3">
+        <h5 class="modal-title" id="modalTratamientoAmbulatorioLabel">Información - Tratamiento Ambulatorio</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Esta pregunta se refiere a si el tratamiento de los pacientes se realiza exclusivamente de forma ambulatoria, sin hospitalización.
+        </p>
+        <!-- VIDEO INFORMATIVO -->
+        <div style="width:100%;max-width:700px;margin:auto;">
+          <iframe
+            width="100%"
+            height="350"
+            style="border-radius: 12px;"
+            src="https://www.youtube.com/embed/MejQrkW0QeI" 
+            title="Información Tratamiento Ambulatorio"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+      <div class="modal-footer bg-light p-2 justify-content-start">
+        <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Otros Riesgos -->
+<div class="mb-3">
+    <label class="form-label d-flex align-items-center">
+        Existen Otros Riesgos (Laboratorios, Farmacias, etc.):
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalOtrosRiesgos">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </label>
+    <div>
+        <input type="radio" name="otros_riesgos" value="SI" required> SI
+        <input type="radio" name="otros_riesgos" value="NO"> NO
+    </div>
+    <div id="detalles_otros_riesgos" style="display: none;">
+        <label class="form-label">Detalles:</label>
+        <input type="text" class="form-control" name="detalles_otros_riesgos">
+    </div>
+</div>
+
+<!-- Modal Otros Riesgos -->
+<div class="modal fade" id="modalOtrosRiesgos" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg"><!-- Cambié aquí a modal-lg y centrado -->
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Otros Riesgos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Indique si existen otros riesgos profesionales adicionales a su práctica principal.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div> -->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Otros Riesgos -->
-    <div class="mb-3">
-        <label class="form-label">Existen Otros Riesgos (Laboratorios, Farmacias, etc.):</label>
-        <div>
-            <input type="radio" name="otros_riesgos" value="SI" required> SI
-            <input type="radio" name="otros_riesgos" value="NO"> NO
-        </div>
-        <div id="detalles_otros_riesgos" style="display: none;">
-            <label class="form-label">Detalles:</label>
-            <input type="text" class="form-control" name="detalles_otros_riesgos">
+
+<!-- Ejercicio Exclusivo en Consultorio -->
+<div class="mb-3">
+    <label class="form-label d-flex align-items-center">
+        Ejercicio de las Actividades Profesionales Exclusivamente en el Consultorio Arriba indicado:
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalEjercicioExclusivo">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </label>
+    <div>
+        <input type="radio" name="ejercicio_exclusivo" value="SI" required> SI
+        <input type="radio" name="ejercicio_exclusivo" value="NO"> NO
+    </div>
+</div>
+
+<!-- Modal Ejercicio Exclusivo -->
+<div class="modal fade" id="modalEjercicioExclusivo" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Ejercicio Exclusivo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Seleccione SI si todas sus actividades profesionales se realizan únicamente en el consultorio indicado.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div> -->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
         </div>
     </div>
+</div>
 
-    <!-- Ejercicio Exclusivo en Consultorio -->
-    <div class="mb-3">
-        <label class="form-label">Ejercicio de las Actividades Profesionales Exclusivamente en el Consultorio Arriba indicado:</label>
-        <div>
-            <input type="radio" name="ejercicio_exclusivo" value="SI" required> SI
-            <input type="radio" name="ejercicio_exclusivo" value="NO"> NO
+<!-- Prestación de Servicios en Otras Instituciones -->
+<div class="mb-3">
+    <label class="form-label d-flex align-items-center">
+        Prestación de Servicios Profesionales También en Otras Instituciones de Salud o Empresa:
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalPrestacionServicios">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </label>
+    <div>
+        <input type="radio" name="prestacion_servicios" value="SI" required> SI
+        <input type="radio" name="prestacion_servicios" value="NO"> NO
+    </div>
+    <div id="detalles_prestacion_servicios" style="display: none;">
+        <label class="form-label">Nombre de la Institución:</label>
+        <input type="text" class="form-control" name="nombre_institucion">
+        <label class="form-label">Tipo de Servicios:</label>
+        <input type="text" class="form-control" name="tipo_servicios">
+        <label class="form-label">Función del Solicitante:</label>
+        <input type="text" class="form-control" name="funcion_solicitante">
+        <label class="form-label">Relación con la Institución:</label>
+        <input type="text" class="form-control" name="relacion_institucion">
+    </div>
+</div>
+
+<!-- Modal Prestación de Servicios -->
+<div class="modal fade" id="modalPrestacionServicios" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Prestación de Servicios</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Indique si presta servicios profesionales en otras instituciones además de su consultorio principal.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div> -->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
         </div>
     </div>
+</div>
 
-    <!-- Prestación de Servicios en Otras Instituciones -->
-    <div class="mb-3">
-        <label class="form-label">Prestación de Servicios  Profesionales También en Otras Instituciones de Salud o Empresa:</label>
-        <div>
-            <input type="radio" name="prestacion_servicios" value="SI" required> SI
-            <input type="radio" name="prestacion_servicios" value="NO"> NO
-        </div>
-        <div id="detalles_prestacion_servicios" style="display: none;">
-            <label class="form-label">Nombre de la Institución:</label>
-            <input type="text" class="form-control" name="nombre_institucion">
-            <label class="form-label">Tipo de Servicios:</label>
-            <input type="text" class="form-control" name="tipo_servicios">
-            <label class="form-label">Función del Solicitante:</label>
-            <input type="text" class="form-control" name="funcion_solicitante">
-            <label class="form-label">Relación con la Institución:</label>
-            <input type="text" class="form-control" name="relacion_institucion">
+<!-- Ejercicio Bajo Relación Laboral -->
+<div class="mb-3">
+    <label class="form-label d-flex align-items-center">
+        Ejercicio profesional bajo relación laboral con una institución de salud, una empresa o cualquier entidad pública o privada, incluyendo médicos particulares:
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalEjercicioLaboral">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </label>
+    <div>
+        <input type="radio" name="ejercicio_laboral" value="SI" required> SI
+        <input type="radio" name="ejercicio_laboral" value="NO"> NO
+    </div>
+    <div id="detalles_ejercicio_laboral" style="display: none;">
+        <label class="form-label">Nombre y Descripción del Empleador:</label>
+        <input type="text" class="form-control" name="nombre_empleador">
+        <label class="form-label">Ubicación del Centro de Trabajo:</label>
+        <input type="text" class="form-control" name="ubicacion_trabajo">
+        <label class="form-label">Descripción de Labores:</label>
+        <input type="text" class="form-control" name="descripcion_labores">
+    </div>
+</div>
+
+<!-- Modal Ejercicio Laboral -->
+<div class="modal fade" id="modalEjercicioLaboral" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Relación Laboral</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Indique si tiene un contrato laboral con alguna institución o empresa donde ejerce su profesión.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div> -->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
         </div>
     </div>
+</div>
 
-    <!-- Ejercicio Bajo Relación Laboral -->
-    <div class="mb-3">
-        <label class="form-label">Ejercicio profesional bajo relación laboral con una institución de salud, una empresa o cualquier entidad pública o privada, incluyendo médicos particulares:</label>
-        <div>
-            <input type="radio" name="ejercicio_laboral" value="SI" required> SI
-            <input type="radio" name="ejercicio_laboral" value="NO"> NO
-        </div>
-        <div id="detalles_ejercicio_laboral" style="display: none;">
-            <label class="form-label">Nombre y Descripción del Empleador:</label>
-            <input type="text" class="form-control" name="nombre_empleador">
-            <label class="form-label">Ubicación del Centro de Trabajo:</label>
-            <input type="text" class="form-control" name="ubicacion_trabajo">
-            <label class="form-label">Descripción de Labores:</label>
-            <input type="text" class="form-control" name="descripcion_labores">
+<!-- Ejercicio en Otras Ocasiones -->
+<div class="mb-3">
+    <label class="form-label d-flex align-items-center">
+        Ejercicio de las actividades profesionales también en otras ocasiones: ejemplo consultorio propio y/o otra clínica, etc.
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalOtrasOcasiones">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </label>
+    <div>
+        <input type="radio" name="ejercicio_otras_ocasiones" value="SI" required> SI
+        <input type="radio" name="ejercicio_otras_ocasiones" value="NO"> NO
+    </div>
+    <div id="detalles_ejercicio_otras_ocasiones" style="display: none;">
+        <label class="form-label">Detalles:</label>
+        <input type="text" class="form-control" name="detalles_ejercicio_otras_ocasiones">
+    </div>
+</div>
+
+<!-- Modal Otras Ocasiones -->
+<div class="modal fade" id="modalOtrasOcasiones" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Otras Ocasiones</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Indique si ejerce su profesión en otros lugares además de su consultorio principal.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div> -->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
         </div>
     </div>
+</div>
 
-    <!-- Ejercicio en Otras Ocasiones -->
-    <div class="mb-3">
-        <label class="form-label">Ejercicio de las actividades profesionales también en otras ocasiones: ejemplo consultorio propio y/o otra clínica, etc.</label>
-        <div>
-            <input type="radio" name="ejercicio_otras_ocasiones" value="SI" required> SI
-            <input type="radio" name="ejercicio_otras_ocasiones" value="NO"> NO
-        </div>
-        <div id="detalles_ejercicio_otras_ocasiones" style="display: none;">
-            <label class="form-label">Detalles:</label>
-            <input type="text" class="form-control" name="detalles_ejercicio_otras_ocasiones">
+<!-- Reclamación de Responsabilidad Civil en los Últimos 5 Años -->
+<div class="mb-3">
+    <label class="form-label d-flex align-items-center">
+        Ha tenido alguna reclamación de responsabilidad civil profesional durante los últimos cinco (5) años:
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalReclamacionResponsabilidad">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </label>
+    <div>
+        <input type="radio" name="reclamacion_responsabilidad" value="SI" required> SI
+        <input type="radio" name="reclamacion_responsabilidad" value="NO"> NO
+    </div>
+    <div id="detalles_reclamacion_responsabilidad" style="display: none;">
+        <label class="form-label">Detalles:</label>
+        <input type="text" class="form-control" name="detalles_reclamacion_responsabilidad">
+    </div>
+</div>
+
+<!-- Modal Reclamación Responsabilidad -->
+<div class="modal fade" id="modalReclamacionResponsabilidad" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Reclamaciones</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Indique si ha tenido reclamaciones por responsabilidad civil profesional en los últimos 5 años.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div> -->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
         </div>
     </div>
+</div>
 
-    <!-- Reclamación de Responsabilidad Civil en los Últimos 5 Años -->
-    <div class="mb-3">
-        <label class="form-label">Ha tenido alguna reclamación de responsabilidad civil profesional durante los últimos cinco (5) años:</label>
-        <div>
-            <input type="radio" name="reclamacion_responsabilidad" value="SI" required> SI
-            <input type="radio" name="reclamacion_responsabilidad" value="NO"> NO
-        </div>
-        <div id="detalles_reclamacion_responsabilidad" style="display: none;">
-            <label class="form-label">Detalles:</label>
-            <input type="text" class="form-control" name="detalles_reclamacion_responsabilidad">
+<!-- Circunstancia que Pudiese Comprometer Responsabilidad Civil -->
+<div class="mb-3">
+    <label class="form-label d-flex align-items-center">
+        Tiene conocimiento de alguna circunstancia que pudiese comprometer su responsabilidad civil profesional:
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalCircunstanciaResponsabilidad">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </label>
+    <div>
+        <input type="radio" name="circunstancia_responsabilidad" value="SI" required> SI
+        <input type="radio" name="circunstancia_responsabilidad" value="NO"> NO
+    </div>
+    <div id="detalles_circunstancia_responsabilidad" style="display: none;">
+        <label class="form-label">Detalles:</label>
+        <input type="text" class="form-control" name="detalles_circunstancia_responsabilidad">
+    </div>
+</div>
+
+<!-- Modal Circunstancia Responsabilidad -->
+<div class="modal fade" id="modalCircunstanciaResponsabilidad" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Circunstancias</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Indique si conoce de alguna situación que pueda generar una reclamación por responsabilidad civil.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div> -->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
         </div>
     </div>
-
-    <!-- Circunstancia que Pudiese Comprometer Responsabilidad Civil -->
-    <div class="mb-3">
-        <label class="form-label">Tiene conocimiento de alguna circunstancia que pudiese comprometer su responsabilidad civil profesional:</label>
-        <div>
-            <input type="radio" name="circunstancia_responsabilidad" value="SI" required> SI
-            <input type="radio" name="circunstancia_responsabilidad" value="NO"> NO
-        </div>
-        <div id="detalles_circunstancia_responsabilidad" style="display: none;">
-            <label class="form-label">Detalles:</label>
-            <input type="text" class="form-control" name="detalles_circunstancia_responsabilidad">
-        </div>
-    </div>
+</div>
 
 <!-- Seguro de Responsabilidad Civil en los Últimos 5 Años -->
 <div class="mb-3">
@@ -631,16 +1476,29 @@
 
 <!-- Modal de información -->
 <div class="modal fade" id="modal_info_seguro" tabindex="-1" aria-labelledby="modal_info_seguro_label" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modal_info_seguro_label">Información sobre el Seguro</h5>
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre el Seguro</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             
             <div class="modal-body">
                 <p>Si ha comprado pólizas de responsabilidad civil profesional en los ultimos 5 años responda SI</p>
                 <p class="small text-muted mb-0">Debe colocar la información de la póliza anterior.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div> -->
             </div>
             <div class="modal-footer bg-light p-2 justify-content-start">
               <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
@@ -649,33 +1507,106 @@
     </div>
 </div>
 
+<!-- Rehusada o Cancelada Póliza de Responsabilidad Civil -->
+<div class="mb-3">
+    <label class="form-label d-flex align-items-center">
+        Le ha sido rehusada o cancelada la póliza de responsabilidad civil profesional por alguna compañía de seguros:
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalPolizaRehusada">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </label>
+    <div>
+        <input type="radio" name="rehusada_cancelada_poliza" value="SI" required> SI
+        <input type="radio" name="rehusada_cancelada_poliza" value="NO"> NO
+    </div>
+    <div id="detalles_rehusada_cancelada_poliza" style="display: none;">
+        <label class="form-label">Detalles:</label>
+        <input type="text" class="form-control" name="detalles_rehusada_cancelada_poliza">
+    </div>
+</div>
 
-
-
-
-    <!-- Rehusada o Cancelada Póliza de Responsabilidad Civil -->
-    <div class="mb-3">
-        <label class="form-label">Le ha sido rehusada o cancelada la póliza de responsabilidad civil profesional por alguna compañía de seguros:</label>
-        <div>
-            <input type="radio" name="rehusada_cancelada_poliza" value="SI" required> SI
-            <input type="radio" name="rehusada_cancelada_poliza" value="NO"> NO
-        </div>
-        <div id="detalles_rehusada_cancelada_poliza" style="display: none;">
-            <label class="form-label">Detalles:</label>
-            <input type="text" class="form-control" name="detalles_rehusada_cancelada_poliza">
+<!-- Modal Póliza Rehusada -->
+<div class="modal fade" id="modalPolizaRehusada" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Póliza Rehusada</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Indique si alguna aseguradora le ha rechazado o cancelado una póliza de responsabilidad civil.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div> -->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
         </div>
     </div>
+</div>
 
 <!-- Suma Asegurada Solicitada -->
 <div class="mb-3">
-<label class="form-label">Suma Asegurada Solicitada:</label>
-<input type="text" class="form-control" id="suma_asegurada_visible" required>
-<input type="hidden" name="suma_asegurada" id="suma_asegurada_real">
+    <label class="form-label d-flex align-items-center">
+        Suma Asegurada Solicitada:
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalSumaAsegurada">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </label>
+    <input type="text" class="form-control" id="suma_asegurada_visible" required>
+    <input type="hidden" name="suma_asegurada" id="suma_asegurada_real">
+</div>
+
+<!-- Modal Suma Asegurada -->
+<div class="modal fade" id="modalSumaAsegurada" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Suma Asegurada</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Ingrese el monto de cobertura que desea contratar para su seguro.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div>-->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Actividad Principal -->
 <div class="mb-3">
-    <label class="form-label">Actividad Principal:</label>
+    <label class="form-label d-flex align-items-center">
+        Actividad Principal:
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalActividadPrincipal">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </label>
     <select class="form-select" name="actividad_principal" id="actividadPrincipal" required>
       <option value="">Selecciona una opción</option>
       <option value="Asalariado">Asalariado</option>
@@ -689,45 +1620,90 @@
       <option value="Rentista">Rentista</option>
       <option value="Socio">Socio</option>
     </select>
-  </div>
+</div>
 
+<!-- Modal Actividad Principal -->
+<div class="modal fade" id="modalActividadPrincipal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Actividad Principal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Seleccione su actividad principal según su situación laboral actual.</p>
+                <!-- Sección de video agregada -->
 
-  
-
-    <!-- Código CIIU -->
-    <div class="mb-3">
-        <label class="form-label">Código CIIU:
-            <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalCodigoCIIU">
-            <i class="bi bi-info-circle"></i> Más información
-          </button>
-        </label>
-        <input type="text" class="form-control" name="codigo_ciiu" required>
- 
-
-    </div>
-    <!-- Modal para Código CIIU -->
-    <div class="modal fade" id="modalCodigoCIIU" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-light p-3">
-                    <h5 class="modal-title fs-6">Información sobre Código CIIU</        h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>El Código CIIU  Hace refrencia a los 4 numeros de su actividad  principal en el rut </p>
-                </div>
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div>-->
+            </div>
             <div class="modal-footer bg-light p-2 justify-content-start">
-              <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
             </div>
-            </div>
-            
         </div>
     </div>
+</div>
 
+<!-- Código CIIU -->
+<div class="mb-3">
+    <label class="form-label d-flex align-items-center">
+        Código CIIU:
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalCodigoCIIU">
+            <i class="bi bi-info-circle"></i> Más información
+        </button>
+    </label>
+    <input type="text" class="form-control" name="codigo_ciiu" required>
+</div>
+
+<!-- Modal para Código CIIU -->
+<div class="modal fade" id="modalCodigoCIIU" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Código CIIU</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>El Código CIIU hace referencia a los 4 números de su actividad principal en el RUT.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div>-->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Sector y Tipo de Actividad -->
 <div class="mb-3">
-    <label class="form-label">Sector y Tipo de Actividad:</label>
+    <label class="form-label d-flex align-items-center">
+        Sector y Tipo de Actividad:
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalSectorActividad">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </label>
     <select class="form-select" name="sector_actividad" id="sectorActividad" required>
       <option value="">Selecciona una opción</option>
       <option value="Agrícola">Agrícola</option>
@@ -756,198 +1732,913 @@
     </select>
 
     <!-- Campo "¿Cuál?" SOLO aparece si selecciona "Otro" -->
-    <div id="cual_sector_row" style="display: none; margin-top: 10px;">
+    <div id="cual_sector_row" style="margin-top: 10px;">
         <label class="form-label">¿Cuál?:</label>
         <input type="text" class="form-control" name="cual" id="cual_sector">
     </div>
 </div>
 
-
-      
-
-    <!-- Ocupación y Cargo -->
-    <div class="row">
-        <div class="col-md-6">
-            <label class="form-label">Ocupación:</label>
-            <input type="text" class="form-control" name="ocupacion" required>
-        </div>
-        <div class="col-md-6">
-            <label class="form-label">Cargo:</label>
-            <input type="text" class="form-control" name="cargo" required>
-        </div>
-    </div>
-
-    <!-- Empresa donde labora o trabajará -->
-    <div class="mb-3">
-        <label class="form-label">Empresa donde labora o trabajará:</label>
-        <input type="text" class="form-control" name="empresa" required>
-    </div>
-
-    <!-- Dirección, Ciudad y Departamento de la Empresa -->
-    <div class="row">
-        <div class="col-md-6">
-            <label class="form-label">Dirección de la Empresa:</label>
-            <input type="text" class="form-control" name="direccion_empresa" required>
-        </div>
-        <div class="col-md-6">
-            <label class="form-label">Ciudad de la Empresa:</label>
-            <input type="text" class="form-control" name="ciudad_empresa" required>
+<!-- Modal Sector Actividad -->
+<div class="modal fade" id="modalSectorActividad" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Sector</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Seleccione el sector económico al que pertenece su actividad profesional principal.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div>-->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
         </div>
     </div>
+</div>
 
-    <div class="mb-3">
-        <label class="form-label">Departamento de la Empresa:</label>
-        <input type="text" class="form-control" name="departamento_empresa" required>
+<!-- Ocupación y Cargo -->
+<div class="row">
+    <div class="col-md-6">
+        <label class="form-label d-flex align-items-center">
+            Ocupación:
+            <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalOcupacion">
+                <i class="bi bi-info-circle"></i>
+            </button>
+        </label>
+        <input type="text" class="form-control" name="ocupacion" required>
     </div>
-
-    <!-- Teléfono de la Empresa (Opcional) -->
-    <div class="mb-3">
-        <label class="form-label">Teléfono de la Empresa (Opcional):</label>
-        <input type="text" class="form-control" name="telefono_empresa">
+    <div class="col-md-6">
+        <label class="form-label d-flex align-items-center">
+            Cargo:
+            <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalCargo">
+                <i class="bi bi-info-circle"></i>
+            </button>
+        </label>
+        <input type="text" class="form-control" name="cargo" required>
     </div>
+</div>
 
-    <div class="mb-3">
-        <label class="form-label">¿QUE TIPO DE PRODUCTO Y/O SERVICIO COMERCIALIZA? (Independientes o Comerciantes)</label>
-        <input type="text" class="form-control" name="producto_servicio" required>
+<!-- Modal Ocupación -->
+<div class="modal fade" id="modalOcupacion" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Ocupación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Ingrese su profesión u ocupación principal.</p>
+                <!-- Sección de video agregada -->
+
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div>-->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
     </div>
+</div>
 
+<!-- Modal Cargo -->
+<div class="modal fade" id="modalCargo" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Cargo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Ingrese el cargo que desempeña en su trabajo principal.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div>-->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Empresa donde labora o trabajará -->
+<div class="mb-3">
+    <label class="form-label d-flex align-items-center">
+        Empresa donde labora o trabajará:
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalEmpresa">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </label>
+    <input type="text" class="form-control" name="empresa" required>
+</div>
+
+<!-- Modal Empresa -->
+<div class="modal fade" id="modalEmpresa" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Empresa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Ingrese el nombre de la empresa o institución donde trabaja actualmente o trabajará.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div>-->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Dirección, Ciudad y Departamento de la Empresa -->
+<div class="row">
+    <div class="col-md-6">
+        <label class="form-label d-flex align-items-center">
+            Dirección de la Empresa:
+            <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalDireccionEmpresa">
+                <i class="bi bi-info-circle"></i>
+            </button>
+        </label>
+        <input type="text" class="form-control" name="direccion_empresa" required>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label d-flex align-items-center">
+            Ciudad de la Empresa:
+            <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalCiudadEmpresa">
+                <i class="bi bi-info-circle"></i>
+            </button>
+        </label>
+        <input type="text" class="form-control" name="ciudad_empresa" required>
+    </div>
+</div>
+
+<!-- Modal Dirección Empresa -->
+<div class="modal fade" id="modalDireccionEmpresa" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Dirección</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Ingrese la dirección completa de la empresa donde labora.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div>-->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Ciudad Empresa -->
+<div class="modal fade" id="modalCiudadEmpresa" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Ciudad</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Ingrese la ciudad donde se encuentra ubicada la empresa.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div>-->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mb-3">
+    <label class="form-label d-flex align-items-center">
+        Departamento de la Empresa:
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalDepartamentoEmpresa">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </label>
+    <input type="text" class="form-control" name="departamento_empresa" required>
+</div>
+
+<!-- Modal Departamento Empresa -->
+<div class="modal fade" id="modalDepartamentoEmpresa" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Departamento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Ingrese el departamento donde se encuentra ubicada la empresa.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div>  -->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Teléfono de la Empresa (Opcional) -->
+<div class="mb-3">
+    <label class="form-label d-flex align-items-center">
+        Teléfono de la Empresa (Opcional):
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalTelefonoEmpresa">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </label>
+    <input type="text" class="form-control" name="telefono_empresa">
+</div>
+
+<!-- Modal Teléfono Empresa -->
+<div class="modal fade" id="modalTelefonoEmpresa" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Teléfono</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Ingrese el número de teléfono de contacto de la empresa (opcional).</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div> -->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Producto/Servicio -->
+<div class="mb-3">
+    <label class="form-label d-flex align-items-center">
+        ¿QUE TIPO DE PRODUCTO Y/O SERVICIO COMERCIALIZA? (Independientes o Comerciantes)
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalProductoServicio">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </label>
+    <input type="text" class="form-control" name="producto_servicio" required>
+</div>
+
+<!-- Modal Producto/Servicio -->
+<div class="modal fade" id="modalProductoServicio" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Producto/Servicio</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Si es independiente o comerciante, indique qué productos o servicios ofrece.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div>  -->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Ingresos, Egresos, Activos, Pasivos, Patrimonio -->
 <div class="row">
-<div class="col-md-4">
-<label class="form-label">Ingresos Mensuales:</label>
-<input type="text" class="form-control money" name="ingresos_mensuales" required>
-</div>
-<div class="col-md-4">
-  <label class="form-label">Otros Ingresos:</label>
-  <input type="text" class="form-control money" name="otros_ingresos" id="otros_ingresos">
-</div>
-<div class="col-md-4" id="concepto_otros_ingresos_div" style="display: none;">
-  <label class="form-label">Concepto de Otros Ingresos:</label>
-  <input type="text" class="form-control" name="concepto_otros_ingresos" id="concepto_otros_ingresos">
+    <div class="col-md-4">
+        <label class="form-label d-flex align-items-center">
+            Ingresos Mensuales:
+            <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalIngresosMensuales">
+                <i class="bi bi-info-circle"></i>
+            </button>
+        </label>
+        <input type="text" class="form-control money" name="ingresos_mensuales" required>
+    </div>
+    <div class="col-md-4">
+        <label class="form-label d-flex align-items-center">
+            Otros Ingresos:
+            <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalOtrosIngresos">
+                <i class="bi bi-info-circle"></i>
+            </button>
+        </label>
+        <input type="text" class="form-control money" name="otros_ingresos" id="otros_ingresos">
+    </div>
+    <div class="col-md-4" id="concepto_otros_ingresos_div" style="display: none;">
+        <label class="form-label">Concepto de Otros Ingresos:</label>
+        <input type="text" class="form-control" name="concepto_otros_ingresos" id="concepto_otros_ingresos">
+    </div>
 </div>
 
+<!-- Modal Ingresos Mensuales -->
+<div class="modal fade" id="modalIngresosMensuales" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Ingresos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Ingrese sus ingresos mensuales promedio en moneda local.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div>-->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Otros Ingresos -->
+<div class="modal fade" id="modalOtrosIngresos" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Otros Ingresos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Ingrese otros ingresos adicionales a los principales (opcional).</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div>-->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="row mt-3">
-<div class="col-md-3">
-<label class="form-label">Egresos Mensuales:</label>
-<input type="text" class="form-control money" name="egresos_mensuales" required>
+    <div class="col-md-3">
+        <label class="form-label d-flex align-items-center">
+            Egresos Mensuales:
+            <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalEgresosMensuales">
+                <i class="bi bi-info-circle"></i>
+            </button>
+        </label>
+        <input type="text" class="form-control money" name="egresos_mensuales" required>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label d-flex align-items-center">
+            Activos:
+            <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalActivos">
+                <i class="bi bi-info-circle"></i>
+            </button>
+        </label>
+        <input type="text" class="form-control money" name="activos" id="activos" required>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label d-flex align-items-center">
+            Pasivos:
+            <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalPasivos">
+                <i class="bi bi-info-circle"></i>
+            </button>
+        </label>
+        <input type="text" class="form-control money" name="pasivos" id="pasivos">
+    </div>
+    <div class="col-md-3">
+        <label class="form-label d-flex align-items-center">
+            Patrimonio:
+            <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalPatrimonio">
+                <i class="bi bi-info-circle"></i>
+            </button>
+        </label>
+        <input type="text" class="form-control" name="patrimonio" id="patrimonio" readonly>
+    </div>
 </div>
-<div class="col-md-3">
-<label class="form-label">Activos:</label>
-<input type="text" class="form-control money" name="activos" id="activos" required>
+
+<!-- Modal Egresos Mensuales -->
+<div class="modal fade" id="modalEgresosMensuales" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Egresos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Ingrese sus gastos mensuales promedio en moneda local.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div>-->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="col-md-3">
-<label class="form-label">Pasivos:</label>
-<input type="text" class="form-control money" name="pasivos" id="pasivos" >
+
+<!-- Modal Activos -->
+<div class="modal fade" id="modalActivos" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Activos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Ingrese el valor total de sus activos (propiedades, inversiones, etc.).</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div> -->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="col-md-3">
-<label class="form-label">Patrimonio:</label>
-<input type="text" class="form-control" name="patrimonio" id="patrimonio" readonly>
+
+<!-- Modal Pasivos -->
+<div class="modal fade" id="modalPasivos" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Pasivos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Ingrese el valor total de sus deudas y obligaciones (opcional).</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div> -->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- Modal Patrimonio -->
+<div class="modal fade" id="modalPatrimonio" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Patrimonio</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Este campo se calcula automáticamente como la diferencia entre sus activos y pasivos.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div> -->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
 </div>
 
+<!-- Vínculo Familiar con PEP -->
+<div class="mb-3">
+    <label class="form-label d-flex align-items-center">
+        ¿Es usted una Persona Expuesta Políticamente (PEP)?:
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalPEP">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </label>
+    <div>
+        <input type="radio" name="persona_pep" value="SI" required> SI
+        <input type="radio" name="persona_pep" value="NO"> NO
+    </div>
+</div>
 
-    <!-- Vínculo Familiar con PEP -->
-    <div class="mb-3">
-        <label class="form-label">¿Es usted una Persona Expuesta Políticamente (PEP)?:</label>
-        <div>
-            <input type="radio" name="persona_pep" value="SI" required> SI
-            <input type="radio" name="persona_pep" value="NO"> NO
+<!-- Modal PEP -->
+<div class="modal fade" id="modalPEP" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre PEP</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Una Persona Expuesta Políticamente (PEP) es alguien que desempeña o ha desempeñado funciones públicas importantes.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div> -->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
         </div>
     </div>
+</div>
 
-    <!-- Vínculo Familiar con PEP -->
-    <div class="mb-3">
-        <label class="form-label">¿Existe algún vínculo familiar, civil y/o asociación entre usted y una PEP?:</label>
-        <div>
-            <input type="radio" name="vinculo_pep" value="SI" required> SI
-            <input type="radio" name="vinculo_pep" value="NO"> NO
+<!-- Vínculo Familiar con PEP -->
+<div class="mb-3">
+    <label class="form-label d-flex align-items-center">
+        ¿Existe algún vínculo familiar, civil y/o asociación entre usted y una PEP?:
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalVinculoPEP">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </label>
+    <div>
+        <input type="radio" name="vinculo_pep" value="SI" required> SI
+        <input type="radio" name="vinculo_pep" value="NO"> NO
+    </div>
+</div>
+
+<!-- Modal Vínculo PEP -->
+<div class="modal fade" id="modalVinculoPEP" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Vínculo PEP</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Indique si tiene algún familiar cercano o asociación con una Persona Expuesta Políticamente.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div> -->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
         </div>
     </div>
+</div>
 
-    <!-- Administra Recursos Públicos -->
-    <div class="mb-3">
-        <label class="form-label">¿Por su cargo o actividad, administra recursos públicos?:</label>
-        <div>
-            <input type="radio" name="administra_recursos_publicos" value="SI" required> SI
-            <input type="radio" name="administra_recursos_publicos" value="NO"> NO
+<!-- Administra Recursos Públicos -->
+<div class="mb-3">
+    <label class="form-label d-flex align-items-center">
+        ¿Por su cargo o actividad, administra recursos públicos?:
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalRecursosPublicos">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </label>
+    <div>
+        <input type="radio" name="administra_recursos_publicos" value="SI" required> SI
+        <input type="radio" name="administra_recursos_publicos" value="NO"> NO
+    </div>
+</div>
+
+<!-- Modal Recursos Públicos -->
+<div class="modal fade" id="modalRecursosPublicos" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Recursos Públicos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Indique si en su trabajo maneja fondos o recursos del estado.</p>
+                <!-- Sección de video agregada -->
+                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div> -->
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
         </div>
     </div>
+</div>
 
-    <!-- Operaciones Internacionales -->
-    <div class="mb-3">
-        <label class="form-label">¿Realiza operaciones internacionales?:</label>
-        <div>
-            <input type="radio" name="operaciones_internacionales" value="SI" required> SI
-            <input type="radio" name="operaciones_internacionales" value="NO"> NO
-        </div>
-        <div id="detalles_operaciones_internacionales" style="display: none;">
-            <label class="form-label">Indique:</label>
-            <input type="text" class="form-control" name="detalles_operaciones_internacionales">
+<!-- Operaciones Internacionales -->
+<div class="mb-3">
+    <label class="form-label d-flex align-items-center">
+        ¿Realiza operaciones internacionales?:
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalOperacionesInternacionales">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </label>
+    <div>
+        <input type="radio" name="operaciones_internacionales" value="SI" required> SI
+        <input type="radio" name="operaciones_internacionales" value="NO"> NO
+    </div>
+    <div id="detalles_operaciones_internacionales" style="display: none;">
+        <label class="form-label">Indique:</label>
+        <input type="text" class="form-control" name="detalles_operaciones_internacionales">
+    </div>
+</div>
+
+<!-- Modal Operaciones Internacionales -->
+<div class="modal fade" id="modalOperacionesInternacionales" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Operaciones Internacionales</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Indique si realiza transacciones comerciales o financieras con el exterior.</p>
+                <!-- Sección de video agregada -->
+
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
         </div>
     </div>
+</div>
 
-    <!-- Obligaciones Tributarias en Otro País -->
-    <div class="mb-3">
-        <label class="form-label">¿Es usted sujeto de obligaciones tributarias en otro país o grupo de países?:</label>
-        <div>
-            <input type="radio" name="obligaciones_tributarias" value="SI" required> SI
-            <input type="radio" name="obligaciones_tributarias" value="NO"> NO
-        </div>
-        <div id="detalles_obligaciones_tributarias" style="display: none;">
-            <label class="form-label">Indique:</label>
-            <input type="text" class="form-control" name="detalles_obligaciones_tributarias">
+<!-- Obligaciones Tributarias en Otro País -->
+<div class="mb-3">
+    <label class="form-label d-flex align-items-center">
+        ¿Es usted sujeto de obligaciones tributarias en otro país o grupo de países?:
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalObligacionesTributarias">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </label>
+    <div>
+        <input type="radio" name="obligaciones_tributarias" value="SI" required> SI
+        <input type="radio" name="obligaciones_tributarias" value="NO"> NO
+    </div>
+    <div id="detalles_obligaciones_tributarias" style="display: none;">
+        <label class="form-label">Indique:</label>
+        <input type="text" class="form-control" name="detalles_obligaciones_tributarias">
+    </div>
+</div>
+
+<!-- Modal Obligaciones Tributarias -->
+<div class="modal fade" id="modalObligacionesTributarias" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Obligaciones Tributarias</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Indique si debe pagar impuestos en otros países además del suyo.</p>
+                <!-- Sección de video agregada -->
+
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
         </div>
     </div>
+</div>
 
-    <!-- Responsable del RUT -->
-    <div class="mb-3">
-        <label class="form-label">¿Es responsable del RUT?:</label>
-        <div>
-            <input type="radio" name="responsable_rut" value="SI" required> SI
-            <input type="radio" name="responsable_rut" value="NO"> NO
-        </div>
-        <div id="detalles_responsable_rut" style="display: none;">
-            <label class="form-label">Código/s de Responsabilidad:</label>
-            <input type="text" class="form-control" name="codigo_responsabilidad">
-            <label class="form-label">Correo Electrónico registrado en la DIAN:</label>
-            <input type="email" class="form-control" name="correo_dian">
+<!-- Responsable del RUT -->
+<div class="mb-3">
+    <label class="form-label d-flex align-items-center">
+        ¿Es responsable del RUT?:
+        <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalResponsableRUT">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </label>
+    <div>
+        <input type="radio" name="responsable_rut" value="SI" required> SI
+        <input type="radio" name="responsable_rut" value="NO"> NO
+    </div>
+    <div id="detalles_responsable_rut" style="display: none;">
+        <label class="form-label">Código/s de Responsabilidad:</label>
+        <input type="text" class="form-control" name="codigo_responsabilidad">
+        <label class="form-label">Correo Electrónico registrado en la DIAN:</label>
+        <input type="email" class="form-control" name="correo_dian">
+    </div>
+</div>
+
+<!-- Modal Responsable RUT -->
+<div class="modal fade" id="modalResponsableRUT" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Responsable RUT</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Indique si es responsable del Registro Único Tributario ante la DIAN.</p>
+                <!-- Sección de video agregada -->
+
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-start">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
         </div>
     </div>
+</div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <label class="form-label">Origen de fondos:
-                 <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalOrigenFondos">
+<!-- Origen de fondos -->
+<div class="row">
+    <div class="col-md-6">
+        <label class="form-label d-flex align-items-center">
+            Origen de fondos:
+            <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalOrigenFondos">
                 <i class="bi bi-info-circle"></i> Más información
             </button>
-            </label>
-            <input type="text" class="form-control" name="fondos"  required>
-           
-        </div>
-
+        </label>
+        <input type="text" class="form-control" name="fondos" required>
     </div>
+</div>
 
-    <!-- Modal para Origen de Fondos -->
-    <div class="modal fade" id="modalOrigenFondos" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-light p-3">
-                    <h5 class="modal-title fs-6">Información sobre Origen de Fondos</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Indique el origen de los ingresos, por ejemplo: ingresos laborales, ahorros, herencias, venta de bienes, entre otros.</p>
+<!-- Modal para Origen de Fondos -->
+<div class="modal fade" id="modalOrigenFondos" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title fs-6">Información sobre Origen de Fondos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Indique el origen de sus ingresos principales (ej: salario, negocios, inversiones, etc.).</p>
+                <!-- Sección de video agregada -->
 
-                </div>
+            </div>
             <div class="modal-footer bg-light p-2 justify-content-start">
-              <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
-            </div>
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
             </div>
         </div>
     </div>
+</div>
 
     <div class="row">
         <div class="col-md-6">
@@ -1169,29 +2860,6 @@ document.addEventListener('DOMContentLoaded', function () {
       conceptoInput.value = "";
     }
   });
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const sectorActividad = document.getElementById('sectorActividad');
-  const cualRow = document.getElementById('cual_sector_row');
-  const cualInput = document.getElementById('cual_sector');
-
-  function toggleCual() {
-    if (sectorActividad.value === 'Otro') {
-      cualRow.style.display = 'block';
-      cualInput.required = true;
-    } else {
-      cualRow.style.display = 'none';
-      cualInput.value = '';
-      cualInput.required = false;
-    }
-  }
-
-  // Ejecutar al cargar la página (útil para edición)
-  toggleCual();
-
-  sectorActividad.addEventListener('change', toggleCual);
 });
 </script>
 

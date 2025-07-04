@@ -1,7 +1,6 @@
 <?php $__env->startSection('title', 'Iniciar Sesión'); ?>
 
 <?php $__env->startSection('content'); ?>
-<!-- Encabezado con gradiente -->
 <div class="container-fluid page-header d-flex align-items-center justify-content-center mb-5 py-5 position-relative overflow-hidden"
      style="background: linear-gradient(135deg, #1e5799 0%, #207cca 51%, #2989d8 100%); height: 400px;">
     <div class="position-absolute w-100 h-100" style="top:0; left:0; background-image: url('<?php echo e(asset('img/headers.jpg')); ?>'); background-size: cover; background-position: center; opacity: 0.15; z-index: 1;"></div>
@@ -11,7 +10,6 @@
     </div>
 </div>
 
-<!-- Login -->
 <div class="container mb-5">
     <div class="row justify-content-center">
         <div class="col-md-6 col-lg-5">
@@ -32,6 +30,7 @@
 
                     <form method="POST" action="<?php echo e(route('login')); ?>">
                         <?php echo csrf_field(); ?>
+                        <input type="hidden" name="redirect_to" value="<?php echo e(request()->query('redirect_to')); ?>">
 
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo Electrónico</label>
@@ -53,7 +52,9 @@
                         </button>
 
                         <div class="text-center mt-3">
-                            <small>¿No tienes una cuenta? <a href="<?php echo e(route('register')); ?>">Regístrate</a></small>
+                            <small>¿No tienes una cuenta? 
+                                <a href="<?php echo e(route('register', ['redirect_to' => request()->query('redirect_to')])); ?>">Regístrate</a>
+                            </small>
                         </div>
                     </form>
 
@@ -70,7 +71,6 @@
     </div>
 </div>
 
-<!-- Estilos personalizados -->
 <style>
     .btn-primary-gradient {
         background: linear-gradient(45deg, #207cca, #1e5799);

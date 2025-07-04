@@ -23,6 +23,7 @@
 
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
+                        <input type="hidden" name="redirect_to" value="{{ request()->query('redirect_to') }}">
 
                         <div class="mb-3">
                             <label for="name" class="form-label">Nombre completo</label>
@@ -50,7 +51,9 @@
                     </form>
 
                     <div class="text-center mt-4">
-                        <small>¿Ya tienes una cuenta? <a href="{{ route('login') }}">Inicia sesión</a></small>
+                        <small>¿Ya tienes una cuenta? 
+                            <a href="{{ route('login', ['redirect_to' => request()->query('redirect_to')]) }}">Inicia sesión</a>
+                        </small>
                     </div>
                 </div>
             </div>
@@ -58,7 +61,6 @@
     </div>
 </div>
 
-<!-- Estilos adicionales -->
 <style>
     .btn-primary-gradient {
         background: linear-gradient(45deg, #207cca, #1e5799);
