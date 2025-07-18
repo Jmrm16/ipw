@@ -89,7 +89,7 @@ public function responder(Request $request)
             session(['esperando_confirmacion' => true]);
             return response()->json([
                 'respuesta' => "✅ La póliza médica para un {$profesionDetectada} con un valor asegurado de {$valorDetectado} cuesta \${$precio} con la aseguradora Confianza.<br>\n                    
-                Puedes registrarte para una póliza médica <a href='https://purple-zebra-412652.hostingersite.com/seguros/medicos' target='_blank'>haciendo clic aquí</a>.<br>\n                    ¿Deseas saber el precio de otra póliza o consultar algo más?"
+                Puedes registrarte para una póliza médica <a href='https://ipwseguros.com.co/Formulario' target='_blank'>haciendo clic aquí</a>.<br>\n                    ¿Deseas saber el precio de otra póliza o consultar algo más?"
             ]);
         }
     } elseif ($profesionDetectada && !$valorDetectado) {

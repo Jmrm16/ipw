@@ -96,5 +96,29 @@ public function subirConstanciaPago(Request $request, $id)
     return back()->with('success', 'Constancia de pago enviada correctamente.');
 }
 
+public function destroy($id)
+{
+    $user = Auth::user();
+
+    $formulario = FormularioMedico::where('id', $id)
+        ->where('user_id', $user->id)
+        ->firstOrFail();
+
+    // Eliminar constancia de pago si existe
+    if ($formulario->constancia_pago_path) {
+        $rutaRelativa = str_replace('/storage/', '', $formulario->constancia_pago_path);
+        Storage::disk('public')->delete($rutaRelativa);
+    }
+
+    // Si quieres, también puedes eliminar los documentos asociados (opcional)
+    // DocumentoUsuario::where('formulario_medico_id', $formulario->id)->delete();
+
+    $formulario->delete();
+
+    return redirect()->route('dashboard')
+        ->with('success', 'Formulario eliminado correctamente.');
+}
+
+
 
 }

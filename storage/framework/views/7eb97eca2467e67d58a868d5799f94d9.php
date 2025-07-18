@@ -654,28 +654,43 @@
             });
         }
 
-        // Configuración del tour
-        function configurarTour() {
-            introJs().setOptions({
-                nextLabel: 'Siguiente →',
-                prevLabel: '← Anterior',
-                skipLabel: 'Saltar tour',
-                doneLabel: 'Terminar',
-                exitOnEsc: true,
-                exitOnOverlayClick: false,
-                showStepNumbers: false,
-                showBullets: true,
-                showProgress: false,
-                scrollToElement: true,
-                overlayOpacity: 0.5,
-                tooltipClass: 'custom-tooltip',
-                highlightClass: 'custom-highlight'
-            }).oncomplete(function() {
-                localStorage.setItem('dashboardTourCompleted', 'true');
-            }).onexit(function() {
-                localStorage.setItem('dashboardTourCompleted', 'true');
-            });
+// Configuración del tour con botones en español
+function configurarTour() {
+    return introJs().setOptions({
+        nextLabel: 'Siguiente',
+        prevLabel: 'Anterior',
+        skipLabel: 'Saltar',
+        doneLabel: 'Finalizar',
+        exitOnEsc: true,
+        exitOnOverlayClick: false,
+        showStepNumbers: false,
+        showBullets: true,
+        showProgress: false,
+        scrollToElement: true,
+        overlayOpacity: 0.5,
+        tooltipClass: 'custom-tooltip',
+        highlightClass: 'custom-highlight'
+    })
+    .onchange(function (element) {
+        // Mostrar modal de notificaciones solo en el paso correspondiente
+        if (element.id === 'notificacionesBtn') {
+            document.getElementById('notificacionesModal')?.classList.remove('hidden');
+            marcarNotificacionesComoLeidas?.();
+        } else {
+            document.getElementById('notificacionesModal')?.classList.add('hidden');
         }
+    })
+    .oncomplete(function () {
+        localStorage.setItem('dashboardTourCompleted', 'true');
+        document.getElementById('notificacionesModal')?.classList.add('hidden');
+    })
+    .onexit(function () {
+        localStorage.setItem('dashboardTourCompleted', 'true');
+        document.getElementById('notificacionesModal')?.classList.add('hidden');
+    });
+}
+
+
 
         // Iniciar tour
         document.getElementById('startTourBtn')?.addEventListener('click', function() {
@@ -690,6 +705,8 @@
         }
     });
 </script>
+
+
 <?php $__env->stopSection(); ?>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.app-modern', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\aseguradora\resources\views/pages/dashboard.blade.php ENDPATH**/ ?>

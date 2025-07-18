@@ -9,7 +9,7 @@
     <div class="mb-8">
         <h1 class="text-3xl font-bold text-sky-900 tracking-tight flex items-center gap-3">
             <i class="ri-folder-upload-line text-4xl text-sky-700"></i>
-             Documentación para La Expedición de póliza de cumplimiento
+            Documentación para La Expedición de póliza de cumplimiento
         </h1>
         <p class="text-gray-600 mt-2 text-base max-w-3xl">
             Adjunta todos los documentos requeridos para validar tu solicitud de póliza de cumplimiento. Asegúrate de que estén legibles, actualizados y en formato PDF o imagen (JPG, PNG).
@@ -45,40 +45,59 @@
             <i class="ri-upload-cloud-line text-lg text-blue-600"></i>
             Subir Todos los Documentos de una vez
         </h2>
-        <div x-data="{
-            uploading: false,
-            submit() {
-                this.uploading = true;
-                const form = this.$refs.massUploadForm;
-                
-                // Verificar que al menos un archivo haya sido seleccionado
-                const fileInputs = form.querySelectorAll('input[type=file]');
-                let hasFiles = false;
-                
-                fileInputs.forEach(input => {
-                    if (input.files.length > 0) {
-                        hasFiles = true;
+
+        <div
+            x-data="{
+                uploading: false,
+                erroresPorCampo: {},
+                checkFileSize(event, campo) {
+                    const archivo = event.target.files[0];
+                    if (archivo && archivo.size > 5 * 1024 * 1024) {
+                        this.erroresPorCampo[campo] = 'Este archivo supera los 5MB';
+                    } else {
+                        delete this.erroresPorCampo[campo];
                     }
-                });
-                
-                if (!hasFiles) {
-                    alert('Por favor selecciona al menos un documento para subir');
-                    this.uploading = false;
-                    return;
+                },
+                submit() {
+                    if (Object.keys(this.erroresPorCampo).length > 0) {
+                        alert('Algunos archivos superan el tamaño permitido (5MB). Corrígelos antes de continuar.');
+                        return;
+                    }
+
+                    const form = this.$refs.massUploadForm;
+                    const fileInputs = form.querySelectorAll('input[type=file]');
+                    let hasFiles = false;
+
+                    fileInputs.forEach(input => {
+                        if (input.files.length > 0) {
+                            hasFiles = true;
+                        }
+                    });
+
+                    if (!hasFiles) {
+                        alert('Por favor selecciona al menos un documento para subir');
+                        return;
+                    }
+
+                    this.uploading = true;
+                    form.submit();
                 }
-                
-                form.submit();
-            }
-        }" class="bg-white rounded-xl shadow-md p-6">
+            }"
+            class="bg-white rounded-xl shadow-md p-6"
+        >
             <form x-ref="massUploadForm" action="{{ route('documentos.store', $formulario->id) }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 @csrf
+
                 @foreach ($documentosCumplimiento as $tipo => $label)
                     @php
                         $documento = $documentos->has($tipo) ? $documentos[$tipo] : null;
                         $esHeredado = $documento && is_null($documento->formulario_medico_id);
                     @endphp
-                    
-                    <div class="relative border rounded-lg p-3 {{ $documento ? 'border-green-500' : 'border-gray-300' }}">
+
+                    <div 
+                        class="relative border rounded-lg p-3"
+                        :class="erroresPorCampo['{{ $tipo }}'] ? 'border-red-500' : '{{ $documento ? 'border-green-500' : 'border-gray-300' }}'">
+                        
                         <div class="flex justify-between items-center mb-2">
                             <label class="block text-sm font-medium text-gray-700">{{ $label }}</label>
                             @if ($documento)
@@ -87,17 +106,26 @@
                                 </span>
                             @endif
                         </div>
-                        
-                        <input type="file" 
-                               name="archivos[{{ $tipo }}]" 
-                               accept=".pdf,.jpg,.jpeg,.png" 
-                               class="block w-full text-sm text-gray-500
-                                      file:mr-4 file:py-2 file:px-4
-                                      file:rounded-md file:border-0
-                                      file:text-sm file:font-semibold
-                                      file:bg-blue-50 file:text-blue-700
-                                      hover:file:bg-blue-100" />
-                        
+
+                        <input 
+                            type="file" 
+                            name="archivos[{{ $tipo }}]" 
+                            accept=".pdf,.jpg,.jpeg,.png"
+                            @change="checkFileSize($event, '{{ $tipo }}')"
+                            class="block w-full text-sm text-gray-500
+                                   file:mr-4 file:py-2 file:px-4
+                                   file:rounded-md file:border-0
+                                   file:text-sm file:font-semibold
+                                   file:bg-blue-50 file:text-blue-700
+                                   hover:file:bg-blue-100" />
+
+                        <template x-if="erroresPorCampo['{{ $tipo }}']">
+                            <p class="text-sm text-red-600 mt-2">
+                                <i class="ri-error-warning-line mr-1"></i> 
+                                <span x-text="erroresPorCampo['{{ $tipo }}']"></span>
+                            </p>
+                        </template>
+
                         @if ($documento)
                             <div class="mt-2 flex justify-between items-center">
                                 <a href="{{ asset('storage/' . $documento->archivo) }}" 
@@ -113,12 +141,14 @@
                         @endif
                     </div>
                 @endforeach
-                
+
                 <div class="md:col-span-2 flex justify-end mt-4">
-                    <button type="button" 
-                            @click="submit"
-                            :disabled="uploading"
-                            class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition">
+                    <button 
+                        type="button"
+                        @click="submit"
+                        :disabled="uploading"
+                        class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition"
+                    >
                         <template x-if="uploading">
                             <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -134,9 +164,5 @@
             </form>
         </div>
     </section>
-
-    {{-- Sección de carga individual (tarjetas) --}}
-
-
 </div>
 @endsection

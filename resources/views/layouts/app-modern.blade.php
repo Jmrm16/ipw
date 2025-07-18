@@ -112,15 +112,18 @@
 
             <!-- Notificaciones -->
             <div class="relative">
-                <button id="notificacionesBtn"
-                        class="relative p-2 rounded-full bg-white shadow hover:bg-blue-50 transition z-50">
-                    <i class="ri-notification-3-line text-2xl text-blue-600"></i>
-                    @if($notificaciones->where('leida', false)->count() > 0)
-                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
-                            {{ $notificaciones->where('leida', false)->count() }}
-                        </span>
-                    @endif
-                </button>
+            <button id="notificacionesBtn"
+                    data-step="2"
+                    data-intro="Aquí puedes revisar tus notificaciones importantes, como actualizaciones de formularios o cambios en el estado de tus pólizas."
+                    class="relative p-2 rounded-full bg-white shadow hover:bg-blue-50 transition z-50">
+                <i class="ri-notification-3-line text-2xl text-blue-600"></i>
+                @if($notificaciones->where('leida', false)->count() > 0)
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
+                        {{ $notificaciones->where('leida', false)->count() }}
+                    </span>
+                @endif
+            </button>
+
 
                 <!-- Dropdown modal -->
                 <div id="notificacionesModal"

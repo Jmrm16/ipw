@@ -64,16 +64,25 @@
 
 
 <!-- Botón flotante del chatbot -->
+<!-- Botón flotante mejorado del chatbot -->
 <div id="chatbot-button" style="position: fixed; bottom: 30px; right: 30px; z-index: 9999;">
-    <button class="btn rounded-circle shadow-lg p-0" 
-            style="width: 60px; height: 60px; background-color: #1a4b8c; border-color: #1a4b8c;"
-            onclick="openChatbotModal()">
-        <i class="fas fa-robot fa-lg text-white"></i>
-        <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
-            <span class="visually-hidden">Nuevos mensajes</span>
-        </span>
-    </button>
+  <button
+    class="btn shadow-lg d-flex align-items-center justify-content-center position-relative pulse-glow"
+    style="width: 65px; height: 65px; border-radius: 50%; background: linear-gradient(135deg, #1a4b8c, #2563eb); border: none;"
+    onclick="openChatbotModal()"
+    aria-label="Abrir chatbot"
+  >
+    <i class="bi bi-chat-dots-fill text-white fs-4"></i> <!-- nuevo ícono Bootstrap Icons -->
+    <span
+      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger shadow-sm"
+      style="font-size: 0.6rem; padding: 4px 6px;"
+    >
+      1
+      <span class="visually-hidden">Nuevo mensaje</span>
+    </span>
+  </button>
 </div>
+
 
 
 <!-- Modal del Chatbot -->
@@ -96,7 +105,7 @@
                             </div>
                         </div>
                         <div class="flex-grow-1">
-                            <h5 class="modal-title mb-0">IPW Bot</h5>
+                            <h5 class="modal-title mb-0">Segurix Bot</h5>
                             <small class="d-block" id="chatbot-status">En línea • Asistente virtual IA</small>
                         </div>
                         <div class="d-flex">
@@ -115,10 +124,11 @@
                                     <div class="chatbot-avatar-small bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 24px; height: 24px;">
                                         <i class="fas fa-robot" style="font-size: 0.7rem;"></i>
                                     </div>
-                                    <small class="text-muted">IPW Bot</small>
+                                    <small class="text-muted">Segurix Bot</small>
                                 </div>
-                                <p class="mb-0">🤖 Hola, ¿en qué puedo ayudarte hoy?</p>
+                                <p class="mb-0">🤖 Bienvenido soy tu asistente virtual Segurix Bot. Estoy aquí para ayudarte con tus consultas relacionadas a pólizas y seguros.</p>
                                 <small class="d-block text-end text-muted mt-1">Ahora</small>
+
                             </div>
                         </div>
                     </div>
@@ -204,7 +214,7 @@
                             <div class="chatbot-avatar-small bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 24px; height: 24px;">
                                 <i class="fas fa-robot" style="font-size: 0.7rem;"></i>
                             </div>
-                            <small class="text-muted">IPW Bot</small>
+                            <small class="text-muted">Segurix Bot</small>
                         </div>
                         <p class="mb-0">🤖 Hola, ¿en qué puedo ayudarte hoy?</p>
                         <small class="d-block text-end text-muted mt-1">Ahora</small>
@@ -247,7 +257,7 @@
                             <div class="chatbot-avatar-small bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 24px; height: 24px;">
                                 <i class="fas fa-robot" style="font-size: 0.7rem;"></i>
                             </div>
-                            <small class="text-muted">IPW Bot</small>
+                            <small class="text-muted">Segurix Bot</small>
                         </div>
                         <div class="typing-indicator">
                             <span></span>
@@ -286,7 +296,7 @@
                                 <div class="chatbot-avatar-small bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 24px; height: 24px;">
                                     <i class="fas fa-robot" style="font-size: 0.7rem;"></i>
                                 </div>
-                                <small class="text-muted">IPW Bot</small>
+                                <small class="text-muted">Segurix Bot</small>
                             </div>
                             <p class="mb-0">${respuesta.replace(/\n/g, '<br>')}</p>
                             <small class="d-block text-end text-muted mt-1">Ahora</small>
@@ -418,6 +428,22 @@
         .message-content {
             position: relative;
         }
+                .pulse-glow {
+        animation: pulseEffect 2s infinite;
+        }
+
+        @keyframes pulseEffect {
+        0% {
+            box-shadow: 0 0 0 0 rgba(26, 75, 140, 0.5);
+        }
+        70% {
+            box-shadow: 0 0 0 10px rgba(26, 75, 140, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(26, 75, 140, 0);
+        }
+        }
+
     </style>
 
 

@@ -2,7 +2,7 @@
 
 return [
     'system_prompt' => <<<EOT
-Eres IPW Bot, asistente virtual oficial de Aseguradora IPW.
+    Eres Segurix Bot, asistente virtual oficial de Aseguradora IPW.
 
 La empresa está ubicada en Maicao, La Guajira. Ofrece:
 

@@ -25,7 +25,10 @@ public function boot()
         if (Auth::check()) {
             $userId = Auth::id();
 
-            $notificaciones = Notificacion::whereRaw("JSON_EXTRACT(data, '$.usuario_id') = ?", [$userId])
+            $notificaciones = Notificacion::where(function ($query) use ($userId) {
+                    $query->whereRaw("JSON_EXTRACT(data, '$.user_id') = ?", [$userId])
+                          ->orWhereRaw("JSON_EXTRACT(data, '$.usuario_id') = ?", [$userId]);
+                })
                 ->latest()
                 ->take(10)
                 ->get();
@@ -37,4 +40,5 @@ public function boot()
         }
     });
 }
+
 }

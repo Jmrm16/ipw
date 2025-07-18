@@ -27,9 +27,10 @@
         </div>
         @endif
 
-        <form action="{{ route('formulario.store') }}" method="POST">
-            @csrf
+        <form id="formularioPDF" action="{{ route('formulario.store') }}" method="POST">
 
+            @csrf
+            
             <!-- Fecha, Ciudad y Sucursal -->
             <div class="mb-3">
                 <label class="form-label">Fecha:</label>
@@ -1093,7 +1094,7 @@
     <label class="form-label d-flex align-items-center">
         Existen Otros Riesgos (Laboratorios, Farmacias, etc.):
         <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalOtrosRiesgos">
-            <i class="bi bi-info-circle"></i>
+            <i class="bi bi-info-circle"></i> Más información
         </button>
     </label>
     <div>
@@ -1117,18 +1118,18 @@
             <div class="modal-body">
                 <p>Indique si existen otros riesgos profesionales adicionales a su práctica principal.</p>
                 <!-- Sección de video agregada -->
-                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                <div style="width:100%;max-width:700px;margin:auto;">
                     <iframe
                         width="100%"
                         height="350"
                         style="border-radius: 12px;"
-                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        src="https://www.youtube.com/embed/KWCrieskJ3k" 
                         title="Información Tratamiento Ambulatorio"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen
                     ></iframe>
-                </div> -->
+                </div> 
             </div>
             <div class="modal-footer bg-light p-2 justify-content-start">
                 <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
@@ -1143,7 +1144,7 @@
     <label class="form-label d-flex align-items-center">
         Ejercicio de las Actividades Profesionales Exclusivamente en el Consultorio Arriba indicado:
         <button class="btn btn-sm btn-outline-info ms-2 p-0 border-0" type="button" data-bs-toggle="modal" data-bs-target="#modalEjercicioExclusivo">
-            <i class="bi bi-info-circle"></i>
+            <i class="bi bi-info-circle"></i> Más información
         </button>
     </label>
     <div>
@@ -1163,18 +1164,18 @@
             <div class="modal-body">
                 <p>Seleccione SI si todas sus actividades profesionales se realizan únicamente en el consultorio indicado.</p>
                 <!-- Sección de video agregada -->
-                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                <div style="width:100%;max-width:700px;margin:auto;">
                     <iframe
                         width="100%"
                         height="350"
                         style="border-radius: 12px;"
-                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        src="https://www.youtube.com/embed/heibgdQF_MY" 
                         title="Información Tratamiento Ambulatorio"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen
                     ></iframe>
-                </div> -->
+                </div> 
             </div>
             <div class="modal-footer bg-light p-2 justify-content-start">
                 <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
@@ -1218,18 +1219,18 @@
             <div class="modal-body">
                 <p>Indique si presta servicios profesionales en otras instituciones además de su consultorio principal.</p>
                 <!-- Sección de video agregada -->
-                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                <div style="width:100%;max-width:700px;margin:auto;">
                     <iframe
                         width="100%"
                         height="350"
                         style="border-radius: 12px;"
-                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        src="https://www.youtube.com/embed/Q7T382NtJpg" 
                         title="Información Tratamiento Ambulatorio"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen
                     ></iframe>
-                </div> -->
+                </div> 
             </div>
             <div class="modal-footer bg-light p-2 justify-content-start">
                 <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
@@ -1271,18 +1272,18 @@
             <div class="modal-body">
                 <p>Indique si tiene un contrato laboral con alguna institución o empresa donde ejerce su profesión.</p>
                 <!-- Sección de video agregada -->
-                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                <div style="width:100%;max-width:700px;margin:auto;">
                     <iframe
                         width="100%"
                         height="350"
                         style="border-radius: 12px;"
-                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        src="https://www.youtube.com/embed/1OdF_KT5n3U" 
                         title="Información Tratamiento Ambulatorio"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen
                     ></iframe>
-                </div> -->
+                </div> 
             </div>
             <div class="modal-footer bg-light p-2 justify-content-start">
                 <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
@@ -1320,18 +1321,18 @@
             <div class="modal-body">
                 <p>Indique si ejerce su profesión en otros lugares además de su consultorio principal.</p>
                 <!-- Sección de video agregada -->
-                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                <div style="width:100%;max-width:700px;margin:auto;">
                     <iframe
                         width="100%"
                         height="350"
                         style="border-radius: 12px;"
-                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        src="https://www.youtube.com/embed/OYaAMVjTvZM" 
                         title="Información Tratamiento Ambulatorio"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen
                     ></iframe>
-                </div> -->
+                </div>
             </div>
             <div class="modal-footer bg-light p-2 justify-content-start">
                 <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
@@ -1369,18 +1370,18 @@
             <div class="modal-body">
                 <p>Indique si ha tenido reclamaciones por responsabilidad civil profesional en los últimos 5 años.</p>
                 <!-- Sección de video agregada -->
-                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                <div style="width:100%;max-width:700px;margin:auto;">
                     <iframe
                         width="100%"
                         height="350"
                         style="border-radius: 12px;"
-                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        src="https://www.youtube.com/embed/uG6eOAaXa5w" 
                         title="Información Tratamiento Ambulatorio"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen
                     ></iframe>
-                </div> -->
+                </div> 
             </div>
             <div class="modal-footer bg-light p-2 justify-content-start">
                 <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
@@ -1418,18 +1419,18 @@
             <div class="modal-body">
                 <p>Indique si conoce de alguna situación que pueda generar una reclamación por responsabilidad civil.</p>
                 <!-- Sección de video agregada -->
-                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                <div style="width:100%;max-width:700px;margin:auto;">
                     <iframe
                         width="100%"
                         height="350"
                         style="border-radius: 12px;"
-                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        src="https://www.youtube.com/embed/V9SqBqpX2h0" 
                         title="Información Tratamiento Ambulatorio"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen
                     ></iframe>
-                </div> -->
+                </div> 
             </div>
             <div class="modal-footer bg-light p-2 justify-content-start">
                 <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
@@ -1487,18 +1488,18 @@
                 <p>Si ha comprado pólizas de responsabilidad civil profesional en los ultimos 5 años responda SI</p>
                 <p class="small text-muted mb-0">Debe colocar la información de la póliza anterior.</p>
                 <!-- Sección de video agregada -->
-                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                <div style="width:100%;max-width:700px;margin:auto;">
                     <iframe
                         width="100%"
                         height="350"
                         style="border-radius: 12px;"
-                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        src="https://www.youtube.com/embed/f4iDDcit_Rg" 
                         title="Información Tratamiento Ambulatorio"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen
                     ></iframe>
-                </div> -->
+                </div> 
             </div>
             <div class="modal-footer bg-light p-2 justify-content-start">
               <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
@@ -1536,18 +1537,18 @@
             <div class="modal-body">
                 <p>Indique si alguna aseguradora le ha rechazado o cancelado una póliza de responsabilidad civil.</p>
                 <!-- Sección de video agregada -->
-                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                <div style="width:100%;max-width:700px;margin:auto;">
                     <iframe
                         width="100%"
                         height="350"
                         style="border-radius: 12px;"
-                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        src="https://www.youtube.com/embed/MDVq8jNGLyY" 
                         title="Información Tratamiento Ambulatorio"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen
                     ></iframe>
-                </div> -->
+                </div> 
             </div>
             <div class="modal-footer bg-light p-2 justify-content-start">
                 <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
@@ -2381,18 +2382,18 @@
             <div class="modal-body">
                 <p>Una Persona Expuesta Políticamente (PEP) es alguien que desempeña o ha desempeñado funciones públicas importantes.</p>
                 <!-- Sección de video agregada -->
-                <!--<div style="width:100%;max-width:700px;margin:auto;">
+                <div style="width:100%;max-width:700px;margin:auto;">
                     <iframe
                         width="100%"
                         height="350"
                         style="border-radius: 12px;"
-                        src="https://www.youtube.com/embed/LWHHJcaQiH4" 
+                        src="https://www.youtube.com/embed/dZDlfCRMJyA" 
                         title="Información Tratamiento Ambulatorio"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen
                     ></iframe>
-                </div> -->
+                </div>
             </div>
             <div class="modal-footer bg-light p-2 justify-content-start">
                 <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
@@ -2548,17 +2549,28 @@
 </div>
 
 <!-- Modal Obligaciones Tributarias -->
-<div class="modal fade" id="modalObligacionesTributarias" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-light p-3">
                 <h5 class="modal-title fs-6">Información sobre Obligaciones Tributarias</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Indique si debe pagar impuestos en otros países además del suyo.</p>
+                <p>Indique si tiene obligaciones tributarias en otro país o grupo de países.</p>
                 <!-- Sección de video agregada -->
-
+                <div style="width:100%;max-width:700px;margin:auto;">
+                    <iframe
+                        width="100%"
+                        height="350"
+                        style="border-radius: 12px;"
+                        src="https://www.youtube.com/embed/" 
+                        title="Información Tratamiento Ambulatorio"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div> 
             </div>
             <div class="modal-footer bg-light p-2 justify-content-start">
                 <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Entendido</button>
@@ -2566,6 +2578,8 @@
         </div>
     </div>
 </div>
+
+
 
 <!-- Responsable del RUT -->
 <div class="mb-3">
@@ -2671,7 +2685,7 @@
 
 
     <!-- Botón de Envío -->
-    <button type="submit" class="btn btn-primary w-100">Generar PDF</button>
+    <button type="submit" id="btnGenerarPDF" class="btn btn-primary w-100">Generar PDF</button>
     
 </form>
 </div>
@@ -2862,7 +2876,42 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
-
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Detener videos cuando se cierra el modal
+  document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('hidden.bs.modal', function() {
+      const iframe = this.querySelector('iframe');
+      if (iframe) {
+        // Reemplazar el iframe con una copia para detener el video
+        const iframeSrc = iframe.src;
+        iframe.src = '';
+        iframe.src = iframeSrc.replace('autoplay=1', 'autoplay=0');
+      }
+    });
+    
+    // Opcional: Autoplay al abrir el modal
+    modal.addEventListener('shown.bs.modal', function() {
+      const iframe = this.querySelector('iframe');
+      if (iframe) {
+        const src = iframe.src;
+        if (!src.includes('autoplay=1')) {
+          iframe.src = src.includes('?') ? 
+            `${src}&autoplay=1` : 
+            `${src}?autoplay=1`;
+        }
+      }
+    });
+  });
+});
+</script>
+<script>
+  document.getElementById('formularioPDF').addEventListener('submit', function () {
+    const boton = document.getElementById('btnGenerarPDF');
+    boton.disabled = true;
+    boton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Generando...';
+  });
+</script>
 
 
 

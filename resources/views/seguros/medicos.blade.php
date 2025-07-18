@@ -32,20 +32,7 @@
     background: linear-gradient(to right, #0b5ed7, #0a58ca);
     color: white;
   }
-</style>
 
-<!-- Hero Section -->
-<section class="hero-section position-relative overflow-hidden">
-  <div class="container-fluid p-0">
-    <div class="hero-image" style="background-image: url('{{ asset('img/asegu.jpg') }}'); height: 500px; background-size: cover; background-position: center;">
-      <div class="hero-overlay d-flex align-items-center justify-content-center">
-
-      </div>
-    </div>
-  </div>
-</section>
-
-<style>
   .hero-image {
     position: relative;
   }
@@ -74,117 +61,123 @@
   }
 
   .btn-gradient {
-  background: linear-gradient(to right, #007bff, #00c6ff);
-  border: none;
-  color: white;
-  transition: all 0.3s ease-in-out;
-}
-.btn-gradient:hover {
-  background: linear-gradient(to right, #0056b3, #009ec3);
-  transform: translateY(-2px);
-}
-.card-hover-effect:hover {
-  transform: translateY(-4px);
-  transition: 0.3s ease;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.08);
-}
-
+    background: linear-gradient(to right, #007bff, #00c6ff);
+    border: none;
+    color: white;
+    transition: all 0.3s ease-in-out;
+  }
+  .btn-gradient:hover {
+    background: linear-gradient(to right, #0056b3, #009ec3);
+    transform: translateY(-2px);
+  }
+  .card-hover-effect:hover {
+    transform: translateY(-4px);
+    transition: 0.3s ease;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.08);
+  }
 </style>
+
+<!-- Hero Section -->
+<section class="hero-section position-relative overflow-hidden">
+  <div class="container-fluid p-0">
+    <div class="hero-image" style="background-image: url('{{ asset('img/asegu.jpg') }}'); height: 500px; background-size: cover; background-position: center;">
+      <div class="hero-overlay d-flex align-items-center justify-content-center">
+        <!-- Puedes agregar contenido aquí si lo deseas -->
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Sección de Cotización -->
 <section id="seccionCotizacion" class="py-5 bg-light">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10">
-      <div class="card border-0 shadow-lg rounded-4 bg-light-subtle">
-  <div class="card-body p-5">
-    <div class="text-center mb-5">
-      <h2 class="fw-bold text-primary mb-3">Cotiza tu Seguro Médico</h2>
-      <p class="text-muted fs-6">Completa los datos para recibir una cotización personalizada en segundos</p>
-    </div>
+        <div class="card border-0 shadow-lg rounded-4 bg-light-subtle">
+          <div class="card-body p-5">
+            <div class="text-center mb-5">
+              <h2 class="fw-bold text-primary mb-3">Cotiza tu Seguro Médico</h2>
+              <p class="text-muted fs-6">Completa los datos para recibir una cotización personalizada en segundos</p>
+            </div>
 
-    <form id="formCotizacion" novalidate>
-      <div class="row g-4">
+            <form id="formCotizacion" novalidate>
+              <div class="row g-4">
+                <!-- Profesión -->
+                <div class="col-md-6">
+                  <div class="form-floating position-relative">
+                    <select class="form-select shadow-sm" id="profesion" required>
+                      <option value="">Seleccione una opción</option>
+                      <option value="CLASE 3" data-profesion="MEDICINA GENERAL">Medicina General</option>
+                      <option value="CLASE 3" data-profesion="ENFERMERA JEFE">Enfermería Superior</option>
+                      <option value="CLASE 4" data-profesion="AUXILIAR DE ENFERMERIA">Auxiliar de Enfermería</option>
+                      <option value="CLASE 1" data-profesion="GINECOBSTETRICIA">Ginecología</option>
+                      <option value="CLASE 4" data-profesion="ODONTOLOGIA">Odontología</option>
+                      <option value="CLASE 3" data-profesion="BACTERIOLOGA">Bacteriologa</option>
+                      <option value="CLASE 2" data-profesion="PSICOLOGIA">Psicología</option>
+                      <option value="CLASE 4" data-profesion="NUTRICIONISTA">Nutricionista</option>
+                      <option value="CLASE 3" data-profesion="PEDIATRIA">Pediatra</option>
+                      <option value="CLASE 1" data-profesion="ORTOPEDIA">Ortopedia</option>
+                      <option value="CLASE 3" data-profesion="ALERGÓLOGO">Alergólogo</option>
+                      <option value="CLASE 1" data-profesion="ANESTESIOLOGIA">Anestesiólogo</option>
+                    </select>
+                    <label for="profesion"><i class="bi bi-briefcase-fill me-2 text-primary"></i>Profesión / Especialidad</label>
+                  </div>
+                </div>
 
-        <!-- Profesión -->
-        <div class="col-md-6">
-          <div class="form-floating position-relative">
-            <select class="form-select shadow-sm" id="profesion" required>
-              <option value="">Seleccione una opción</option>
-              <option value="CLASE 3" data-profesion="MEDICINA GENERAL">Medicina General</option>
-              <option value="CLASE 3" data-profesion="ENFERMERA JEFE">Enfermería Superior</option>
-              <option value="CLASE 4" data-profesion="AUXILIAR DE ENFERMERIA">Auxiliar de Enfermería</option>
-              <option value="CLASE 1" data-profesion="GINECOBSTETRICIA">Ginecología</option>
-              <option value="CLASE 4" data-profesion="ODONTOLOGIA">Odontología</option>
-              <option value="CLASE 3" data-profesion="BACTERIOLOGA">Bacteriologa</option>
-              <option value="CLASE 2" data-profesion="PSICOLOGIA">Psicología</option>
-              <option value="CLASE 4" data-profesion="NUTRICIONISTA">Nutricionista</option>
-              <option value="CLASE 3" data-profesion="PEDIATRIA">Pediatra</option>
-              <option value="CLASE 1" data-profesion="ORTOPEDIA">Ortopedia</option>
-              <option value="CLASE 3" data-profesion="ALERGÓLOGO">Alergólogo</option>
-              <option value="CLASE 1" data-profesion="ANESTESIOLOGIA">Anestesiólogo</option>
-            </select>
-            <label for="profesion"><i class="bi bi-briefcase-fill me-2 text-primary"></i>Profesión / Especialidad</label>
+                <!-- Valor asegurado -->
+                <div class="col-md-6">
+                  <div class="form-floating position-relative">
+                    <select class="form-select shadow-sm" id="valor" required>
+                      <option value="">Seleccione una opción</option>
+                      <option value="100M">$100.000.000</option>
+                      <option value="200M">$200.000.000</option>
+                      <option value="300M">$300.000.000</option>
+                      <option value="400M">$400.000.000</option>
+                      <option value="500M">$500.000.000</option>
+                      <option value="700M">$700.000.000</option>
+                      <option value="1.000M">$1.000.000.000</option>
+                      <option value="2.000M">$2.000.000.000</option>
+                    </select>
+                    <label for="valor"><i class="bi bi-currency-dollar me-2 text-success"></i>Valor Asegurado</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Botón calcular -->
+              <div class="d-grid mt-5">
+                <button type="submit" class="btn btn-gradient btn-lg py-3 rounded-pill shadow-sm position-relative overflow-hidden">
+                  <span class="fw-semibold">
+                    <i class="bi bi-calculator me-2"></i>Calcular Cotización
+                  </span>
+                </button>
+              </div>
+
+              <!-- WhatsApp -->
+              <div class="container mt-5">
+                <div class="card border-0 shadow-sm rounded-4 bg-white p-4 text-center">
+                  <div class="card-body px-4 py-3">
+                    <div class="d-flex flex-column align-items-center">
+                      <div class="bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fab fa-whatsapp fa-2x"></i>
+                      </div>
+                      <h4 class="fw-bold text-dark mb-2">¿No encontraste tu profesión o el valor asegurado?</h4>
+                      <p class="text-muted mb-4" style="max-width: 600px;">
+                        Si tu especialidad médica o el monto deseado no está disponible en el simulador, comunícate con uno de nuestros asesores. Estaremos encantados de brindarte una cotización personalizada.
+                      </p>
+                      <a href="https://wa.me/573008000231" target="_blank" rel="noopener"
+                         class="btn btn-success btn-lg px-5 py-2 rounded-pill shadow-sm">
+                        <i class="fab fa-whatsapp me-2"></i> Hablar con un asesor
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Resultado -->
+              <div id="resultado" class="text-center mt-4 fs-5 fw-bold text-success"></div>
+            </form>
           </div>
         </div>
-
-        <!-- Valor asegurado -->
-        <div class="col-md-6">
-          <div class="form-floating position-relative">
-            <select class="form-select shadow-sm" id="valor" required>
-              <option value="">Seleccione una opción</option>
-              <option value="100M">$100.000.000</option>
-              <option value="200M">$200.000.000</option>
-              <option value="300M">$300.000.000</option>
-              <option value="400M">$400.000.000</option>
-              <option value="500M">$500.000.000</option>
-              <option value="700M">$700.000.000</option>
-              <option value="1.000M">$1.000.000.000</option>
-              <option value="2.000M">$2.000.000.000</option>
-            </select>
-            <label for="valor"><i class="bi bi-currency-dollar me-2 text-success"></i>Valor Asegurado</label>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Botón calcular -->
-      <div class="d-grid mt-5">
-        <button type="submit" class="btn btn-gradient btn-lg py-3 rounded-pill shadow-sm position-relative overflow-hidden">
-          <span class="fw-semibold">
-            <i class="bi bi-calculator me-2"></i>Calcular Cotización
-          </span>
-        </button>
-      </div>
-
-<div class="container mt-5">
-  <div class="card border-0 shadow-sm rounded-4 bg-white p-4 text-center">
-    <div class="card-body px-4 py-3">
-      <div class="d-flex flex-column align-items-center">
-        <div class="bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-          <i class="fab fa-whatsapp fa-2x"></i>
-        </div>
-        <h4 class="fw-bold text-dark mb-2">¿No encontraste tu profesión o el valor asegurado?</h4>
-        <p class="text-muted mb-4" style="max-width: 600px;">
-          Si tu especialidad médica o el monto deseado no está disponible en el simulador, comunícate con uno de nuestros asesores. Estaremos encantados de brindarte una cotización personalizada.
-        </p>
-        <a href="https://wa.me/573008000231" target="_blank" rel="noopener"
-           class="btn btn-success btn-lg px-5 py-2 rounded-pill shadow-sm">
-          <i class="fab fa-whatsapp me-2"></i> Hablar con un asesor
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-      <!-- Resultado -->
-      <div id="resultado" class="text-center mt-4 fs-5 fw-bold text-success"></div>
-    </form>
-  </div>
-</div>
-
         
         <!-- Resultados de Cotización -->
         <div id="resultadoCotizacionGeneral" class="mt-5" style="display: none;">
@@ -320,9 +313,12 @@
 </section>
 
 <script>
+// Tabla de valores mejorada con todas las combinaciones posibles
 const tablaValores = {
   "CLASE 1": {
     "100M": 249900,
+    "200M": 295000,
+    "300M": 425000,
     "400M": 687820,
     "500M": 880600,
     "700M": 1130500,
@@ -331,6 +327,8 @@ const tablaValores = {
   },
   "CLASE 2": {
     "100M": 188020,
+    "200M": 220000,
+    "300M": 305000,
     "400M": 499800,
     "500M": 630700,
     "700M": 815150,
@@ -339,8 +337,8 @@ const tablaValores = {
   },
   "CLASE 3": {
     "100M": 124950,
-    "200M": 178500,   // Agregado
-    "300M": 238000,   // Agregado
+    "200M": 178500,
+    "300M": 238000,
     "400M": 321300,
     "500M": 434350,
     "700M": 565250,
@@ -359,174 +357,204 @@ const tablaValores = {
   }
 };
 
+// Tabla de valores para La Previsora con todas las especialidades
+const tablaValoresPrevisora = {
+  "MEDICINA GENERAL": { 
+    "100M": 119000, "200M": 166600, "300M": 214200, "400M": 261800, "500M": 309400,
+    "700M": 357000, "1.000M": 404600, "2.000M": 499800
+  },
+  "ENFERMERA JEFE": { 
+    "100M": 119000, "200M": 166600, "300M": 214200, "400M": 261800, "500M": 309400,
+    "700M": 357000, "1.000M": 404600, "2.000M": 499800
+  },
+  "AUXILIAR DE ENFERMERIA": { 
+    "100M": 119000, "200M": 166600, "300M": 214200, "400M": 261800, "500M": 309400,
+    "700M": 357000, "1.000M": 404600, "2.000M": 499800
+  },
+  "ODONTOLOGIA": { 
+    "100M": 119000, "200M": 166600, "300M": 214200, "400M": 261800, "500M": 309400,
+    "700M": 357000, "1.000M": 404600, "2.000M": 499800
+  },
+  "BACTERIOLOGA": { 
+    "100M": 119000, "200M": 166600, "300M": 214200, "400M": 261800, "500M": 309400,
+    "700M": 357000, "1.000M": 404600, "2.000M": 499800
+  },
+  "PSICOLOGIA": { 
+    "100M": 119000, "200M": 166600, "300M": 214200, "400M": 261800, "500M": 309400,
+    "700M": 357000, "1.000M": 404600, "2.000M": 499800
+  },
+  "PEDIATRIA": { 
+    "100M": 119000, "200M": 166600, "300M": 214200, "400M": 261800, "500M": 309400,
+    "700M": 357000, "1.000M": 404600, "2.000M": 499800
+  },
+  "ALERGÓLOGO": { 
+    "100M": 119000, "200M": 166600, "300M": 214200, "400M": 261800, "500M": 309400,
+    "700M": 357000, "1.000M": 404600, "2.000M": 499800
+  },
+  "GINECOBSTETRICIA": { 
+    "100M": 325000, "200M": 505750, "300M": 624750, "400M": 743750, "500M": 862750,
+    "700M": 981750, "1.000M": 1100750, "2.000M": 1338750
+  },
+  "ORTOPEDIA": { 
+    "100M": 386750, "200M": 505750, "300M": 624750, "400M": 743750, "500M": 862750,
+    "700M": 981750, "1.000M": 1100750, "2.000M": 1338750
+  },
+  "ANESTESIOLOGIA": { 
+    "100M": 345100, "200M": 464100, "300M": 583100, "400M": 702100, "500M": 821100,
+    "700M": 940100, "1.000M": 1059100, "2.000M": 1297100
+  },
+  "NUTRICIONISTA": { 
+    "100M": 119000, "200M": 166600, "300M": 214200, "400M": 261800, "500M": 309400,
+    "700M": 357000, "1.000M": 404600, "2.000M": 499800
+  }
+};
 
-  const tablaValoresPrevisora = {
-    "MEDICINA GENERAL":     { "100M": 119000,  "200M": 166600,  "300M": 214200,  "400M": 261800,  "500M": 309400 },
-    "AUXILIAR DE ENFERMERIA": { "100M": 119000,  "200M": 166600,  "300M": 214200,  "400M": 261800,  "500M": 309400 },
-    "ENFERMERA JEFE":       { "100M": 119000,  "200M": 166600,  "300M": 214200,  "400M": 261800,  "500M": 309400 },
-    "ODONTOLOGIA":          { "100M": 119000,  "200M": 166600,  "300M": 214200,  "400M": 261800,  "500M": 309400 },
-    "ANESTESIOLOGIA":       { "100M": 345100,  "200M": 464100,  "300M": 583100,  "400M": 702100,  "500M": 821100 },
-    "FISIOTERAPEUTA":       { "100M": 119000,  "200M": 166600,  "300M": 214200,  "400M": 261800,  "500M": 309400 },
-    "GINECOBSTETRICIA":     { "100M": 325000,  "200M": 505750,  "300M": 624750,  "400M": 743750,  "500M": 862750 },
-    "PEDIATRIA":            { "100M": 119000,  "200M": 166600,  "300M": 214200,  "400M": 261800,  "500M": 309400 },
-    "PSICOLOGIA":           { "100M": 119000,  "200M": 166600,  "300M": 214200,  "400M": 261800,  "500M": 309400 },
-    "MEDICINA INTERNA":     { "100M": 130900,  "200M": 178500,  "300M": 226100,  "400M": 273700,  "500M": 321300 },
-    "CIRUJANO GENERAL":     { "100M": 130900,  "200M": 178500,  "300M": 226100,  "400M": 273700,  "500M": 321300 },
-    "ORTOPEDIA":            { "100M": 386750,  "200M": 505750,  "300M": 624750,  "400M": 743750,  "500M": 862750 },
-    "BACTERIOLOGIA":        { "100M": 119000,  "200M": 166600,  "300M": 214200,  "400M": 261800,  "500M": 309400 },
-    "OFTALMOLOGIA":         { "100M": 238000,  "200M": 333200,  "300M": 428400,  "400M": 523600,  "500M": 618800 }
-  };
+// Coberturas para cada aseguradora
+const coberturas = {
+  "La Previsora": [
+    "Responsabilidad civil médica",
+    "Accidentes personales",
+    "Gastos legales"
+  ],
+  "Confianza": [
+    "Cobertura Básica Responsabilidad Civil Profesional Médica",
+    "Lucro cesante",
+    "Perjuicios extrapatrimoniales",
+    "Gastos de defensa",
+    "Responsabilidad Civil Derivada del Uso de Aparatos Médicos"
+  ],
+  "Seguros del Estado": [
+    "RC médica",
+    "Gastos judiciales",
+    "Lucro cesante"
+  ]
+};
 
-  const coberturas = {
-    "La Previsora": [
-      "Responsabilidad civil médica",
-      "Accidentes personales",
-      "Gastos legales"
-    ],
-    "Confianza": [
-      "Cobertura Básica Responsabilidad Civil Profesional Médica",
-      "Lucro cesante",
-      "Perjuicios extrapatrimoniales",
-      "Gastos de defensa",
-      "Responsabilidad Civil Derivada del Uso de Aparatos Médicos"
-    ],
-    "Seguros del Estado": [
-      "RC médica",
-      "Gastos judiciales",
-      "Lucro cesante"
-    ]
-  };
+document.getElementById('formCotizacion').addEventListener('submit', function(e) {
+  e.preventDefault();
 
-  document.getElementById('formCotizacion').addEventListener('submit', function(e) {
+  const select = document.getElementById("profesion");
+  const clase = select.value;
+  const profesionReal = select.options[select.selectedIndex].dataset.profesion;
+  const valor = document.getElementById("valor").value;
+  const resultadoDiv = document.getElementById("resultado");
+  const resultadoGeneral = document.getElementById("resultadoCotizacionGeneral");
+  const lista = document.getElementById("listaResultados");
+
+  if (!clase || !valor || !profesionReal) {
+    resultadoDiv.innerHTML = '<div class="alert alert-danger"><i class="fas fa-exclamation-circle me-2"></i>Por favor seleccione una profesión y un valor asegurado.</div>';
+    return;
+  }
+
+  const valorConfianza = tablaValores[clase]?.[valor];
+  const valorPrevisora = tablaValoresPrevisora[profesionReal]?.[valor];
+
+  if (!valorConfianza && !valorPrevisora) {
+    resultadoDiv.innerHTML = '<div class="alert alert-warning"><i class="fas fa-info-circle me-2"></i>No hay información disponible para esa combinación. Por favor contacta a un asesor.</div>';
+    return;
+  }
+
+  resultadoDiv.innerHTML = '<div class="alert alert-success"><i class="fas fa-check-circle me-2"></i>Comparación entre aseguradoras:</div>';
+  resultadoGeneral.style.display = "block";
+  
+  // Scroll suave a los resultados
+  setTimeout(() => {
+    resultadoGeneral.scrollIntoView({ behavior: 'smooth' });
+  }, 300);
+
+  lista.innerHTML = "";
+
+  const cotizaciones = [];
+
+  // Agregar Confianza si existe cotización
+  if (valorConfianza) {
+    cotizaciones.push({
+      nombre: "Confianza",
+      valor: valorConfianza,
+      avatar: "https://confianza.directus.app/assets/cefd9fcd-0798-47f0-8637-af85d67ccfb8"
+    });
+  }
+
+  // Agregar La Previsora si existe cotización
+  if (valorPrevisora) {
+    cotizaciones.push({
+      nombre: "La Previsora",
+      valor: valorPrevisora,
+      avatar: "https://www.funcionpublica.gov.co/documents/d/guest/logo-previsora_mesa-de-trabajo-1-png"
+    });
+  }
+
+  // Agregar Seguros del Estado como opción adicional (95% del valor de La Previsora)
+  if (valorPrevisora) {
+    cotizaciones.push({
+      nombre: "Seguros del Estado",
+      valor: Math.round(valorPrevisora * 0.95),
+      avatar: "https://media.perezlara.com/2020/09/1.Seguros_del_estado.png"
+    });
+  }
+
+  // Encontrar el valor mínimo para resaltar la mejor opción
+  const minValor = Math.min(...cotizaciones.map(c => c.valor));
+
+  // Generar las filas de resultados
+  cotizaciones.forEach((cot, index) => {
+    const esMejorOpcion = cot.valor === minValor;
+    const url = `/Formulario?aseguradora=${encodeURIComponent(cot.nombre)}&profesion=${encodeURIComponent(profesionReal)}&valor=${encodeURIComponent(valor)}`;
+    const collapseId = `collapseCobertura${index}`;
+
+    const coberturaHtml = coberturas[cot.nombre]
+      ? coberturas[cot.nombre].map(c => `<li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i>${c}</li>`).join('')
+      : '<li class="text-muted">Coberturas no disponibles</li>';
+
+    lista.innerHTML += `
+      <tr ${esMejorOpcion ? 'class="bg-light"' : ''}>
+        <td>
+          <div class="d-flex align-items-center">
+            <img src="${cot.avatar}" alt="${cot.nombre}" class="rounded-circle me-3" style="width: 40px; height: 40px; object-fit: cover;">
+            <span class="fw-semibold">${cot.nombre} ${esMejorOpcion ? '' : ''}</span>
+          </div>
+        </td>
+        <td class="fw-bold text-nowrap">
+          $${cot.valor.toLocaleString('es-CO')}
+        </td>
+        <td class="text-nowrap">${valor.replace('M', ' Millones')}</td>
+        <td class="text-center">
+          <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#${collapseId}">
+            <i class="fas fa-eye me-1"></i> Ver
+          </button>
+        </td>
+        <td class="text-center">
+          ${cot.nombre === "Confianza"
+            ? `<a href="#" class="btn btn-primary solicitar-poliza-btn">Solicitar Póliza</a>`
+            : `<span class="text-muted">Solo disponible para Confianza</span>`}
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5" class="p-0">
+          <div class="collapse" id="${collapseId}">
+            <div class="p-3 bg-light">
+              <h6 class="fw-bold mb-3"><i class="fas fa-shield-alt me-2"></i>Coberturas incluidas:</h6>
+              <ul class="mb-0 ps-3">${coberturaHtml}</ul>
+            </div>
+          </div>
+        </td>
+      </tr>
+    `;
+  });
+});
+
+// Manejar clic en botón de solicitar póliza
+document.addEventListener('click', function (e) {
+  if (e.target && e.target.classList.contains('solicitar-poliza-btn')) {
     e.preventDefault();
 
-    const select = document.getElementById("profesion");
-    const clase = select.value;
-    const profesionReal = select.options[select.selectedIndex].dataset.profesion;
-    const valor = document.getElementById("valor").value;
-    const resultadoDiv = document.getElementById("resultado");
-    const resultadoGeneral = document.getElementById("resultadoCotizacionGeneral");
-    const lista = document.getElementById("listaResultados");
-
-    if (!clase || !valor || !profesionReal) {
-      resultadoDiv.innerHTML = '<div class="alert alert-danger"><i class="fas fa-exclamation-circle me-2"></i>Por favor seleccione una profesión y un valor asegurado.</div>';
-      return;
-    }
-
-    const valorConfianza = tablaValores[clase]?.[valor];
-    const valorPrevisora = tablaValoresPrevisora[profesionReal]?.[valor];
-
-    if (!valorConfianza && !valorPrevisora) {
-      resultadoDiv.innerHTML = '<div class="alert alert-warning"><i class="fas fa-info-circle me-2"></i>No hay información disponible para esa combinación.</div>';
-      return;
-    }
-
-    resultadoDiv.innerHTML = '<div class="alert alert-success"><i class="fas fa-check-circle me-2"></i>Comparación entre aseguradoras:</div>';
-    resultadoGeneral.style.display = "block";
-    
-    // Scroll suave a los resultados
-    setTimeout(() => {
-      resultadoGeneral.scrollIntoView({ behavior: 'smooth' });
-    }, 300);
-
-    lista.innerHTML = "";
-
-    const cotizaciones = [];
-
-    if (valorConfianza) {
-      cotizaciones.push({
-        nombre: "Confianza",
-        valor: valorConfianza,
-        avatar: "https://confianza.directus.app/assets/cefd9fcd-0798-47f0-8637-af85d67ccfb8"
-      });
-    }
-
-    if (valorPrevisora) {
-      cotizaciones.push({
-        nombre: "La Previsora",
-        valor: valorPrevisora,
-        avatar: "https://www.funcionpublica.gov.co/documents/d/guest/logo-previsora_mesa-de-trabajo-1-png"
-      });
-    }
-
-    if (valorPrevisora) {
-      cotizaciones.push({
-        nombre: "Seguros del Estado",
-        valor: Math.round(valorPrevisora * 0.95),
-        avatar: "https://media.perezlara.com/2020/09/1.Seguros_del_estado.png"
-      });
-    }
-
-    const minValor = Math.min(...cotizaciones.map(c => c.valor));
-
-    cotizaciones.forEach((cot, index) => {
-      let diferencia = "";
-      if (cot.valor > minValor) {
-        const extra = Math.round(((cot.valor - minValor) / minValor) * 100);
-       
-      } else if (cot.valor === minValor) {
-       
-      }
-
-      const url = `/Formulario?aseguradora=${encodeURIComponent(cot.nombre)}&profesion=${encodeURIComponent(profesionReal)}&valor=${encodeURIComponent(valor)}`;
-      const collapseId = `collapseCobertura${index}`;
-
-      const coberturaHtml = coberturas[cot.nombre]
-        ? coberturas[cot.nombre].map(c => `<li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i>${c}</li>`).join('')
-        : '<li class="text-muted">Coberturas no disponibles</li>';
-
-      lista.innerHTML += `
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <img src="${cot.avatar}" alt="${cot.nombre}" class="rounded-circle me-3" style="width: 40px; height: 40px; object-fit: cover;">
-              <span class="fw-semibold">${cot.nombre}</span>
-            </div>
-          </td>
-          <td class="fw-bold text-nowrap">
-            $${cot.valor.toLocaleString('es-CO')} ${diferencia}
-          </td>
-          <td class="text-nowrap">${valor.replace('M', ' Millones')}</td>
-          <td class="text-center">
-            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#${collapseId}">
-              <i class="fas fa-eye me-1"></i> Ver
-            </button>
-          </td>
-          <td class="text-center">
-<a href="#" class="btn btn-primary solicitar-poliza-btn">Solicitar Póliza</a>
-
-          </td>
-        </tr>
-        <tr>
-          <td colspan="5" class="p-0">
-            <div class="collapse" id="${collapseId}">
-              <div class="p-3 bg-light">
-                <h6 class="fw-bold mb-3"><i class="fas fa-shield-alt me-2"></i>Coberturas incluidas:</h6>
-                <ul class="mb-0 ps-3">${coberturaHtml}</ul>
-              </div>
-            </div>
-          </td>
-        </tr>
-      `;
-    });
-  });
+    @if(Auth::check())
+      window.location.href = "{{ route('formulario.create') }}";
+    @else
+      window.location.href = "{{ route('login') }}?redirect_to={{ urlencode('/seguros/medicos') }}";
+    @endif
+  }
+});
 </script>
-<script>
-    document.addEventListener('click', function (e) {
-        if (e.target && e.target.classList.contains('solicitar-poliza-btn')) {
-            e.preventDefault();
-
-            @if(Auth::check())
-                window.location.href = "{{ route('formulario.create') }}";
-            @else
-                window.location.href = "{{ route('login') }}?redirect_to={{ urlencode('/seguros/medicos') }}";
-            @endif
-        }
-    });
-</script>
-
-
-
-
 
 @endsection
