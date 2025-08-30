@@ -7,6 +7,7 @@ use App\Models\FormularioMedico;
 use App\Models\DocumentoUsuario;
 use App\Models\Notificacion;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class EliminarFormulariosInactivos extends Command
 {
@@ -19,6 +20,8 @@ class EliminarFormulariosInactivos extends Command
         $fechaLimite = Carbon::now()->subDays(5);
 
         $formularios = FormularioMedico::where('created_at', '<=', $fechaLimite)->get();
+
+        $eliminados = 0;
 
         foreach ($formularios as $formulario) {
             $documentos = DocumentoUsuario::where('formulario_medico_id', $formulario->id)->exists();
@@ -37,8 +40,11 @@ class EliminarFormulariosInactivos extends Command
 
                 $formulario->delete();
                 $this->info("Formulario ID {$formulario->id} eliminado.");
+                $eliminados++;
             }
         }
+
+        Log::info("🧹 [AUTOMÁTICO] Se ejecutó 'formularios:eliminar-inactivos'. Formularios eliminados: {$eliminados}");
 
         return Command::SUCCESS;
     }
