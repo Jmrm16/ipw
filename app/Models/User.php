@@ -2,29 +2,28 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;   // ← trait
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements CanResetPasswordContract
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, CanResetPassword; // ← usa el trait
 
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
-protected $fillable = [
-    'name',
-    'email',
-    'password',
-    'telefono', // ✅ Agrégalo
-    'role',     // ✅ Agrégalo
-];
-
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'telefono',
+        'role',
+    ];
 
     /**
      * The attributes that should be hidden for serialization.

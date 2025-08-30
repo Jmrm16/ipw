@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Log;
 
 class NewPasswordController extends Controller
 {
@@ -36,24 +37,29 @@ class NewPasswordController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user) use ($request) {
-                $user->forceFill([
-                    'password' => Hash::make($request->password),
-                    'remember_token' => Str::random(60),
-                ])->save();
+$status = Password::broker('users')->reset(
+    $request->only('email','password','password_confirmation','token'),
+    function ($user) use ($request) {
+        // 🔎 Log para confirmar que entramos al callback y qué usuario es
+        Log::info('RESET OK', ['user_id' => $user->id, 'email' => $user->email]);
 
-                event(new PasswordReset($user));
-            }
-        );
+        $user->forceFill([
+            'password' => \Illuminate\Support\Facades\Hash::make($request->password),
+            'remember_token' => \Illuminate\Support\Str::random(60),
+        ])->save();
+    }
+);
+
+
 
         if ($status === Password::PASSWORD_RESET) {
             return redirect()->route('login')->with('status', __($status));
         }
 
         throw ValidationException::withMessages([
+            
             'email' => [__($status)],
+            
         ]);
     }
 }

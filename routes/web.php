@@ -15,6 +15,9 @@ use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventoPublicoController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\LitePasswordController;
+use App\Http\Controllers\Auth\NewPasswordController;
 /*
 |--------------------------------------------------------------------------
 | Rutas Públicas
@@ -172,6 +175,28 @@ Route::post('/logout', function () {
     Auth::logout();
     return redirect('/login');
 })->name('logout');
+
+
+
+Route::middleware('guest')->group(function () {
+    // Mostrar formulario para ingresar email
+    Route::get('/forgot-password-lite', [LitePasswordController::class, 'create'])
+        ->name('password.request.lite');
+
+    // Procesar email: si existe, generar token y redirigir al reset
+    Route::post('/forgot-password-lite', [LitePasswordController::class, 'store'])
+        ->middleware('throttle:6,1') // recomendado: limitar intentos
+        ->name('password.email.lite');
+});
+
+
+// GET
+Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])
+    ->name('password.reset');
+// POST
+Route::post('/reset-password', [NewPasswordController::class, 'store'])
+    ->name('password.update');
+
 
 require __DIR__.'/auth.php';
 

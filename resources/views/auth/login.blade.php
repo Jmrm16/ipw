@@ -52,6 +52,7 @@
                         <button type="submit" class="btn btn-primary-gradient w-100 py-2 fw-semibold rounded-pill">
                             <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
                         </button>
+                        
 
                         <div class="text-center mt-3">
                             <small>¿No tienes una cuenta? 
@@ -63,6 +64,16 @@
                     <div class="text-center my-4 text-muted">
                         <span>— o —</span>
                     </div>
+
+                    <div class="text-center mt-3">
+<small>
+  <a href="{{ route('password.request.lite') }}" class="text-decoration-none">
+    ¿Olvidaste tu contraseña?
+  </a>
+</small>
+
+</div>
+
 
                     <a href="{{ route('google.login') }}" class="btn btn-outline-danger w-100 py-2 rounded-pill fw-semibold">
                         <i class="fab fa-google me-2"></i> Iniciar Sesión con Google
